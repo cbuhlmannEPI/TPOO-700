@@ -2,8 +2,8 @@ import Config
 
 # Configure your database
 config :api, Api.Repo,
-  username: "cyrilbuhlmann",
-  password: "Cyril2607?",
+  username: "postgres",
+  password: "postgres",
   hostname: "localhost",
   database: "api",
   stacktrace: true,
