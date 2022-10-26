@@ -1,8 +1,16 @@
 <template>
+    <div class="top-div">
+
+        <h2>Où ? </h2>
+        <select name="" id="">
+            <option v-for="ville in ville" :key="ville">{{ ville }}</option>
+        </select>
+        <button>Search</button>
+    </div>
     <div class="rectangle">
         <div class="container">
             <h2>Météo Actuelle à Lille</h2>
-            <select name="" id=""></select>
+
             <p>Temperature : {{ weather.temperature }}℃ </p>
             <p>Date du jour : {{ moment().format('DD/MM/YYYY hh:mm') }}</p>
 
@@ -25,7 +33,13 @@ export default {
         }
     },
     data() {
+
         return {
+            ville: [
+                'Lille',
+                'Roubaix',
+                'Tourcoing',
+            ],
             weather: {
                 temperature: '15'
             }
