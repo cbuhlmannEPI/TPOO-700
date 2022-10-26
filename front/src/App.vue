@@ -1,17 +1,17 @@
 
 <template>
   <!-- <img alt="Vue logo" src="./assets/logo.png"> -->
-  <CurrentWeather msg="Weather" />
+  <ChartComponent msg="Weather" />
 </template>
 
 <script>
 // import HelloWorld from './components/HelloWorld.vue'
-import CurrentWeather from './components/CurrentWeather.vue'
+import ChartComponent from './components/ChartComponent.vue'
 
 export default {
   name: 'App',
   components: {
-    CurrentWeather,
+    ChartComponent,
 
   }
 }
