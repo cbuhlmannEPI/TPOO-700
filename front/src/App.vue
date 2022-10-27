@@ -1,23 +1,28 @@
+<script>
+import ChartComponent from "./components/ChartComponent.vue"
+import User from './components/User.vue';
+</script>
 <template>
+
   <nav>
     <User/>
     <RouterLink to="/">Accueil</RouterLink> |
     <RouterLink to="/WorkingTimes/1">WorkingTimes</RouterLink>
   </nav>
   <RouterView/>
+  
+  <ChartComponent />
 </template>
 
 <script>
-import User from './components/User.vue';
-
- 
-
 export default {
   name: 'App',
   components: {
-    User
+    ChartComponent,
+     User
   }
 }
+
 </script>
 
 <style>
