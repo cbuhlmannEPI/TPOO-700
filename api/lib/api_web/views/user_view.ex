@@ -17,7 +17,8 @@ defmodule ApiWeb.UserView do
       email: user.email,
       updated_at: user.updated_at,
       inserted_at: user.inserted_at,
-      # clocks: user.clocks,
+      clocks: user.clocks,
+      workingtimes: user.workingtimes,
     }
   end
 end

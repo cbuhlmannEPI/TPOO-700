@@ -20,6 +20,7 @@ defmodule Api.Workingtimes do
   def list_workingtimes!(userID) do
     query = from(w in Workingtime, where: w.user_id == ^userID)
     Repo.all(query)
+    |> Repo.preload(:user)
   end
 
   @doc """
@@ -39,10 +40,12 @@ defmodule Api.Workingtimes do
   def get_workingtime_for_user!(userID, id) do
     query = from(w in Workingtime, where: w.id == ^id and w.user_id == ^userID)
     Repo.all(query)
+    |> Repo.preload(:user)
   end
 
   def get_workingtime!(id) do 
     Repo.get!(Workingtime, id)
+    |> Repo.preload(:user)
   end
 
   @doc """

@@ -20,6 +20,7 @@ defmodule Api.Clocks do
   def list_clocks!(userID) do
     query = from(c in Clock, where: c.user_id == ^userID)
     Repo.all(query)
+    |> Repo.preload(:user)
   end
 
   @doc """
@@ -36,7 +37,10 @@ defmodule Api.Clocks do
       ** (Ecto.NoResultsError)
 
   """
-  def get_clock!(id), do: Repo.get!(Clock, id)
+  def get_clock!(id) do
+    Repo.get!(Clock, id)
+    |> Repo.preload(:user)
+  end
 
   @doc """
   Creates a clock.

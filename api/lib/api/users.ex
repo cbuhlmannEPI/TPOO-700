@@ -19,6 +19,8 @@ defmodule Api.Users do
   """
   def list_users do
     Repo.all(User)
+    |> Repo.preload(:clocks)
+    |> Repo.preload(:workingtimes)
   end
 
   @doc """
@@ -37,7 +39,8 @@ defmodule Api.Users do
   """
   def get_user!(id) do 
     Repo.get!(User, id)
-    # Repo.preload clocks, :clocks
+    |> Repo.preload(:clocks)
+    |> Repo.preload(:workingtimes)
   end
 
   @doc """
