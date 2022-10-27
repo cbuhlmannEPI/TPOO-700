@@ -1,5 +1,5 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import App from '../App.vue'
+import { createRouter, createWebHistory } from 'vue-router';
+import App from '../App.vue';
 import  WorkingTimes  from "../components/WorkingTimes.vue";
 import  WorkingTime  from "../components/WorkingTime.vue";
 import  ChartManager  from "../components/ChartManager.vue";

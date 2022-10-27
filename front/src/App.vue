@@ -1,23 +1,21 @@
+<!-- eslint-disable no-unused-vars -->
 <template>
-  <nav>
-    <User/>
-    <RouterLink to="/">Accueil</RouterLink> |
-    <RouterLink to="/WorkingTimes/1">WorkingTimes</RouterLink>
-  </nav>
-  <RouterView/>
+  <User/>
+
+  <ChartComponents/>
 </template>
 
 <script>
-import User from './components/User.vue';
-
- 
-
+  import  ChartComponents  from "../src/components/ChartComponent.vue";
+  import  User from "../src/components/User.vue";
 export default {
   name: 'App',
   components: {
-    User
+   ChartComponents,
+   User
   }
 }
+
 </script>
 
 <style>
