@@ -9,7 +9,7 @@ defmodule ApiWeb.Endpoint do
     key: "_api_key",
     signing_salt: "gUYT3fML"
   ]
-
+  plug CORSPlug
   socket "/live", Phoenix.LiveView.Socket, websocket: [connect_info: [session: @session_options]]
 
   # Serve at "/" the static files from "priv/static" directory.
@@ -47,4 +47,6 @@ defmodule ApiWeb.Endpoint do
   plug Plug.Head
   plug Plug.Session, @session_options
   plug ApiWeb.Router
+
+
 end

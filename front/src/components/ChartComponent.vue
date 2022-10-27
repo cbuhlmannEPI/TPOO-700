@@ -18,7 +18,7 @@
 import {
   defineComponent,
 } from 'vue'
-
+import axios from "axios";
 import { Pie, Line, Bar } from 'vue-chartjs'
 import {
   Chart as ChartJS,
@@ -105,6 +105,21 @@ export default defineComponent({
 
     }
 
+  },
+
+  // Pulls posts when the component is created.
+  created() {
+    axios
+      .get(`http://localhost:4000/api/users`)
+      .then((response) => {
+        // JSON responses are automatically parsed.
+        this.posts = response.data;
+        console.log(response.data);
+      })
+      .catch((e) => {
+
+        this.errors.push(e);
+      });
   }
 })
 </script>
