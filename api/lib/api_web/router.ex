@@ -34,9 +34,6 @@ defmodule ApiWeb.Router do
     delete "/workingtimes/:id", WorkingtimeController, :delete
     post "/workingtimes/:userID", WorkingtimeController, :create
   end
-  # resources "/api/workingtimes", ApiWeb.WorkingtimeController, except: [:new, :edit]
-
-  # resources "/api/clocks", ApiWeb.ClockController, except: [:new, :edit]
 
   # Other scopes may use custom stacks.
   # scope "/api", ApiWeb do

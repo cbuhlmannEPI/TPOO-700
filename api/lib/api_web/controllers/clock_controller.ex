@@ -13,10 +13,7 @@ defmodule ApiWeb.ClockController do
 
   def create(conn, %{"userID"=>userID, "clock" => clock_params}) do
     with {:ok, %Clock{} = clock} <- Clocks.create_clock(userID, clock_params) do
-      conn
-      |> put_status(:created)
-      |> put_resp_header("location", Routes.clock_path(conn, :show, clock))
-      |> render("show.json", clock: clock)
+      render(conn, "show.json", clock: clock)
     end
   end
 end
