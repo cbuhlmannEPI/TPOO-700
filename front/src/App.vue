@@ -1,25 +1,18 @@
-<script>
-import ChartComponent from "./components/ChartComponent.vue"
-import User from './components/User.vue';
-</script>
+<!-- eslint-disable no-unused-vars -->
 <template>
+  <User/>
 
-  <nav>
-    <User/>
-    <RouterLink to="/">Accueil</RouterLink> |
-    <RouterLink to="/WorkingTimes/1">WorkingTimes</RouterLink>
-  </nav>
-  <RouterView/>
-  
-  <ChartComponent />
+  <ChartComponents/>
 </template>
 
 <script>
+  import  ChartComponents  from "../src/components/ChartComponent.vue";
+  import  User from "../src/components/User.vue";
 export default {
   name: 'App',
   components: {
-    ChartComponent,
-     User
+   ChartComponents,
+   User
   }
 }
 
