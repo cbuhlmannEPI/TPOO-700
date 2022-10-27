@@ -1,69 +1,112 @@
+
 <template>
-  <div class="top-div">
-
-    Chart
-
+  <h2>CHART</h2>
+  <div class="chart">
+    <Pie :chart-options="chartOptions" :chart-data="chartData" :chart-id="chartId" :dataset-id-key="datasetIdKey"
+      :plugins="plugins" :css-classes="cssClasses" :styles="styles" :width="width" :height="height"></Pie>
+    <Line :chart-options="chartOptions" :chart-data="chartData" :chart-id="chartId" :dataset-id-key="datasetIdKey"
+      :plugins="plugins" :css-classes="cssClasses" :styles="styles" :width="width" :height="height"></Line>
     <Bar :chart-options="chartOptions" :chart-data="chartData" :chart-id="chartId" :dataset-id-key="datasetIdKey"
-      :plugins="plugins" :css-classes="cssClasses" :styles="styles" :width="width" :height="height" />
-
+      :plugins="plugins" :css-classes="cssClasses" :styles="styles" :width="width" :height="height"></bar>
   </div>
 </template>
 
+
 <script>
 
-import { Bar } from 'vue-chartjs'
-import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js'
 
-ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
+import {
+  defineComponent,
+} from 'vue'
 
-export default {
-  name: 'BarChart',
-  components: { Bar },
+import { Pie, Line, Bar } from 'vue-chartjs'
+import {
+  Chart as ChartJS,
+  Title,
+  Tooltip,
+  Legend,
+  ArcElement,
+  CategoryScale,
+  LineElement,
+  LinearScale,
+  PointElement,
+  BarElement
+
+} from 'chart.js'
+
+ChartJS.register(Title, Tooltip, Legend, ArcElement, CategoryScale, LineElement, BarElement,
+  LinearScale,
+  PointElement)
+
+export default defineComponent({
+  name: 'PieChart',
+  components: {
+    Pie,
+    Line,
+    Bar
+  },
   props: {
     chartId: {
       type: String,
-      default: 'bar-chart'
+      default: 'pie-chart'
     },
-    datasetIdKey: {
+    lineId: {
       type: String,
-      default: 'label'
+      default: 'line-chart'
     },
     width: {
       type: Number,
-      default: 200
+      default: 400
     },
     height: {
       type: Number,
-      default: 200
+      default: 400
     },
     cssClasses: {
       default: '',
       type: String
     },
     styles: {
-      type: Object,
       default: () => { }
     },
     plugins: {
-      type: Object,
-      default: () => { }
+      type: Array,
+      default: () => []
     }
-  },
+  }, data() {
 
-  data() {
     return {
+
       chartData: {
-        labels: ['January', 'February', 'March'],
-        datasets: [{ data: [40, 20, 12] }]
+
+        labels: ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi'],
+
+        datasets: [
+
+          {
+
+            label: 'Working Time',
+
+            backgroundColor: ['red', 'blue', 'orange', 'purple', 'green'],
+
+            data: [6, 7, 6, 8, 9]
+
+          }]
+
       },
+
       chartOptions: {
-        responsive: true
-      }
+
+        responsive: false,
+
+      },
+
+
+
     }
+
   }
-}
-
-
+})
 </script>
 
 <style>
