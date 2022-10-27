@@ -2,26 +2,34 @@
 <script lang="ts" setup>
 </script>
 <template>
+  <img width=200 src="../assets/logo-epitech.png" alt="">
+
   <div class="head">
 
     <!-- filtre -->
-    <div><input v-model="prefix" placeholder="Filter prefix"></div>
+    <input id="search" v-model="prefix" placeholder="Filter prefix">
+
+    <div class="container">
+      <select size="5" v-model="selected">
+        <option v-for="name in filteredNames" :key="name">{{ name }}</option>
+      </select>
+    </div>
     <!-- affichage user -->
-    <select size="5" v-model="selected">
-      <option v-for="name in filteredNames" :key="name">{{ name }}</option>
-    </select>
-    <!-- champs pour nom et prenom de l'user -->
-   <div class="flex">
-    <label>Nom: <input v-model="first"></label>
-   </div>
-   <div class="flex">
-     <label>Prenom: <input v-model="last"></label>
-   </div>
+    <div class="container">
+
+      <!-- champs pour nom et prenom de l'user -->
+      <div class="flex">
+        <label>Nom: <input class="name" v-model="first"></label>
+      </div>
+      <div class="flex">
+        <label>Email <input class="email" v-model="last"></label>
+      </div>
+    </div>
     <!-- btn CRUD -->
     <div class="buttons">
-      <button @click="createUser">Créer</button>
-      <button @click="updateUser">Modifier</button>
-      <button @click="deleteUser">Sup</button>
+      <button @click="createUser" class="create">Créer</button>
+      <button @click="updateUser" class="update">Modifier</button>
+      <button @click="deleteUser" class="delete">Supprimer</button>
     </div>
   </div>
 </template>
@@ -31,7 +39,7 @@
 export default {
   data() {
     return {
-      names: ['Test, test','zest,zest'], //mettre data
+      names: ['Test, test', 'zest,zest'], //mettre data
       selected: '',
       prefix: '',
       first: '',
@@ -87,28 +95,69 @@ export default {
 input {
   display: block;
   margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 10px;
+  border: solid 1px;
 }
 
 select {
-  float: left;
-  margin: 0 1em 1em 0;
+  margin: 10px;
+  padding: 10px;
   width: 14em;
+  border-radius: 10px;
 }
 
-.buttons {
-  clear: both;
+button {
+  border-radius: 10px;
+  padding: 10px;
+  border: none;
+  margin: 10px;
+  color: white;
+  transition: all ease 0.5s;
+
 }
 
-button + button {
-  margin-left: 5px;
+button:hover {
+  transform: scale(1.1);
 }
-.head{
-  background: rgb(202, 202, 202);
+
+
+
+
+.head {
   margin-bottom: 5px;
-
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
 }
-.flex{
+
+.flex {
+
   display: flex;
   flex-wrap: nowrap;
+}
+
+#search {
+  border: solid 1px black;
+}
+
+.create {
+
+  background-color: rgb(53, 176, 53);
+}
+
+.update {
+  background-color: orange;
+}
+
+.delete {
+  background-color: #e63946;
+}
+
+.container {
+  display: flex;
+  gap: 2em;
+
 }
 </style>
