@@ -41,6 +41,10 @@ defmodule Api.Workingtimes do
     Repo.all(query)
   end
 
+  def get_workingtime!(id) do 
+    Repo.get!(Workingtime, id)
+  end
+
   @doc """
   Creates a workingtime.
 
