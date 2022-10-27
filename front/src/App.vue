@@ -1,18 +1,18 @@
 <!-- eslint-disable no-unused-vars -->
 <template>
-  <User/>
+  <User />
 
-  <ChartComponents/>
+  <ChartComponents />
 </template>
 
 <script>
-  import  ChartComponents  from "../src/components/ChartComponent.vue";
-  import  User from "../src/components/User.vue";
+import ChartComponents from "../src/components/ChartComponent.vue";
+import User from "../src/components/User.vue";
 export default {
   name: 'App',
   components: {
-   ChartComponents,
-   User
+    ChartComponents,
+    User
   }
 }
 

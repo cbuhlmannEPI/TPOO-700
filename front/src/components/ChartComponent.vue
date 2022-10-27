@@ -87,7 +87,7 @@ export default defineComponent({
 
             label: 'Working Time',
 
-            backgroundColor: ['red', 'blue', 'orange', 'purple', 'green'],
+            backgroundColor: ['#1d3557', '#457b9d', '#a8dadc', '#f1faee', '#e63946'],
 
             data: [6, 7, 6, 8, 9]
 
