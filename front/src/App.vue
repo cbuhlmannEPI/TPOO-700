@@ -1,15 +1,21 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <nav>
+    <User/>
+    <RouterLink to="/">Accueil</RouterLink> |
+    <RouterLink to="/WorkingTimes/1">WorkingTimes</RouterLink>
+  </nav>
+  <RouterView/>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import User from './components/User.vue';
+
+ 
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    User
   }
 }
 </script>
@@ -21,6 +27,6 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+
 }
 </style>
