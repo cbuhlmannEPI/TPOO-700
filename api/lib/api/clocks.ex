@@ -50,10 +50,9 @@ defmodule Api.Clocks do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_clock(attrs \\ %{}) do
-    %Clock{}
-    |> Clock.changeset(attrs)
-    |> Repo.insert()
+  def create_clock(userID, attrs) do
+    %Clock{time: NaiveDateTime.from_iso8601!(attrs["time"]), status: attrs["status"], user_id: String.to_integer(userID)}
+     |> Repo.insert();
   end
 
   @doc """

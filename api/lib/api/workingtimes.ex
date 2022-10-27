@@ -17,8 +17,9 @@ defmodule Api.Workingtimes do
       [%Workingtime{}, ...]
 
   """
-  def list_workingtimes do
-    Repo.all(Workingtime)
+  def list_workingtimes!(userID) do
+    query = from(w in Workingtime, where: w.user_id == ^userID)
+    Repo.all(query)
   end
 
   @doc """
@@ -35,7 +36,10 @@ defmodule Api.Workingtimes do
       ** (Ecto.NoResultsError)
 
   """
-  def get_workingtime!(id), do: Repo.get!(Workingtime, id)
+  def get_workingtime_for_user!(userID, id) do
+    query = from(w in Workingtime, where: w.id == ^id and w.user_id == ^userID)
+    Repo.all(query)
+  end
 
   @doc """
   Creates a workingtime.
@@ -49,10 +53,9 @@ defmodule Api.Workingtimes do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_workingtime(attrs \\ %{}) do
-    %Workingtime{}
-    |> Workingtime.changeset(attrs)
-    |> Repo.insert()
+  def create_workingtime(userID, attrs) do
+    %Workingtime{end: NaiveDateTime.from_iso8601!(attrs["end"]), start: NaiveDateTime.from_iso8601!(attrs["start"]), user_id: String.to_integer(userID)}
+     |> Repo.insert();
   end
 
   @doc """
