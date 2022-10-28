@@ -11,7 +11,7 @@
 
     <div class="container">
       <select size="5" v-model="selected">
-        <option v-for="name in filteredNames" :key="name">{{ name }}</option>
+        <option v-for="name in users" :key="name.id">{{ name.username }}</option>
       </select>
     </div>
     <!-- affichage user -->
@@ -19,15 +19,15 @@
 
       <!-- champs pour nom et prenom de l'user -->
       <div class="flex">
-        <label>Nom <input class="name" v-model="first"></label>
+        <label>Username <input class="name" v-model="user.username"></label>
       </div>
       <div class="flex">
-        <label>Email <input class="email" v-model="last"></label>
+        <label>Email <input class="email" type="email" v-model="user.email"></label>
       </div>
     </div>
     <!-- btn CRUD -->
     <div class="buttons">
-      <button @click="createUser" class="create">Créer</button>
+      <button @click="this.createUser" class="create">Créer</button>
       <button @click="updateUser" class="update">Modifier</button>
       <button @click="deleteUser" class="delete">Supprimer</button>
     </div>
@@ -36,14 +36,22 @@
 
 
 <script>
+
+import axios from 'axios';
+
 export default {
   data() {
     return {
-      names: ['Test, test', 'zest,zest'], //mettre data
+      // names: ['Test, test', 'zest,zest'], //mettre data
       selected: '',
       prefix: '',
       first: '',
-      last: ''
+      last: '',
+      users: [],
+      user: {
+        username: '',
+        email: ''
+      }
     }
   },
   computed: {
@@ -60,13 +68,18 @@ export default {
   },
   methods: {
     createUser() { //fonction créer un User
-      if (this.hasValidInput()) {
-        const fullName = `${this.last}, ${this.first}`
-        if (!this.names.includes(fullName)) {
-          this.names.push(fullName)
-          this.first = this.last = ''
+      axios.post(`http://localhost:4000/api/users`, {
+        user:{
+          username: this.user.username,
+          email: this.user.email
         }
-      }
+      })
+        .then((response) => {
+          this.users.push(response.data.data)
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
     },
     updateUser() { //fonction mettre à jour un User
       if (this.hasValidInput() && this.selected) {
@@ -80,10 +93,18 @@ export default {
         this.names.splice(i, 1)
         this.selected = this.first = this.last = ''
       }
-    },
-    hasValidInput() {
-      return this.first.trim() && this.last.trim()
     }
+  },
+  created() {
+    axios
+      .get(`http://localhost:4000/api/users`)
+      .then((response) => {
+        this.users = response.data.data;
+      })
+      .catch((errors) => {
+        console.log(errors)
+      });
+
   }
 }
 
