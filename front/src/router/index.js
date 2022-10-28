@@ -4,9 +4,15 @@ import  WorkingTimes  from "../components/WorkingTimes.vue";
 import  WorkingTime  from "../components/WorkingTime.vue";
 import  ChartManager  from "../components/ChartManager.vue";
 import  ClockManager  from "../components/ClockManager.vue";
+import  User  from "../components/User.vue";
 
 const routes = [
   
+  {
+    path: '/', 
+    name: 'Users',
+    component: User
+  },
   {
     path: '/workingTime/:userid', 
     name: 'workingTimeUser',

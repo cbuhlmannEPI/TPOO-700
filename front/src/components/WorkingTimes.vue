@@ -4,6 +4,7 @@
   <h3>Installed CLI Plugins</h3>
   <div>{{ $route.params }}</div>
 
+
   <div class="workTable">
     <table>
       <tr>
