@@ -11,7 +11,7 @@
 
     <div class="container">
       <select size="5" v-model="selected" @change="getValue">
-        <option v-for="name in users" :key="name.id" :value="name.id">{{ name.username }}</option>
+        <option v-for="(name, index) in users" :key="name.id" :value="name.id+' '+index">{{ name.username }}</option>
       </select>
     </div>
     <!-- affichage user -->
@@ -45,8 +45,6 @@ export default {
       // names: ['Test, test', 'zest,zest'], //mettre data
       selected: '',
       prefix: '',
-      first: '',
-      last: '',
       users: [],
       user: {
         username: '',
@@ -82,21 +80,36 @@ export default {
         });
     },
     updateUser() { //fonction mettre à jour un User
-      if (this.hasValidInput() && this.selected) {
-        const i = this.names.indexOf(this.selected)
-        this.names[i] = this.selected = `${this.last}, ${this.first}`
-      }
+      var split = this.selected.split(" ");
+      axios.put(`http://localhost:4000/api/users/`+split[0], {
+        user:{
+          username: this.user.username,
+          email: this.user.email
+        }
+      })
+      .then((response) => { 
+        console.log(response.data.data)
+        this.users[split[1]]['username'] = this.user.username;
+        this.users[split[1]]['email'] = this.user.email;
+      })
     },
     deleteUser() { // sup un User
-      if (this.selected) {
-        const i = this.names.indexOf(this.selected)
-        this.names.splice(i, 1)
-        this.selected = this.first = this.last = ''
-      }
+      var split = this.selected.split(" ");
+      axios.delete(`http://localhost:4000/api/users/`+split[0])
+    .then((response) => { 
+      console.log(response.data.data)
+      this.users.splice(split[1]);
+      this.user.username = "";
+      this.user.email = "";
+    })
+    .catch(error => {
+        console.error('There was an error!', error);
+    });
     },
     getValue() {
+      var split = this.selected.split(" ");
       axios
-      .get(`http://localhost:4000/api/users/`+this.selected)
+      .get(`http://localhost:4000/api/users/`+split[0])
       .then((response) => {
         this.user.username = response.data.data.username;
         this.user.email = response.data.data.email;
@@ -117,11 +130,6 @@ export default {
       });
   }
 }
-
-
-
-
-
 
 </script>
 <style>
