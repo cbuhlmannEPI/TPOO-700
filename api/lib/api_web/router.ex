@@ -8,13 +8,17 @@ defmodule ApiWeb.Router do
     plug :put_root_layout, {ApiWeb.LayoutView, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug CORSPlug, origin: "*"
   end
 
   pipeline :api do
     plug :accepts, ["json"]
+    plug CORSPlug
+
   end
 
   scope "/", ApiWeb do
+
     pipe_through :browser
 
     get "/", PageController, :index

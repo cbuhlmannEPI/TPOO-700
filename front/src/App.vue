@@ -1,20 +1,23 @@
-
+<!-- eslint-disable no-unused-vars -->
 <template>
-  <!-- <img alt="Vue logo" src="./assets/logo.png"> -->
-  <CurrentWeather msg="Weather" />
+  <User />
+
+  <ChartComponents />
+  <TestComponent />
 </template>
 
 <script>
-// import HelloWorld from './components/HelloWorld.vue'
-import CurrentWeather from './components/CurrentWeather.vue'
+import ChartComponents from "../src/components/ChartComponent.vue";
+import User from "../src/components/User.vue";
 
 export default {
   name: 'App',
   components: {
-    CurrentWeather,
-
+    ChartComponents,
+    User
   }
 }
+
 </script>
 
 <style>
@@ -24,6 +27,6 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+
 }
 </style>

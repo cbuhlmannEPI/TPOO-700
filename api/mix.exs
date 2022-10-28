@@ -6,6 +6,7 @@ defmodule Api.MixProject do
       app: :api,
       version: "0.1.0",
       elixir: "~> 1.12",
+
       elixirc_paths: elixirc_paths(Mix.env()),
       compilers: [:gettext] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
@@ -48,6 +49,7 @@ defmodule Api.MixProject do
       {:telemetry_poller, "~> 1.0"},
       {:gettext, "~> 0.18"},
       {:jason, "~> 1.2"},
+      {:cors_plug, "~> 3.0"},
       {:plug_cowboy, "~> 2.5"}
     ]
   end
