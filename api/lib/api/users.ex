@@ -57,6 +57,8 @@ defmodule Api.Users do
   """
   def create_user(attrs \\ %{}) do
     %User{}
+    |> Repo.preload(:clocks)
+    |> Repo.preload(:workingtimes)
     |> User.changeset(attrs)
     |> Repo.insert()
   end
