@@ -111,9 +111,8 @@ export default {
     deleteUser(id, index) { // sup un User
       // var split = this.selected.split(" ");
       axios.delete(`http://localhost:4000/api/users/` + id)
-        .then((response) => {
-          console.log(response.data.data)
-          this.users.splice(index);
+        .then(() => {
+          this.users.splice(index, 1);
         })
         .catch(error => {
           console.error('There was an error!', error);
