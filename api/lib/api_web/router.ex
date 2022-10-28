@@ -8,31 +8,36 @@ defmodule ApiWeb.Router do
     plug :put_root_layout, {ApiWeb.LayoutView, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug CORSPlug, origin: "*"
   end
 
   pipeline :api do
     plug :accepts, ["json"]
+    plug CORSPlug
+
   end
 
   scope "/", ApiWeb do
+
     pipe_through :browser
 
     get "/", PageController, :index
   end
 
   resources "/api/users", ApiWeb.UserController, except: [:new, :edit]
-  # resources "/api/clocks", ApiWeb.ClockController, except: [:new, :edit]
-
 
   scope "/api", ApiWeb do
     get "/clocks/:userID", ClockController, :index
-    post "/clocks", ClockController, :create
+    post "/clocks/:userID", ClockController, :create
   end
 
-
-  resources "/api/workingtimes", ApiWeb.WorkingtimeController, except: [:new, :edit]
-
-  # resources "/api/clocks", ApiWeb.ClockController, except: [:new, :edit]
+  scope "/api", ApiWeb do
+    get "/workingtimes/:userID", WorkingtimeController, :index
+    get "/workingtimes/:userID/:id", WorkingtimeController, :show
+    put "/workingtimes/:id", WorkingtimeController, :update
+    delete "/workingtimes/:id", WorkingtimeController, :delete
+    post "/workingtimes/:userID", WorkingtimeController, :create
+  end
 
   # Other scopes may use custom stacks.
   # scope "/api", ApiWeb do

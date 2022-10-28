@@ -17,6 +17,7 @@ defmodule ApiWeb.ClockView do
       status: clock.status,
       updated_at: clock.updated_at,
       inserted_at: clock.inserted_at,
+      user: clock.user
     }
   end
 end

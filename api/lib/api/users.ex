@@ -19,6 +19,8 @@ defmodule Api.Users do
   """
   def list_users do
     Repo.all(User)
+    |> Repo.preload(:clocks)
+    |> Repo.preload(:workingtimes)
   end
 
   @doc """
@@ -35,7 +37,11 @@ defmodule Api.Users do
       ** (Ecto.NoResultsError)
 
   """
-  def get_user!(id), do: Repo.get!(User, id)
+  def get_user!(id) do 
+    Repo.get!(User, id)
+    |> Repo.preload(:clocks)
+    |> Repo.preload(:workingtimes)
+  end
 
   @doc """
   Creates a user.

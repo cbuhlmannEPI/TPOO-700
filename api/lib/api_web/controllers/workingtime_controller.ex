@@ -6,23 +6,20 @@ defmodule ApiWeb.WorkingtimeController do
 
   action_fallback ApiWeb.FallbackController
 
-  def index(conn, _params) do
-    workingtimes = Workingtimes.list_workingtimes()
+  def index(conn, %{"userID" => userID}) do
+    workingtimes = Workingtimes.list_workingtimes!(userID)
     render(conn, "index.json", workingtimes: workingtimes)
   end
 
-  def create(conn, %{"workingtime" => workingtime_params}) do
-    with {:ok, %Workingtime{} = workingtime} <- Workingtimes.create_workingtime(workingtime_params) do
-      conn
-      |> put_status(:created)
-      |> put_resp_header("location", Routes.workingtime_path(conn, :show, workingtime))
-      |> render("show.json", workingtime: workingtime)
+  def create(conn, %{"userID"=>userID, "workingtime" => workingtime_params}) do
+    with {:ok, %Workingtime{} = workingtime} <- Workingtimes.create_workingtime(userID, workingtime_params) do
+      render(conn, "show.json", workingtime: workingtime)
     end
   end
 
-  def show(conn, %{"id" => id}) do
-    workingtime = Workingtimes.get_workingtime!(id)
-    render(conn, "show.json", workingtime: workingtime)
+  def show(conn, %{"userID" => userID,"id" => id}) do
+    workingtimes = Workingtimes.get_workingtime_for_user!(userID, id)
+    render(conn, "index.json", workingtimes: workingtimes)
   end
 
   def update(conn, %{"id" => id, "workingtime" => workingtime_params}) do

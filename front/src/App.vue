@@ -3,11 +3,13 @@
   <User />
 
   <ChartComponents />
+  <TestComponent />
 </template>
 
 <script>
 import ChartComponents from "../src/components/ChartComponent.vue";
 import User from "../src/components/User.vue";
+
 export default {
   name: 'App',
   components: {

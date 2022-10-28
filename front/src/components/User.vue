@@ -19,7 +19,7 @@
 
       <!-- champs pour nom et prenom de l'user -->
       <div class="flex">
-        <label>Nom: <input class="name" v-model="first"></label>
+        <label>Nom <input class="name" v-model="first"></label>
       </div>
       <div class="flex">
         <label>Email <input class="email" v-model="last"></label>
@@ -86,6 +86,12 @@ export default {
     }
   }
 }
+
+
+
+
+
+
 </script>
 <style>
 * {
