@@ -1,20 +1,20 @@
 <!-- eslint-disable no-unused-vars -->
 <template>
-  <User />
+  <!-- <User /> -->
 
-  <TestComponent />
+  <!-- <TestComponent /> -->
 <RouterView/>
 </template>
 
 <script>
 
-import User from "../src/components/User.vue";
+// import User from "../src/components/User.vue";
 
 export default {
   name: 'App',
-  components: {
-    User
-  }
+  // components: {
+  //   User
+  // }
 }
 
 </script>
