@@ -7,31 +7,48 @@
   <div class="head">
 
     <!-- filtre -->
-    <input id="search" v-model="prefix" placeholder="Filter prefix">
 
-    <div class="container">
-      <select size="5" v-model="selected" @change="getValue">
-        <option v-for="(name, index) in users" :key="name.id" :value="name.id+' '+index">{{ name.username }}</option>
-      </select>
-    </div>
+
     <!-- affichage user -->
     <div class="container">
 
       <!-- champs pour nom et prenom de l'user -->
-      <div class="flex">
-        <label>Username <input class="name" v-model="user.username"></label>
-      </div>
-      <div class="flex">
-        <label>Email <input class="email" type="email" v-model="user.email"></label>
+
+      <label>Username <input class="name" v-model="user.username"></label>
+
+      <label>Email <input class="email" type="email" v-model="user.email"></label>
+      <div class="buttons">
+        <button @click="createUser" class="create">Créer</button>
+
       </div>
     </div>
     <!-- btn CRUD -->
-    <div class="buttons">
-      <button @click="createUser" class="create">Créer</button>
-      <button @click="updateUser" class="update">Modifier</button>
-      <button @click="deleteUser" class="delete">Supprimer</button>
-    </div>
+
   </div>
+
+
+  <div class="userTable">
+    <table>
+      <tr>
+        <th>Username</th>
+        <th>Email</th>
+        <th>Accès détails</th>
+      </tr>
+      <tr v-for="(name, index) in users" :key="name.id" :value="name.id + ' ' + index">
+        <td> {{ name.username }}</td>
+        <td>{{ name.email }}</td>
+        <td><button class="userDetail"> <a v-bind:href="'/WorkingTimes/' + name.id"> Voir détails</a></button> <button
+            @click="updateUser" class="update">Modifier</button>
+          <button @click="deleteUser" class="delete">Supprimer</button>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <!-- <select size="5" v-model="selected" @change="getValue">
+      <option v-for="(name, index) in users" :key="name.id" :value="name.id + ' ' + index">{{ name.username }}
+      </option>
+    </select> -->
+
 </template>
 
 
@@ -67,7 +84,7 @@ export default {
   methods: {
     createUser() { //fonction créer un User
       axios.post(`http://localhost:4000/api/users`, {
-        user:{
+        user: {
           username: this.user.username,
           email: this.user.email
         }
@@ -81,42 +98,42 @@ export default {
     },
     updateUser() { //fonction mettre à jour un User
       var split = this.selected.split(" ");
-      axios.put(`http://localhost:4000/api/users/`+split[0], {
-        user:{
+      axios.put(`http://localhost:4000/api/users/` + split[0], {
+        user: {
           username: this.user.username,
           email: this.user.email
         }
       })
-      .then((response) => { 
-        console.log(response.data.data)
-        this.users[split[1]]['username'] = this.user.username;
-        this.users[split[1]]['email'] = this.user.email;
-      })
+        .then((response) => {
+          console.log(response.data.data)
+          this.users[split[1]]['username'] = this.user.username;
+          this.users[split[1]]['email'] = this.user.email;
+        })
     },
     deleteUser() { // sup un User
       var split = this.selected.split(" ");
-      axios.delete(`http://localhost:4000/api/users/`+split[0])
-    .then((response) => { 
-      console.log(response.data.data)
-      this.users.splice(split[1]);
-      this.user.username = "";
-      this.user.email = "";
-    })
-    .catch(error => {
-        console.error('There was an error!', error);
-    });
+      axios.delete(`http://localhost:4000/api/users/` + split[0])
+        .then((response) => {
+          console.log(response.data.data)
+          this.users.splice(split[1]);
+          this.user.username = "";
+          this.user.email = "";
+        })
+        .catch(error => {
+          console.error('There was an error!', error);
+        });
     },
     getValue() {
       var split = this.selected.split(" ");
       axios
-      .get(`http://localhost:4000/api/users/`+split[0])
-      .then((response) => {
-        this.user.username = response.data.data.username;
-        this.user.email = response.data.data.email;
-      })
-      .catch((errors) => {
-        console.log(errors)
-      });
+        .get(`http://localhost:4000/api/users/` + split[0])
+        .then((response) => {
+          this.user.username = response.data.data.username;
+          this.user.email = response.data.data.email;
+        })
+        .catch((errors) => {
+          console.log(errors)
+        });
     }
   },
   created() {
@@ -139,7 +156,6 @@ export default {
 
 input {
   display: block;
-  margin-bottom: 10px;
   padding: 10px;
   border-radius: 10px;
   border: solid 1px;
@@ -172,8 +188,7 @@ button:hover {
 .head {
   margin-bottom: 5px;
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  justify-content: center;
   padding: 10px;
 }
 
@@ -202,7 +217,37 @@ button:hover {
 
 .container {
   display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   gap: 2em;
 
+}
+
+table {
+  border: solid 1px black;
+  border-collapse: collapse;
+}
+
+td {
+  padding: 10px;
+
+  border: solid 1px black;
+}
+
+.userDetail {
+  background-color: rgb(44, 20, 182);
+
+}
+
+.userTable {
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+}
+
+a {
+  text-decoration: none;
+  color: white;
 }
 </style>
