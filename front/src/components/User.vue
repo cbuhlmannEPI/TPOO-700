@@ -10,8 +10,8 @@
     <input id="search" v-model="prefix" placeholder="Filter prefix">
 
     <div class="container">
-      <select size="5" v-model="selected">
-        <option v-for="name in users" :key="name.id">{{ name.username }}</option>
+      <select size="5" v-model="selected" @change="getValue">
+        <option v-for="name in users" :key="name.id" :value="name.id">{{ name.username }}</option>
       </select>
     </div>
     <!-- affichage user -->
@@ -27,7 +27,7 @@
     </div>
     <!-- btn CRUD -->
     <div class="buttons">
-      <button @click="this.createUser" class="create">Créer</button>
+      <button @click="createUser" class="create">Créer</button>
       <button @click="updateUser" class="update">Modifier</button>
       <button @click="deleteUser" class="delete">Supprimer</button>
     </div>
@@ -62,9 +62,9 @@ export default {
     }
   },
   watch: {
-    selected(name) {
-      [this.last, this.first] = name.split(', ')
-    }
+    // selected(name) {
+    //   [this.last, this.first] = name.split(', ')
+    // }
   },
   methods: {
     createUser() { //fonction créer un User
@@ -93,6 +93,17 @@ export default {
         this.names.splice(i, 1)
         this.selected = this.first = this.last = ''
       }
+    },
+    getValue() {
+      axios
+      .get(`http://localhost:4000/api/users/`+this.selected)
+      .then((response) => {
+        this.user.username = response.data.data.username;
+        this.user.email = response.data.data.email;
+      })
+      .catch((errors) => {
+        console.log(errors)
+      });
     }
   },
   created() {
@@ -104,7 +115,6 @@ export default {
       .catch((errors) => {
         console.log(errors)
       });
-
   }
 }
 
