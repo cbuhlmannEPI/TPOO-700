@@ -80,10 +80,18 @@ export default {
         });
     },
     updateUser() { //fonction mettre à jour un User
-      // if (this.hasValidInput() && this.selected) {
-      //   const i = this.names.indexOf(this.selected)
-      //   this.names[i] = this.selected = `${this.last}, ${this.first}`
-      // }
+      var split = this.selected.split(" ");
+      axios.put(`http://localhost:4000/api/users/`+split[0], {
+        user:{
+          username: this.user.username,
+          email: this.user.email
+        }
+      })
+      .then((response) => { 
+        console.log(response.data.data)
+        this.users[split[1]]['username'] = this.user.username;
+        this.users[split[1]]['email'] = this.user.email;
+      })
     },
     deleteUser() { // sup un User
       var split = this.selected.split(" ");
