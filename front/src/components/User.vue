@@ -18,12 +18,10 @@
 
       <label>Email <input class="email" type="email" v-model="user.email"></label>
       <div class="buttons">
-        <button @click="createUser" class="create">Créer</button>
-
+        <button v-if="show" id="create" @click="createUser" class="create">Créer</button>
+        <button v-if="!show" id="update" @click="updateUser" class="update">Modifier</button>
       </div>
     </div>
-    <!-- btn CRUD -->
-
   </div>
 
 
@@ -38,16 +36,12 @@
         <td> {{ name.username }}</td>
         <td>{{ name.email }}</td>
         <td><button class="userDetail"> <a v-bind:href="'/WorkingTimes/' + name.id"> Voir détails</a></button> <button
-            @click="updateUser" class="update">Modifier</button>
-          <button @click="deleteUser" class="delete">Supprimer</button>
+            @click="getValue(name.id, index)" class="update">Modifier</button>
+          <button @click="deleteUser(name.id, index)" class="delete">Supprimer</button>
         </td>
       </tr>
     </table>
   </div>
-  <!-- <select size="5" v-model="selected" @change="getValue">
-      <option v-for="(name, index) in users" :key="name.id" :value="name.id + ' ' + index">{{ name.username }}
-      </option>
-    </select> -->
 
 </template>
 
@@ -59,13 +53,13 @@ import axios from 'axios';
 export default {
   data() {
     return {
-      // names: ['Test, test', 'zest,zest'], //mettre data
+      show: true,
       selected: '',
-      prefix: '',
       users: [],
       user: {
         username: '',
-        email: ''
+        email: '',
+        id: ''
       }
     }
   },
@@ -90,6 +84,8 @@ export default {
         }
       })
         .then((response) => {
+          this.user.username = '';
+          this.user.email = '';
           this.users.push(response.data.data)
         })
         .catch(function (error) {
@@ -97,37 +93,39 @@ export default {
         });
     },
     updateUser() { //fonction mettre à jour un User
-      var split = this.selected.split(" ");
-      axios.put(`http://localhost:4000/api/users/` + split[0], {
+      // var split = this.selected.split(" ");
+      axios.put(`http://localhost:4000/api/users/` + this.user.id, {
         user: {
           username: this.user.username,
           email: this.user.email
         }
       })
         .then((response) => {
-          console.log(response.data.data)
-          this.users[split[1]]['username'] = this.user.username;
-          this.users[split[1]]['email'] = this.user.email;
+          this.show = true;
+          this.user.username = '';
+          this.user.email = '';
+          this.users[this.selected]['username'] = response.data.data.username;
+          this.users[this.selected]['email'] = response.data.data.email;
         })
     },
-    deleteUser() { // sup un User
-      var split = this.selected.split(" ");
-      axios.delete(`http://localhost:4000/api/users/` + split[0])
+    deleteUser(id, index) { // sup un User
+      // var split = this.selected.split(" ");
+      axios.delete(`http://localhost:4000/api/users/` + id)
         .then((response) => {
           console.log(response.data.data)
-          this.users.splice(split[1]);
-          this.user.username = "";
-          this.user.email = "";
+          this.users.splice(index);
         })
         .catch(error => {
           console.error('There was an error!', error);
         });
     },
-    getValue() {
-      var split = this.selected.split(" ");
+    getValue(id, index) {
+      this.selected = index
+      this.user.id = id
       axios
-        .get(`http://localhost:4000/api/users/` + split[0])
+        .get(`http://localhost:4000/api/users/` + id)
         .then((response) => {
+          this.show = false;
           this.user.username = response.data.data.username;
           this.user.email = response.data.data.email;
         })
