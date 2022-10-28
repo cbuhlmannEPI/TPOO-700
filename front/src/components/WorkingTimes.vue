@@ -3,6 +3,10 @@
 <template>
     <img width=200 src="../assets/logo-epitech.png" alt="">
   <!-- <div>{{ $route.params }}</div> -->
+  <label>Start <input class="name" v-model="workingtime.start"></label>
+
+  <label>End <input class="email" type="email" v-model="workingtime.end"></label>
+  <button @click="createWorkingtime" class="create">Créer</button>
 
   <div class="workTable">
     <table>
@@ -32,80 +36,27 @@ export default {
     return {
       show: true,
       workingtimes: [],
-      user: {
-        username: '',
-        email: '',
-        id: ''
+      workingtime: {
+        start: '',
+        end: ''
       }
     }
   },
-  computed: {
-    filteredNames() { // filtre (miniscule to majuscule comprise )
-      return this.names.filter((n) =>
-        n.toLowerCase().startsWith(this.prefix.toLowerCase())
-      )
-    }
-  },
-  watch: {
-    // selected(name) {
-    //   [this.last, this.first] = name.split(', ')
-    // }
-  },
   methods: {
-    createUser() { //fonction créer un User
-      axios.post(`http://localhost:4000/api/users`, {
-        user: {
-          username: this.user.username,
-          email: this.user.email
+    createWorkingtime() { //fonction créer un User
+      axios.post(`http://localhost:4000/api/workingtimes/`+this.$route.params['userI'], {
+        workingtime: {
+          start: this.workingtime.start,
+          end: this.workingtime.end
         }
       })
         .then((response) => {
-          this.user.username = '';
-          this.user.email = '';
-          this.users.push(response.data.data)
+          this.workingtime.start = '';
+          this.workingtime.end = '';
+          this.workingtimes.push(response.data.data)
         })
         .catch(function (error) {
           console.log(error);
-        });
-    },
-    updateUser() { //fonction mettre à jour un User
-      // var split = this.selected.split(" ");
-      axios.put(`http://localhost:4000/api/users/` + this.user.id, {
-        user: {
-          username: this.user.username,
-          email: this.user.email
-        }
-      })
-        .then((response) => {
-          this.show = true;
-          this.user.username = '';
-          this.user.email = '';
-          this.users[this.selected]['username'] = response.data.data.username;
-          this.users[this.selected]['email'] = response.data.data.email;
-        })
-    },
-    deleteUser(id, index) { // sup un User
-      // var split = this.selected.split(" ");
-      axios.delete(`http://localhost:4000/api/users/` + id)
-        .then(() => {
-          this.users.splice(index, 1);
-        })
-        .catch(error => {
-          console.error('There was an error!', error);
-        });
-    },
-    getValue(id, index) {
-      this.selected = index
-      this.user.id = id
-      axios
-        .get(`http://localhost:4000/api/users/` + id)
-        .then((response) => {
-          this.show = false;
-          this.user.username = response.data.data.username;
-          this.user.email = response.data.data.email;
-        })
-        .catch((errors) => {
-          console.log(errors)
         });
     },
     formatDate(value) {
@@ -121,6 +72,15 @@ export default {
       .catch((errors) => {
         console.log(errors)
       });
+    // axios
+    //   .get(`http://localhost:4000/api/users/` + this.user.id)
+    //   .then((response) => {
+    //     this.user.username = response.data.data.username;
+    //     this.user.email = response.data.data.email;
+    //   })
+    //   .catch((errors) => {
+    //     console.log(errors)
+    //   });
   }
 }
 
