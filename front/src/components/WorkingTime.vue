@@ -2,6 +2,9 @@
 
 <template>
   <div>
+    {{$route.params}}
+  </div>
+  <div>
     Component: WorkingTime
   </div>
 </template>
