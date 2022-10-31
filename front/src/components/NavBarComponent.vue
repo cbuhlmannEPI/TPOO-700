@@ -4,11 +4,15 @@
             <a v-bind:href="'/'">
                 <i style="font-size:30px" class="fa fa-home"></i>
             </a>
-            <a v-bind:href="'/clocks/'  +  username">
+            <a v-bind:href="'/clocks/' + username">
                 <li>Clocks</li>
             </a>
             <li>
-                <a v-bind:href="'/WorkingTimes/'  +  userID"> Working Times</a>
+                <a v-bind:href="'/WorkingTimes/' + userID"> Working Times</a>
+            </li>
+            <li>
+                <a v-bind:href="'/chartManager/'">Charts</a>
+
             </li>
         </ul>
         <div class="account">
