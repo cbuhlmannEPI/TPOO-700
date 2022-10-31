@@ -25,8 +25,7 @@ const routes = [
   {
     path: '/clocks/:username', 
     name: 'clocks',
-    component: ClockManager,
-    props: 'test'
+    component: ClockManager
   },
   {
     path: '/chartManager/:userID', 

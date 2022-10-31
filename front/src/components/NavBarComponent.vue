@@ -4,11 +4,11 @@
             <a v-bind:href="'/'">
                 <i style="font-size:30px" class="fa fa-home"></i>
             </a>
-            <a v-bind:href="'/clocks/test'">
+            <a v-bind:href="'/clocks/'+username">
                 <li>Clocks</li>
             </a>
             <li>
-                <a v-bind:href="'/WorkingTimes/10'"> Working Times</a>
+                <a v-bind:href="'/WorkingTimes/'+userID"> Working Times</a>
             </li>
         </ul>
         <div class="account">
@@ -18,6 +18,22 @@
         </div>
     </div>
 </template>
+
+<script>
+export default {
+  data() {
+    return {
+      username: null,
+      userID: null
+    }
+  },
+  methods: {},
+  created() {
+    this.username = sessionStorage['username']
+    this.userID = sessionStorage['userID']
+  }
+}
+</script>
 
 <style>
 body {

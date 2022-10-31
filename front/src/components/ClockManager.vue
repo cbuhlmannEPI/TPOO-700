@@ -9,7 +9,7 @@
   </h1>
 </template>
 <script>
-// import axios from 'axios';
+import axios from 'axios';
 import moment from 'moment';
 
 export default {
@@ -29,16 +29,14 @@ export default {
     }
   },
   created() {
-    // axios
-    //   .get(`http://localhost:4000/api/clocks/`+this.$route.params['username'])
-    //   .then((response) => {
-    //     this.workingtime.start = this.formatDate(response.data.data[0].start)
-    //     this.workingtime.end = this.formatDate(response.data.data[0].end)
-    //   })
-    //   .catch((errors) => {
-    //     console.log(errors)
-    //   });
-    console.log(this.props);
+    axios
+      .get(`http://localhost:4000/api/clocks/`+sessionStorage['userID'])
+      .then((response) => {
+        console.log(response.data.data)
+      })
+      .catch((errors) => {
+        console.log(errors)
+      });
   }
 }
 </script>
