@@ -3,7 +3,7 @@ defmodule Api.Repo.Migrations.AddReferencesUserId do
 
   def change do
     alter table(:clocks) do
-      modify :user_id, references(:users, on_delete: :nothing)
+      modify :user_id, references(:users, on_delete: :delete_all)
     end
   end
 end

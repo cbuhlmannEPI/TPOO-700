@@ -4,17 +4,22 @@ import  WorkingTimes  from "../components/WorkingTimes.vue";
 import  WorkingTime  from "../components/WorkingTime.vue";
 import  ChartManager  from "../components/ChartManager.vue";
 import  ClockManager  from "../components/ClockManager.vue";
-import  User  from "../components/User.vue";
+// import  User  from "../components/User.vue";
 
 const routes = [
   
+  // {
+  //   path: '/', 
+  //   name: 'app',
+  //   component: App
+  // },
   {
-    path: '/', 
-    name: 'Users',
-    component: User
+    path: '/WorkingTimes/:userI', 
+    name: 'workingTimesUser',
+    component: WorkingTimes
   },
   {
-    path: '/workingTime/:userid', 
+    path: '/workingTimes/:userid/:id', 
     name: 'workingTimeUser',
     component: WorkingTime
   },
