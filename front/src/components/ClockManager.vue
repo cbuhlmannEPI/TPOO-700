@@ -1,12 +1,27 @@
 <script lang="ts" setup></script>
 
 <template>
-  <div>
-    Component: ClockManager
+    <div class="inputs">
+
+
+
+      <label>Time</label> <input class="name" v-model="clock.time">
+
+      <label>Status </label><input class="email" type="email" v-model="clock.status">
+    <button @click="createClock" class="create">Créer</button>
+</div>
+  <div class="workTable">
+    <table>
+      <tr>
+        <th>time</th>
+        <th>status</th>
+      </tr>
+      <tr v-for="clock in clocks" :key="clock.id">
+        <td>{{ formatDate(clock.time) }}</td>
+        <td>{{ clock.status }}</td>
+      </tr>
+    </table>
   </div>
-  <h1>
-    COOCUOCUOCUO
-  </h1>
 </template>
 <script>
 import axios from 'axios';
@@ -15,6 +30,7 @@ import moment from 'moment';
 export default {
   data() {
     return {
+      clocks:[],
       clock: {
         time: '',
         status:'',
@@ -22,8 +38,21 @@ export default {
       },
     }
   },
-  props: ['test'],
   methods: {
+    createClock() {
+      axios.post(`http://localhost:4000/api/clocks/`+this.$route.params['userID'], {
+        workingtime: {
+          time: this.clock.time,
+          status: this.clock.status
+        }
+      })
+        .then((response) => {
+          this.clock.push(response.data.data)
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
     formatDate(value) {
       return moment(String(value)).format('YYYY-MM-DD hh:mm:ss')
     }
@@ -32,7 +61,7 @@ export default {
     axios
       .get(`http://localhost:4000/api/clocks/`+sessionStorage['userID'])
       .then((response) => {
-        console.log(response.data.data)
+        this.clocks = response.data.data;
       })
       .catch((errors) => {
         console.log(errors)
