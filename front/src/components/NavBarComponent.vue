@@ -4,11 +4,11 @@
             <a v-bind:href="'/'">
                 <i style="font-size:30px" class="fa fa-home"></i>
             </a>
-            <a v-bind:href="'/clocks/'+username">
+            <a v-bind:href="'/clocks/'  +  username">
                 <li>Clocks</li>
             </a>
             <li>
-                <a v-bind:href="'/WorkingTimes/'+userID"> Working Times</a>
+                <a v-bind:href="'/WorkingTimes/'  +  userID"> Working Times</a>
             </li>
         </ul>
         <div class="account">
@@ -21,17 +21,17 @@
 
 <script>
 export default {
-  data() {
-    return {
-      username: null,
-      userID: null
+    data() {
+        return {
+            username: null,
+            userID: null
+        }
+    },
+    methods: {},
+    created() {
+        this.username = sessionStorage['username']
+        this.userID = sessionStorage['userID']
     }
-  },
-  methods: {},
-  created() {
-    this.username = sessionStorage['username']
-    this.userID = sessionStorage['userID']
-  }
 }
 </script>
 
@@ -90,9 +90,3 @@ ul li {
 </style>
 
 
-<script>
-export default {
-    name: 'NavBarComponent',
-
-}
-</script>

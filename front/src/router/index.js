@@ -4,7 +4,6 @@ import WorkingTimes from "../components/WorkingTimes.vue";
 import WorkingTime from "../components/WorkingTime.vue";
 import ChartManager from "../components/ChartManager.vue";
 import ClockManager from "../components/ClockManager.vue";
-import LoginView from "../views/LoginView.vue";
 
 const routes = [
   // {
@@ -13,26 +12,26 @@ const routes = [
   //   component: App
   // },
   {
-    path: '/WorkingTimes/:userID', 
-    name: 'workingTimesUser',
-    component: WorkingTimes
+    path: "/WorkingTimes/:userID",
+    name: "workingTimesUser",
+    component: WorkingTimes,
   },
   {
-    path: '/workingTimes/:userID/:id', 
-    name: 'workingTimeUser',
-    component: WorkingTime
+    path: "/workingTimes/:userID/:id",
+    name: "workingTimeUser",
+    component: WorkingTime,
   },
   {
-    path: '/clocks/:username', 
-    name: 'clocks',
-    component: ClockManager
+    path: "/clocks/:username",
+    name: "clocks",
+    component: ClockManager,
   },
   {
-    path: '/chartManager/:userID', 
-    name: 'charts',
-    component: ChartManager
-  }
-]
+    path: "/chartManager/:userID",
+    name: "charts",
+    component: ChartManager,
+  },
+];
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
