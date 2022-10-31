@@ -1,13 +1,17 @@
 <script lang="ts" setup></script>
 
 <template>
-    <img width=200 src="../assets/logo-epitech.png" alt="">
+
   <!-- <div>{{ $route.params }}</div> -->
-  <label>Start <input class="name" v-model="workingtime.start"></label>
+  <div class="inputs">
 
-  <label>End <input class="email" type="email" v-model="workingtime.end"></label>
-  <button @click="createWorkingtime" class="create">Créer</button>
 
+
+    <label>Start</label> <input class="name" v-model="workingtime.start">
+
+    <label>End </label><input class="email" type="email" v-model="workingtime.end">
+    <button @click="createWorkingtime" class="create">Créer</button>
+  </div>
   <div class="workTable">
     <table>
       <tr>
@@ -16,10 +20,11 @@
         <th></th>
       </tr>
       <tr v-for="workingtime in workingtimes" :key="workingtime.id">
-        <td>{{formatDate(workingtime.start)}}</td>
-        <td>{{formatDate(workingtime.end)}}</td>
+        <td>{{ formatDate(workingtime.start) }}</td>
+        <td>{{ formatDate(workingtime.end) }}</td>
         <td>
-          <button class="seeDetails"> <a v-bind:href="'/workingTimes/' + $route.params['userI'] +'/'+workingtime.id "> Voir détails</a></button>
+          <button class="seeDetails"> <a v-bind:href="'/workingTimes/' + $route.params['userI'] + '/' + workingtime.id">
+              Voir détails</a></button>
         </td>
       </tr>
     </table>
@@ -32,6 +37,7 @@ import moment from 'moment';
 
 
 export default {
+
   data() {
     return {
       show: true,
@@ -86,6 +92,18 @@ export default {
 
 </script>
 <style>
+.inputs {
+  padding: 10px;
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+
+}
+
+.inputs input {
+  font-size: 30px;
+}
+
 .workTable {
   display: flex;
   flex-direction: column;
@@ -103,8 +121,27 @@ td {
   border: solid 1px black;
 }
 
+button.seeDetails {
+  border: none;
+  padding: 10px;
+  font-size: 15px;
+  border-radius: 10px;
+  color: white;
+}
+
 .seeDetails {
   background-color: rgb(44, 20, 182);
+
+}
+
+button.create {
+  padding: 10px;
+  background-color: green;
+
+  margin: 10px;
+  border: none;
+  border-radius: 10px;
+  color: white;
 
 }
 </style>

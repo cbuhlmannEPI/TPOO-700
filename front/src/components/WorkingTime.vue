@@ -1,20 +1,13 @@
-<script lang="ts" setup>
-</script>
 
 <template>
-  <!-- <div>
-    {{$route.params}}
-  </div> -->
-  <!-- <div>
-    Component: WorkingTime
-  </div> -->
   <div class="container">
 
     <!-- champs pour nom et prenom de l'user -->
 
-    <label>Start <input class="name" type="datetime" v-model="workingtime.start"></label>
+    <label>Start</label> <input class="name" type="datetime" v-model="workingtime.start">
 
-    <label>End <input class="email" type="datetime" v-model="workingtime.end"></label>
+    <label>End </label><input class="email" type="datetime" v-model="workingtime.end">
+
     <div class="buttons">
       <button @click="updatedWorkingtime" class="update">Modifier</button>
       <button @click="deleteWorkingtime" class="delete">Supprimer</button>
@@ -24,13 +17,13 @@
 <script>
 import axios from 'axios';
 import moment from 'moment';
-
 export default {
+
   data() {
     return {
       workingtime: {
         start: '',
-        end:'',
+        end: '',
         id: this.$route.params['id']
       },
     }
@@ -76,6 +69,23 @@ export default {
   }
 }
 </script>
-<style scoped>
+<style>
+.container {
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+}
 
+.container input {
+  font-size: 25px;
+}
+
+button.update {
+  margin-top: 30px;
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  background-color: orange;
+  color: white;
+}
 </style>

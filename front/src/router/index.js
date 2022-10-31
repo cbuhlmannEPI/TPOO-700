@@ -1,15 +1,14 @@
-import { createRouter, createWebHistory } from 'vue-router';
+import { createRouter, createWebHistory } from "vue-router";
 
-import  WorkingTimes  from "../components/WorkingTimes.vue";
-import  WorkingTime  from "../components/WorkingTime.vue";
-import  ChartManager  from "../components/ChartManager.vue";
-import  ClockManager  from "../components/ClockManager.vue";
-// import  User  from "../components/User.vue";
+import WorkingTimes from "../components/WorkingTimes.vue";
+import WorkingTime from "../components/WorkingTime.vue";
+import ChartManager from "../components/ChartManager.vue";
+import ClockManager from "../components/ClockManager.vue";
+import LoginView from "../views/LoginView.vue";
 
 const routes = [
-  
   // {
-  //   path: '/', 
+  //   path: '/',
   //   name: 'app',
   //   component: App
   // },
@@ -38,8 +37,7 @@ const routes = [
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
-  routes
-})
+  routes,
+});
 
-export default router
- 
+export default router;
