@@ -44,7 +44,7 @@ export default {
   },
   methods: {
     createWorkingtime() { //fonction créer un User
-      axios.post(`http://localhost:4000/api/workingtimes/`+this.$route.params['userI'], {
+      axios.post(`http://localhost:4000/api/workingtimes/`+this.$route.params['userID'], {
         workingtime: {
           start: this.workingtime.start,
           end: this.workingtime.end
@@ -65,22 +65,22 @@ export default {
   },
   created() {
     axios
-      .get(`http://localhost:4000/api/workingtimes/`+this.$route.params['userI'])
+      .get(`http://localhost:4000/api/workingtimes/`+this.$route.params['userID'])
       .then((response) => {
         this.workingtimes = response.data.data;
       })
       .catch((errors) => {
         console.log(errors)
       });
-    // axios
-    //   .get(`http://localhost:4000/api/users/` + this.user.id)
-    //   .then((response) => {
-    //     this.user.username = response.data.data.username;
-    //     this.user.email = response.data.data.email;
-    //   })
-    //   .catch((errors) => {
-    //     console.log(errors)
-    //   });
+    axios
+      .get(`http://localhost:4000/api/users/` + this.user.id)
+      .then((response) => {
+        this.user.username = response.data.data.username;
+        this.user.email = response.data.data.email;
+      })
+      .catch((errors) => {
+        console.log(errors)
+      });
   }
 }
 

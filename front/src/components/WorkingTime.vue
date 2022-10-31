@@ -65,7 +65,7 @@ export default {
   },
   created() {
     axios
-      .get(`http://localhost:4000/api/workingtimes/`+this.$route.params['userid']+'/'+this.$route.params['id'])
+      .get(`http://localhost:4000/api/workingtimes/`+this.$route.params['userID']+'/'+this.$route.params['id'])
       .then((response) => {
         this.workingtime.start = this.formatDate(response.data.data[0].start)
         this.workingtime.end = this.formatDate(response.data.data[0].end)

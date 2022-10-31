@@ -14,34 +14,25 @@ const routes = [
   //   component: App
   // },
   {
-    path: '/WorkingTimes/:userI', 
+    path: '/WorkingTimes/:userID', 
     name: 'workingTimesUser',
     component: WorkingTimes
   },
   {
-    path: '/workingTimes/:userid/:id', 
+    path: '/workingTimes/:userID/:id', 
     name: 'workingTimeUser',
     component: WorkingTime
   },
   {
-    path: '/clock/:username', 
-    name: 'clockUser',
-    component: ClockManager
+    path: '/clocks/:username', 
+    name: 'clocks',
+    component: ClockManager,
+    props: 'test'
   },
   {
-    path: '/workingTime/:userid/:workingtimeid', 
-    name: 'workingTimeTime',
-    component: WorkingTime
-  },
-  {
-    path: '/chartManager/:userid', 
-    name: 'clockUser',
+    path: '/chartManager/:userID', 
+    name: 'charts',
     component: ChartManager
-  },
-  {
-    path: '/WorkingTimes/:userI',
-    name: 'WorkingTimes',
-    component: WorkingTimes
   }
 ]
 
