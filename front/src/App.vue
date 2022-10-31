@@ -2,7 +2,7 @@
 <template>
   <User />
 
-  <TestComponent />
+  <!-- <TestComponent /> -->
 <RouterView/>
 </template>
 

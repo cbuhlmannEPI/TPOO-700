@@ -62,6 +62,7 @@ defmodule Api.Workingtimes do
   """
   def create_workingtime(userID, attrs) do
     %Workingtime{end: NaiveDateTime.from_iso8601!(attrs["end"]), start: NaiveDateTime.from_iso8601!(attrs["start"]), user_id: String.to_integer(userID)}
+     |> Repo.preload(:user)
      |> Repo.insert();
   end
 
@@ -80,6 +81,7 @@ defmodule Api.Workingtimes do
   def update_workingtime(%Workingtime{} = workingtime, attrs) do
     workingtime
     |> Workingtime.changeset(attrs)
+    |> Repo.preload(:user)
     |> Repo.update()
   end
 

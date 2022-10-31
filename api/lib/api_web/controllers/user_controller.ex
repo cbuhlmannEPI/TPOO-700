@@ -6,8 +6,8 @@ defmodule ApiWeb.UserController do
 
   action_fallback ApiWeb.FallbackController
 
-  def index(conn, _params) do
-    users = Users.list_users()
+  def index(conn, %{"email" => email, "username"=>username}) do
+    users = Users.list_users(email, username)
     render(conn, "index.json", users: users)
   end
 
