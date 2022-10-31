@@ -13,42 +13,27 @@ const routes = [
   //   component: App
   // },
   {
-    path: "/WorkingTimes/:userI",
-    name: "workingTimesUser",
-    component: WorkingTimes,
+    path: '/WorkingTimes/:userID', 
+    name: 'workingTimesUser',
+    component: WorkingTimes
   },
   {
-    path: "/workingTimes/:userid/:id",
-    name: "workingTimeUser",
-    component: WorkingTime,
+    path: '/workingTimes/:userID/:id', 
+    name: 'workingTimeUser',
+    component: WorkingTime
   },
   {
-    path: "/clock/:username",
-    name: "clockUser",
+    path: '/clocks/:username', 
+    name: 'clocks',
     component: ClockManager,
+    props: 'test'
   },
   {
-    path: "/workingTime/:userid/:workingtimeid",
-    name: "workingTimeTime",
-    component: WorkingTime,
-  },
-  {
-    path: "/chartManager/:userid",
-    name: "clockUser",
-    component: ChartManager,
-  },
-  {
-    path: "/WorkingTimes/:userI",
-    name: "WorkingTimes",
-    component: WorkingTimes,
-  },
-
-  {
-    path: "/login",
-    name: "Login",
-    component: LoginView,
-  },
-];
+    path: '/chartManager/:userID', 
+    name: 'charts',
+    component: ChartManager
+  }
+]
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
