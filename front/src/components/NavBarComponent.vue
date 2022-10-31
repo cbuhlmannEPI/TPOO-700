@@ -12,6 +12,7 @@
             </li>
         </ul>
         <div class="account">
+            <p>John Doe</p>
             <div class="img-account"></div>
 
         </div>
@@ -37,6 +38,12 @@ a {
     height: 100px;
     display: flex;
     justify-content: space-between;
+    align-items: center;
+}
+
+.account {
+    display: flex;
+    justify-content: center;
     align-items: center;
 }
 
