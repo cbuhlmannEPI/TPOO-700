@@ -1,0 +1,48 @@
+version: '3'
+
+services:
+
+  front:
+    build: front/
+    ports:
+      - "8080:80"
+    networks:
+      - frontend
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    restart: on-failure
+
+  # db:
+  #   image: "postgres"
+  #   volumes:
+  #     - db-data:/var/lib/postgresql/data
+  #     - ./schema.sql:/docker-entrypoint-initdb.d/schema.sql
+  #   environment:
+  #     - POSTGRES_DB=postgres
+  #     - POSTGRES_USER=postgres
+  #     - POSTGRES_PASSWORD=postgres
+  #   networks:
+  #     - result-tier
+  #     - back-tier
+  #   restart: on-failure
+
+  # back:
+  #   build: back/
+  #   ports:
+  #     - "4000:4000"
+  #   networks:
+  #     - backend
+  #   environment:
+  #     - POSTGRES_DB=postgres
+  #     - POSTGRES_USER=postgres
+  #     - POSTGRES_PASSWORD=postgres
+  #   restart: on-failure
+
+# volumes:
+#   db-data:
+
+networks:
+  frontend:
+  # backend:
