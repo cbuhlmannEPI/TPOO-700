@@ -81,7 +81,6 @@ defmodule Api.Workingtimes do
   def update_workingtime(%Workingtime{} = workingtime, attrs) do
     workingtime
     |> Workingtime.changeset(attrs)
-    |> Repo.preload(:user)
     |> Repo.update()
   end
 
