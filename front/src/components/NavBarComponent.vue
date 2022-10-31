@@ -1,13 +1,19 @@
 <template>
     <div class="navbar">
         <ul>
-            <li>Clocks</li>
-            <li>Working Times</li>
+            <a v-bind:href="'/'">
+                <i style="font-size:30px" class="fa fa-home"></i>
+            </a>
+            <a v-bind:href="'/clocks/test'">
+                <li>Clocks</li>
+            </a>
+            <li>
+                <a v-bind:href="'/WorkingTimes/10'"> Working Times</a>
+            </li>
         </ul>
-
         <div class="account">
-            <i class="fa-solid fa-gear"></i>
             <div class="img-account"></div>
+
         </div>
     </div>
 </template>
@@ -21,7 +27,7 @@ body {
 .navbar {
     margin: 0;
     width: 100%;
-    background-color: black;
+    background-color: rgb(72, 63, 198);
     color: white;
     height: 100px;
     display: flex;
