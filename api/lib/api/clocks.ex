@@ -56,6 +56,7 @@ defmodule Api.Clocks do
   """
   def create_clock(userID, attrs) do
     %Clock{time: NaiveDateTime.from_iso8601!(attrs["time"]), status: attrs["status"], user_id: String.to_integer(userID)}
+     |> Repo.preload(:user)
      |> Repo.insert();
   end
 
