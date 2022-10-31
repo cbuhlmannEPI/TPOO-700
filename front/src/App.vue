@@ -1,19 +1,22 @@
 <!-- eslint-disable no-unused-vars -->
 <template>
+  <NavBarComponent />
   <User />
-
   <!-- <TestComponent /> -->
-<RouterView/>
+  <RouterView />
 </template>
 
 <script>
 
+// import User from "../src/components/User.vue";
+import NavBarComponent from "./components/NavBarComponent.vue";
 import User from "../src/components/User.vue";
 
 export default {
   name: 'App',
   components: {
-    User
+    User,
+    NavBarComponent
   }
 }
 
