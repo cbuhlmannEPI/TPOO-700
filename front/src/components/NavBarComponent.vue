@@ -12,7 +12,7 @@
             </li>
         </ul>
         <div class="account">
-            <p>John Doe</p>
+            <p>{{username}}</p>
             <div class="img-account"></div>
 
         </div>
@@ -88,5 +88,3 @@ ul li {
     background-image: url('https://images.unsplash.com/photo-1603415526960-f7e0328c63b1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80');
 }
 </style>
-
-
