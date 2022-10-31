@@ -19,7 +19,7 @@
         <td>{{formatDate(workingtime.start)}}</td>
         <td>{{formatDate(workingtime.end)}}</td>
         <td>
-          <button class="seeDetails"> <a v-bind:href="'/workingTimes/' + $route.params['userI'] +'/'+workingtime.id "> Voir détails</a></button>
+          <button class="seeDetails"> <a v-bind:href="'/workingTimes/' + $route.params['userID'] +'/'+workingtime.id "> Voir détails</a></button>
         </td>
       </tr>
     </table>
@@ -68,15 +68,6 @@ export default {
       .get(`http://localhost:4000/api/workingtimes/`+this.$route.params['userID'])
       .then((response) => {
         this.workingtimes = response.data.data;
-      })
-      .catch((errors) => {
-        console.log(errors)
-      });
-    axios
-      .get(`http://localhost:4000/api/users/` + this.user.id)
-      .then((response) => {
-        this.user.username = response.data.data.username;
-        this.user.email = response.data.data.email;
       })
       .catch((errors) => {
         console.log(errors)

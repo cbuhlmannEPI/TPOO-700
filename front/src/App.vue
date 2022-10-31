@@ -2,7 +2,6 @@
 <template>
   <NavBarComponent />
   <User />
-  <!-- <TestComponent /> -->
   <RouterView />
 </template>
 
