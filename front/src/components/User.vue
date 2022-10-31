@@ -28,26 +28,6 @@
       </div>
     </div>
   </div>
-
-
-  <!-- <div class="userTable" v-if="show">
-    <table>
-      <tr>
-        <th>Username</th>
-        <th>Email</th>
-        <th></th>
-      </tr>
-      <tr>
-        <td> {{ user.username }}</td>
-        <td>{{ user.email }}</td>
-        <td><button class="userDetail"> <a v-bind:href="'/WorkingTimes/' + user.id"> Voir détails</a></button> <button
-            @click="getUserbyID" class="update">Modifier</button>
-          <button @click="deleteUser" class="delete">Supprimer</button>
-        </td>
-      </tr>
-    </table>
-  </div> -->
-
 </template>
 
 
@@ -56,6 +36,7 @@
 import axios from 'axios';
 
 export default {
+  name: 'UserComponent',
   data() {
     return {
       show: false,
@@ -157,6 +138,14 @@ select {
   border-radius: 10px;
 }
 
+button#search {
+  background-color: black;
+}
+
+button.search {
+  background-color: black;
+}
+
 button {
   border-radius: 10px;
   padding: 10px;
@@ -177,7 +166,7 @@ button:hover {
 .head {
   margin-bottom: 5px;
   display: flex;
-  justify-content: center;
+
   padding: 10px;
 }
 
@@ -233,10 +222,5 @@ td {
   display: flex;
   flex-direction: column;
   margin: 10px;
-}
-
-a {
-  text-decoration: none;
-  color: white;
 }
 </style>
