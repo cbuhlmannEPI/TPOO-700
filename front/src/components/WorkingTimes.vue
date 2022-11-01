@@ -5,12 +5,11 @@
   <!-- <div>{{ $route.params }}</div> -->
   <div class="inputs">
 
+    <label>Start</label> <input placeholder="2022/01/02" class="name" v-model="workingtime.start">
 
+    <label>End </label><input class="email" placeholder="2022/01/02" type="email" v-model="workingtime.end">
 
-    <label>Start</label> <input class="name" v-model="workingtime.start">
-
-    <label>End </label><input class="email" type="email" v-model="workingtime.end">
-    <button @click="createWorkingtime" class="create">Créer</button>
+    <div class="create"><button @click="createWorkingtime" class="create">Créer</button></div>
   </div>
   <div class="workTable">
     <table>
@@ -23,7 +22,9 @@
         <td>{{ formatDate(workingtime.start) }}</td>
         <td>{{ formatDate(workingtime.end) }}</td>
         <td>
-          <button class="seeDetails"> <a v-bind:href="'/workingTimes/' + $route.params['userID'] +'/'+workingtime.id "> Voir détails</a></button>
+          <button class="seeDetails"> <a
+              v-bind:href="'/workingTimes/' + $route.params['userID'] + '/' + workingtime.id">
+              Voir détails</a></button>
         </td>
       </tr>
     </table>
@@ -49,7 +50,7 @@ export default {
   },
   methods: {
     createWorkingtime() { //fonction créer un User
-      axios.post(`http://localhost:4000/api/workingtimes/`+this.$route.params['userID'], {
+      axios.post(`http://localhost:4000/api/workingtimes/` + this.$route.params['userID'], {
         workingtime: {
           start: this.workingtime.start,
           end: this.workingtime.end
@@ -70,7 +71,7 @@ export default {
   },
   created() {
     axios
-      .get(`http://localhost:4000/api/workingtimes/`+this.$route.params['userID'])
+      .get(`http://localhost:4000/api/workingtimes/` + this.$route.params['userID'])
       .then((response) => {
         this.workingtimes = response.data.data;
       })
@@ -87,11 +88,14 @@ export default {
   margin: 10px;
   display: flex;
   flex-direction: column;
+  width: 30%;
 
 }
 
 .inputs input {
-  font-size: 30px;
+  padding: 10px;
+  font-size: 20px;
+  border: solid 2px black;
 }
 
 .workTable {

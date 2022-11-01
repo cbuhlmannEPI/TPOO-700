@@ -36,12 +36,12 @@ export default {
           end: this.formatDate(this.workingtime.end)
         }
       })
-      .then((response) => {
-        console.log(response.data.data)
-      })
-      .catch(error => {
-        console.error('There was an error!', error);
-      });
+        .then((response) => {
+          console.log(response.data.data)
+        })
+        .catch(error => {
+          console.error('There was an error!', error);
+        });
     },
     deleteWorkingtime() { // sup un User
       axios.delete(`http://localhost:4000/api/workingtimes/` + this.workingtime.id)
@@ -58,7 +58,7 @@ export default {
   },
   created() {
     axios
-      .get(`http://localhost:4000/api/workingtimes/`+this.$route.params['userID']+'/'+this.$route.params['id'])
+      .get(`http://localhost:4000/api/workingtimes/` + this.$route.params['userID'] + '/' + this.$route.params['id'])
       .then((response) => {
         this.workingtime.start = this.formatDate(response.data.data[0].start)
         this.workingtime.end = this.formatDate(response.data.data[0].end)

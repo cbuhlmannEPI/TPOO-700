@@ -4,6 +4,7 @@ import WorkingTimes from "../components/WorkingTimes.vue";
 import WorkingTime from "../components/WorkingTime.vue";
 import ChartManager from "../components/ChartManager.vue";
 import ClockManager from "../components/ClockManager.vue";
+import LoginView from "../views/LoginView.vue";
 
 const routes = [
   // {
@@ -30,6 +31,11 @@ const routes = [
     path: "/chartManager/",
     name: "charts",
     component: ChartManager,
+  },
+  {
+    path: "/login/",
+    name: "login",
+    component: LoginView,
   },
 ];
 
