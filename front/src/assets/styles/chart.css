@@ -4,3 +4,14 @@
 h2 {
   text-align: center;
 }
+
+.card {
+  border-radius: 20px;
+  box-shadow: 1px 1px 8px 5px rgba(0, 0, 0, 0.37);
+}
+
+.chart {
+  display: flex;
+  justify-content: space-between;
+  margin: 30px 30px;
+}
