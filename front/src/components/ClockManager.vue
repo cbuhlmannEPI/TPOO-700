@@ -1,10 +1,12 @@
 <script lang="ts" setup></script>
 
 <template>
+  <div>
+    <button @click="refresh">
+      REFRESH
+    </button>
+  </div>
     <div class="inputs">
-
-
-
       <label>Time</label> <input class="name" v-model="clock.time">
 
       <label>Status </label><input class="email" type="email" v-model="clock.status">
@@ -15,10 +17,14 @@
       <tr>
         <th>time</th>
         <th>status</th>
+        <th></th>
       </tr>
-      <tr v-for="clock in clocks" :key="clock.id">
-        <td>{{ formatDate(clock.time) }}</td>
-        <td>{{ clock.status }}</td>
+      <tr v-for="(clk, idx) in clocks" :key="clk.id">
+        <td>{{ formatDate(clk.time) }}</td>
+        <td>{{ clk.status }}</td>
+        <td>
+          <button @click="clockIn(clk, idx)">active/inactive</button>
+        </td>
       </tr>
     </table>
   </div>
@@ -55,6 +61,23 @@ export default {
     },
     formatDate(value) {
       return moment(String(value)).format('YYYY-MM-DD hh:mm:ss')
+    },
+    refresh() {
+      window.location.reload()
+    },
+    clockIn(clk, idx){
+      axios.put(`http://localhost:4000/api/clocks/`+clk.id, {
+        clock: {
+          status: (clk.status) ? false : true
+        }
+      })
+        .then((response) => {
+          this.clocks[idx].status = response.data.data.status
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+
     }
   },
   created() {

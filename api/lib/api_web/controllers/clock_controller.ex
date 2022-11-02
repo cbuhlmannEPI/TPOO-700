@@ -16,4 +16,12 @@ defmodule ApiWeb.ClockController do
       render(conn, "show.json", clock: clock)
     end
   end
+
+    def update(conn, %{"id" => id, "clock" => clock_params}) do
+    clock = Clocks.get_clock!(id)
+
+    with {:ok, %Clock{} = clock} <- Clocks.update_clock(clock, clock_params) do
+      render(conn, "show.json", clock: clock)
+    end
+  end
 end
