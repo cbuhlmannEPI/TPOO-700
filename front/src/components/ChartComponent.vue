@@ -18,7 +18,8 @@
 import {
   defineComponent,
 } from 'vue'
-import axios from "axios";
+import moment from 'moment';
+import axios from 'axios';
 import { Pie, Line, Bar } from 'vue-chartjs'
 import {
   Chart as ChartJS,
@@ -74,51 +75,38 @@ export default defineComponent({
       default: () => []
     }
   }, data() {
-
     return {
-
       chartData: {
-
-        labels: ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi'],
-
+        labels: [],
         datasets: [
-
           {
-
             label: 'Working Time',
-
             backgroundColor: ['#1d3557', '#457b9d', '#a8dadc', '#f1faee', '#e63946'],
-
-            data: [6, 7, 6, 8, 9]
-
+            data: []
           }]
-
       },
-
       chartOptions: {
-
         responsive: false,
-
       },
-
-
-
     }
-
   },
-
-  // Pulls posts when the component is created.
+  methods: {
+    formatDate(value) {
+      return moment(String(value)).format('YYYY-MM-DD')
+    }
+  },
   created() {
     axios
-      .get(`http://localhost:4000/api/users`)
+      .get(`http://localhost:4000/api/workingtimes/`+sessionStorage['userID'])
       .then((response) => {
-        // JSON responses are automatically parsed.
-        this.posts = response.data;
-        console.log(response.data);
+        response.data.data.forEach(wtime => {
+          let start = this.formatDate(wtime.start);
+          // let end = this.formatDate(wtime.end)
+          this.chartData.labels.push(start)
+        });
       })
-      .catch((e) => {
-
-        this.errors.push(e);
+      .catch((errors) => {
+        console.log(errors)
       });
   }
 })

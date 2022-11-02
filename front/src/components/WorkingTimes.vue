@@ -18,12 +18,12 @@
         <th>End</th>
         <th></th>
       </tr>
-      <tr v-for="workingtime in workingtimes" :key="workingtime.id">
-        <td>{{ formatDate(workingtime.start) }}</td>
-        <td>{{ formatDate(workingtime.end) }}</td>
+      <tr v-for="wtime in workingtimes" :key="wtime.id">
+        <td>{{ formatDate(wtime.start) }}</td>
+        <td>{{ formatDate(wtime.end) }}</td>
         <td>
           <button class="seeDetails"> <a
-              v-bind:href="'/workingTimes/' + $route.params['userID'] + '/' + workingtime.id">
+              v-bind:href="'/workingTimes/' + $route.params['userID'] + '/' + wtime.id">
               Voir détails</a></button>
         </td>
       </tr>
@@ -33,7 +33,6 @@
 
 <script>
 import axios from 'axios';
-import moment from 'moment';
 
 
 export default {
@@ -66,7 +65,15 @@ export default {
         });
     },
     formatDate(value) {
-      return moment(String(value)).format('YYYY-MM-DD hh:mm:ss')
+      const dateObj = new Date(value);
+      let date = this.addZero(dateObj.getFullYear())+'-'+this.addZero(dateObj.getMonth())+'-'+this.addZero(dateObj.getDate())+' '+this.addZero(dateObj.getHours())+':'+this.addZero(dateObj.getMinutes())+':'+this.addZero(dateObj.getSeconds());
+      return date;
+    },
+    addZero(val){
+      if(String(val).length == 1){
+        return '0'+val;
+      }
+      return val;
     }
   },
   created() {
