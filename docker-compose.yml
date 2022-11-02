@@ -8,10 +8,6 @@ services:
       - "8080:80"
     networks:
       - frontend
-    environment:
-      - POSTGRES_DB=api
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
     restart: on-failure
 
   back:
