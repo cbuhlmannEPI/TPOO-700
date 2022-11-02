@@ -46,7 +46,7 @@ export default {
     deleteWorkingtime() { // sup un User
       axios.delete(`http://localhost:4000/api/workingtimes/` + this.workingtime.id)
         .then(() => {
-
+          window.location.replace('/workingtimes/'+this.$route.params['userID'])
         })
         .catch(error => {
           console.error('There was an error!', error);
