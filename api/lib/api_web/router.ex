@@ -29,6 +29,7 @@ defmodule ApiWeb.Router do
   scope "/api", ApiWeb do
     get "/clocks/:userID", ClockController, :index
     post "/clocks/:userID", ClockController, :create
+    put "/clocks/:id", ClockController, :update
   end
 
   scope "/api", ApiWeb do

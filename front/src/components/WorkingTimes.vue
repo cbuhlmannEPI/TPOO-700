@@ -1,13 +1,16 @@
 <script lang="ts" setup></script>
 
 <template>
-    <img width=200 src="../assets/logo-epitech.png" alt="">
+
   <!-- <div>{{ $route.params }}</div> -->
-  <label>Start <input class="name" v-model="workingtime.start"></label>
+  <div class="inputs">
 
-  <label>End <input class="email" type="email" v-model="workingtime.end"></label>
-  <button @click="createWorkingtime" class="create">Créer</button>
+    <label>Start</label> <input placeholder="2022/01/02" class="name" v-model="workingtime.start">
 
+    <label>End </label><input class="email" placeholder="2022/01/02" type="email" v-model="workingtime.end">
+
+    <div class="create"><button @click="createWorkingtime" class="create">Créer</button></div>
+  </div>
   <div class="workTable">
     <table>
       <tr>
@@ -15,11 +18,13 @@
         <th>End</th>
         <th></th>
       </tr>
-      <tr v-for="workingtime in workingtimes" :key="workingtime.id">
-        <td>{{formatDate(workingtime.start)}}</td>
-        <td>{{formatDate(workingtime.end)}}</td>
+      <tr v-for="wtime in workingtimes" :key="wtime.id">
+        <td>{{ formatDate(wtime.start) }}</td>
+        <td>{{ formatDate(wtime.end) }}</td>
         <td>
-          <button class="seeDetails"> <a v-bind:href="'/workingTimes/' + $route.params['userI'] +'/'+workingtime.id "> Voir détails</a></button>
+          <button class="seeDetails"> <a
+              v-bind:href="'/workingTimes/' + $route.params['userID'] + '/' + wtime.id">
+              Voir détails</a></button>
         </td>
       </tr>
     </table>
@@ -28,10 +33,10 @@
 
 <script>
 import axios from 'axios';
-import moment from 'moment';
 
 
 export default {
+
   data() {
     return {
       show: true,
@@ -44,7 +49,7 @@ export default {
   },
   methods: {
     createWorkingtime() { //fonction créer un User
-      axios.post(`http://localhost:4000/api/workingtimes/`+this.$route.params['userI'], {
+      axios.post(`http://localhost:4000/api/workingtimes/` + this.$route.params['userID'], {
         workingtime: {
           start: this.workingtime.start,
           end: this.workingtime.end
@@ -60,32 +65,46 @@ export default {
         });
     },
     formatDate(value) {
-      return moment(String(value)).format('YYYY-MM-DD hh:mm:ss')
+      const dateObj = new Date(value);
+      let date = this.addZero(dateObj.getFullYear())+'-'+this.addZero(dateObj.getMonth())+'-'+this.addZero(dateObj.getDate())+' '+this.addZero(dateObj.getHours())+':'+this.addZero(dateObj.getMinutes())+':'+this.addZero(dateObj.getSeconds());
+      return date;
+    },
+    addZero(val){
+      if(String(val).length == 1){
+        return '0'+val;
+      }
+      return val;
     }
   },
   created() {
     axios
-      .get(`http://localhost:4000/api/workingtimes/`+this.$route.params['userI'])
+      .get(`http://localhost:4000/api/workingtimes/` + this.$route.params['userID'])
       .then((response) => {
         this.workingtimes = response.data.data;
       })
       .catch((errors) => {
         console.log(errors)
       });
-    // axios
-    //   .get(`http://localhost:4000/api/users/` + this.user.id)
-    //   .then((response) => {
-    //     this.user.username = response.data.data.username;
-    //     this.user.email = response.data.data.email;
-    //   })
-    //   .catch((errors) => {
-    //     console.log(errors)
-    //   });
   }
 }
 
 </script>
 <style>
+.inputs {
+  padding: 10px;
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+  width: 30%;
+
+}
+
+.inputs input {
+  padding: 10px;
+  font-size: 20px;
+  border: solid 2px black;
+}
+
 .workTable {
   display: flex;
   flex-direction: column;
@@ -103,8 +122,27 @@ td {
   border: solid 1px black;
 }
 
+button.seeDetails {
+  border: none;
+  padding: 10px;
+  font-size: 15px;
+  border-radius: 10px;
+  color: white;
+}
+
 .seeDetails {
   background-color: rgb(44, 20, 182);
+
+}
+
+button.create {
+  padding: 10px;
+  background-color: green;
+
+  margin: 10px;
+  border: none;
+  border-radius: 10px;
+  color: white;
 
 }
 </style>

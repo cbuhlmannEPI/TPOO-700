@@ -28,26 +28,6 @@
       </div>
     </div>
   </div>
-
-
-  <!-- <div class="userTable" v-if="show">
-    <table>
-      <tr>
-        <th>Username</th>
-        <th>Email</th>
-        <th></th>
-      </tr>
-      <tr>
-        <td> {{ user.username }}</td>
-        <td>{{ user.email }}</td>
-        <td><button class="userDetail"> <a v-bind:href="'/WorkingTimes/' + user.id"> Voir détails</a></button> <button
-            @click="getUserbyID" class="update">Modifier</button>
-          <button @click="deleteUser" class="delete">Supprimer</button>
-        </td>
-      </tr>
-    </table>
-  </div> -->
-
 </template>
 
 
@@ -56,6 +36,7 @@
 import axios from 'axios';
 
 export default {
+  name: 'UserComponent',
   data() {
     return {
       show: false,
@@ -113,6 +94,8 @@ export default {
         .then((response) => {
           this.user.username = response.data.data.username;
           this.user.email = response.data.data.email;
+          sessionStorage.setItem("userID", response.data.data.id);
+          sessionStorage.setItem("username", response.data.data.username);
         })
         .catch((errors) => {
           console.log(errors)
@@ -125,6 +108,8 @@ export default {
           this.user.username = response.data.data[0].username;
           this.user.email = response.data.data[0].email;
           this.user.id = response.data.data[0].id;
+          sessionStorage.setItem("userID", response.data.data.id);
+          sessionStorage.setItem("username", response.data.data.username);
         })
         .catch((errors) => {
           console.log(errors)
@@ -153,6 +138,14 @@ select {
   border-radius: 10px;
 }
 
+button#search {
+  background-color: black;
+}
+
+button.search {
+  background-color: black;
+}
+
 button {
   border-radius: 10px;
   padding: 10px;
@@ -173,7 +166,7 @@ button:hover {
 .head {
   margin-bottom: 5px;
   display: flex;
-  justify-content: center;
+
   padding: 10px;
 }
 
@@ -229,10 +222,5 @@ td {
   display: flex;
   flex-direction: column;
   margin: 10px;
-}
-
-a {
-  text-decoration: none;
-  color: white;
 }
 </style>

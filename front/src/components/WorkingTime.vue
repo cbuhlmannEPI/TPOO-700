@@ -1,35 +1,28 @@
-<script lang="ts" setup>
-</script>
 
 <template>
-  <!-- <div>
-    {{$route.params}}
-  </div> -->
-  <!-- <div>
-    Component: WorkingTime
-  </div> -->
   <div class="container">
 
     <!-- champs pour nom et prenom de l'user -->
 
-    <label>Start <input class="name" type="datetime" v-model="workingtime.start"></label>
+    <label>Start</label> <input class="name" type="datetime" v-model="workingtime.start">
 
-    <label>End <input class="email" type="datetime" v-model="workingtime.end"></label>
+    <label>End </label><input class="email" type="datetime" v-model="workingtime.end">
+
     <div class="buttons">
       <button @click="updatedWorkingtime" class="update">Modifier</button>
-      <!-- <button @click="updateWorkingtimke" class="delete">Supprimer</button> -->
+      <button @click="deleteWorkingtime" class="delete">Supprimer</button>
     </div>
   </div>
 </template>
 <script>
 import axios from 'axios';
-
 export default {
+
   data() {
     return {
       workingtime: {
         start: '',
-        end:'',
+        end: '',
         id: this.$route.params['id']
       },
     }
@@ -38,36 +31,44 @@ export default {
     updatedWorkingtime() { //fonction mettre à jour un User
       axios.put(`http://localhost:4000/api/workingtimes/` + this.workingtime.id, {
         workingtime: {
-          start: this.workingtime.start,
-          end: this.workingtime.end
+          start: this.formatDate(this.workingtime.start),
+          end: this.formatDate(this.workingtime.end)
         }
       })
         .then((response) => {
-          // this.workingtime.start = '';
-          // this.workingtime.end = '';
           console.log(response.data.data)
         })
+        .catch(error => {
+          console.error('There was an error!', error);
+        });
     },
-    // deleteWorkingtime() { // sup un User
-    //   // var split = this.selected.split(" ");
-    //   axios.delete(`http://localhost:4000/api/users/` + id)
-    //     .then(() => {
-    //       // this.users.splice(index, 1);
-    //     })
-    //     .catch(error => {
-    //       console.error('There was an error!', error);
-    //     });
-    // },
-    // formatDate(value) {
-    //   return moment(String(value)).format('YYYY-MM-DD hh:mm:ss')
-    // }
+    deleteWorkingtime() { // sup un User
+      axios.delete(`http://localhost:4000/api/workingtimes/` + this.workingtime.id)
+        .then(() => {
+          window.location.replace('/workingtimes/'+this.$route.params['userID'])
+        })
+        .catch(error => {
+          console.error('There was an error!', error);
+        });
+    },
+    formatDate(value) {
+      const dateObj = new Date(value);
+      let date = this.addZero(dateObj.getFullYear())+'-'+this.addZero(dateObj.getMonth())+'-'+this.addZero(dateObj.getDate())+' '+this.addZero(dateObj.getHours())+':'+this.addZero(dateObj.getMinutes())+':'+this.addZero(dateObj.getSeconds());
+      return date;
+    },
+    addZero(val){
+      if(String(val).length == 1){
+        return '0'+val;
+      }
+      return val;
+    }
   },
   created() {
     axios
-      .get(`http://localhost:4000/api/workingtimes/`+this.$route.params['userid']+'/'+this.$route.params['id'])
+      .get(`http://localhost:4000/api/workingtimes/` + this.$route.params['userID'] + '/' + this.$route.params['id'])
       .then((response) => {
-        this.workingtime.start = response.data.data[0].start
-        this.workingtime.end = response.data.data[0].end
+        this.workingtime.start = this.formatDate(response.data.data[0].start)
+        this.workingtime.end = this.formatDate(response.data.data[0].end)
       })
       .catch((errors) => {
         console.log(errors)
@@ -75,6 +76,23 @@ export default {
   }
 }
 </script>
-<style scoped>
+<style>
+.container {
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+}
 
+.container input {
+  font-size: 25px;
+}
+
+button.update {
+  margin-top: 30px;
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  background-color: orange;
+  color: white;
+}
 </style>

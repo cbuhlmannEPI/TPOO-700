@@ -1,11 +1,10 @@
 <template>
   <div>
-    Component: ChartManager
-    <ChartComponenent/>
+    <ChartComponenent />
   </div>
 </template>
 <script>
-  import ChartComponenent from "../components/ChartComponent.vue";
+import ChartComponenent from "../components/ChartComponent.vue";
 export default {
 
   name: 'ChartManager',
@@ -14,4 +13,6 @@ export default {
   }
 }
 </script>
-<style scoped></style>
+<style scoped>
+
+</style>
