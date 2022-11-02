@@ -12,4 +12,4 @@ WORKDIR /app
 # Expose port 4000
 EXPOSE 4000
 # Execute commands mentioned under run.sh file
-CMD ["./run.sh"]
+CMD bash run.sh
