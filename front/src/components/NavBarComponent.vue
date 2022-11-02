@@ -11,7 +11,7 @@
                 <a v-bind:href="'/WorkingTimes/' + userID"> Working Times</a>
             </li>
             <li>
-                <a v-bind:href="'/chartManager/'">Charts</a>
+                <a v-bind:href="'/chartManager/'+ userID">Charts</a>
 
             </li>
         </ul>
