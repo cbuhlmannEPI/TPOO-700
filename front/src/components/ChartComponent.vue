@@ -2,12 +2,18 @@
 <template>
   <h2>CHART</h2>
   <div class="chart">
-    <Pie :chart-options="chartOptions" :chart-data="chartData" :chart-id="chartId" :dataset-id-key="datasetIdKey"
-      :plugins="plugins" :css-classes="cssClasses" :styles="styles" :width="width" :height="height"></Pie>
-    <Line :chart-options="chartOptions" :chart-data="chartData" :chart-id="chartId" :dataset-id-key="datasetIdKey"
-      :plugins="plugins" :css-classes="cssClasses" :styles="styles" :width="width" :height="height"></Line>
-    <Bar :chart-options="chartOptions" :chart-data="chartData" :chart-id="chartId" :dataset-id-key="datasetIdKey"
-      :plugins="plugins" :css-classes="cssClasses" :styles="styles" :width="width" :height="height"></bar>
+    <div class="card">
+      <Pie :chart-options="chartOptions" :chart-data="chartData" :chart-id="chartId" :dataset-id-key="datasetIdKey"
+        :plugins="plugins" :css-classes="cssClasses" :styles="styles" :width="width" :height="height"></Pie>
+    </div>
+    <div class="card">
+      <Line :chart-options="chartOptions" :chart-data="chartData" :chart-id="chartId" :dataset-id-key="datasetIdKey"
+        :plugins="plugins" :css-classes="cssClasses" :styles="styles" :width="width" :height="height"></Line>
+    </div>
+    <div class="card">
+      <Bar :chart-options="chartOptions" :chart-data="chartData" :chart-id="chartId" :dataset-id-key="datasetIdKey"
+        :plugins="plugins" :css-classes="cssClasses" :styles="styles" :width="width" :height="height"></bar>
+    </div>
   </div>
 </template>
 
@@ -57,11 +63,11 @@ export default defineComponent({
     },
     width: {
       type: Number,
-      default: 450
+      default: 290
     },
     height: {
       type: Number,
-      default: 400
+      default: 290
     },
     cssClasses: {
       default: '',
