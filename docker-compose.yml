@@ -9,40 +9,44 @@ services:
     networks:
       - frontend
     environment:
-      - POSTGRES_DB=postgres
+      - POSTGRES_DB=api
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
     restart: on-failure
 
-  # db:
-  #   image: "postgres"
-  #   volumes:
-  #     - db-data:/var/lib/postgresql/data
-  #     - ./schema.sql:/docker-entrypoint-initdb.d/schema.sql
-  #   environment:
-  #     - POSTGRES_DB=postgres
-  #     - POSTGRES_USER=postgres
-  #     - POSTGRES_PASSWORD=postgres
-  #   networks:
-  #     - result-tier
-  #     - back-tier
-  #   restart: on-failure
-
-  # back:
-  #   build: back/
-  #   ports:
-  #     - "4000:4000"
-  #   networks:
-  #     - backend
-  #   environment:
-  #     - POSTGRES_DB=postgres
-  #     - POSTGRES_USER=postgres
-  #     - POSTGRES_PASSWORD=postgres
-  #   restart: on-failure
+  back:
+    build: api/
+    ports:
+      - "4000:4000"
+    networks:
+      - backend
+    environment:
+      - POSTGRES_DB=api
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    depends_on:
+         # The DB container needs to be started before we start this container.
+         - db
+  db:
+      # We use the predefined Postgres image.
+      image: postgres:latest
+      environment:
+         # Set user/password for Postgres.
+         POSTGRES_USER: postgres
+         POSTGRES_PASSWORD: postgres
+         # Set a path where Postgres should store the data.
+         PGDATA: /var/lib/postgresql/data/pgdata
+      restart: always
+      volumes:
+         - pgdata:/var/lib/postgresql/data
+# Define the volumes.
+volumes:
+   pgdata:
+    
 
 # volumes:
 #   db-data:
 
 networks:
   frontend:
-  # backend:
+  backend:
