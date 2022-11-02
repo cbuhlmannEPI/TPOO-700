@@ -13,10 +13,10 @@
     <button @click="createClock" class="create">Créer</button>
   </div> -->
   <div>
-    <button @click="clockStart">
+    <button v-if="!start" @click="clockStart">
       START
     </button>
-    <button @click="clockEnd">
+    <button v-else @click="clockEnd">
       END
     </button>
   </div>
@@ -44,7 +44,7 @@ import axios from 'axios';
 export default {
   data() {
     return {
-      start : '',
+      start : sessionStorage['start'],
       clock: {
         // time: '',
         // status:'',
@@ -71,6 +71,7 @@ export default {
       const dateObj = new Date();
       let currentDate = this.addZero(dateObj.getFullYear())+'-'+this.addZero(dateObj.getMonth())+'-'+this.addZero(dateObj.getDate())+' '+this.addZero(dateObj.getHours())+':'+this.addZero(dateObj.getMinutes())+':'+this.addZero(dateObj.getSeconds());
       sessionStorage.setItem("start", currentDate);
+      this.start = currentDate;
       this.createClock(currentDate);
     },
     clockEnd(){
@@ -84,7 +85,8 @@ export default {
         }
       })
         .then(() => {
-          console.log('coucou')
+          sessionStorage.removeItem('start');
+          this.start = null;
         })
         .catch(function (error) {
           console.log(error);
