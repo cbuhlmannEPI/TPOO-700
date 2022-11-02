@@ -40,14 +40,14 @@ export default {
   },
   methods: {
     createClock() {
-      axios.post(`http://localhost:4000/api/clocks/`+this.$route.params['userID'], {
-        workingtime: {
+      axios.post(`http://localhost:4000/api/clocks/`+sessionStorage['userID'], {
+        clock: {
           time: this.clock.time,
-          status: this.clock.status
+          status: (this.clock.status === "true") 
         }
       })
         .then((response) => {
-          this.clock.push(response.data.data)
+          this.clocks.push(response.data.data)
         })
         .catch(function (error) {
           console.log(error);
