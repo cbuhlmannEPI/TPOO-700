@@ -14,18 +14,21 @@
                         <div v-if="!registerActive" class="card login" v-bind:class="{ error: emptyFields }">
                             <h1>Se connecter</h1>
                             <!-- <form class="form-group"> -->
+                            <div class="form-group">
                                 <input v-model="emailLogin" type="email" class="form-control" placeholder="Email"
                                     required>
                                 <input v-model="passwordLogin" type="password" class="form-control"
                                     placeholder="Password" required>
-                                <button class="btn btn-primary" @click="getUserbyUsernameAndEmail">Envoyer</button>
+                                <button class="btn btn-primary mb-3 mt-3"
+                                    @click="getUserbyUsernameAndEmail">Envoyer</button>
                                 <p>Pas de compte? <a href="#"
                                         @click="registerActive = !registerActive, emptyFields = false"
                                         style="color:black">S'inscrire
                                         ici</a>
                                 </p>
                                 <p><a href="#">Mot de passe oublié ?</a></p>
-                            <!-- </form> -->
+                                <!-- </form> -->
+                            </div>
                         </div>
 
                         <div v-else class="card register" v-bind:class="{ error: emptyFields }">
@@ -39,7 +42,6 @@
                                     placeholder="Confirm Password" required>
                                 <input type="submit" class="btn btn-primary" @click="doRegister">
                                 <p>Already have an account? <a style="color:black" href="#"
-
                                         @click="registerActive = !registerActive, emptyFields = false">Sign in here</a>
                                 </p>
                             </form>
@@ -53,6 +55,7 @@
     </div>
 </template>
 <script>
+
 import axios from 'axios';
 
 export default {
@@ -95,7 +98,7 @@ export default {
                 .catch((errors) => {
                     console.log(errors)
                 });
-            },
+        },
     }
 }
 </script>
