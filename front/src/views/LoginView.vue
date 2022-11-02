@@ -20,7 +20,8 @@
                                     placeholder="Password" required>
                                 <button class="btn btn-primary" @click="getUserbyUsernameAndEmail">Envoyer</button>
                                 <p>Pas de compte? <a href="#"
-                                        @click="registerActive = !registerActive, emptyFields = false">S'inscrire
+                                        @click="registerActive = !registerActive, emptyFields = false"
+                                        style="color:black">S'inscrire
                                         ici</a>
                                 </p>
                                 <p><a href="#">Mot de passe oublié ?</a></p>
@@ -36,8 +37,9 @@
                                     required>
                                 <input v-model="confirmReg" type="password" class="form-control"
                                     placeholder="Confirm Password" required>
-                                <input type="submit" class="btn btn-primary" @click="getUserbyUsernameAndEmail">
-                                <p>Already have an account? <a href="#"
+                                <input type="submit" class="btn btn-primary" @click="doRegister">
+                                <p>Already have an account? <a style="color:black" href="#"
+
                                         @click="registerActive = !registerActive, emptyFields = false">Sign in here</a>
                                 </p>
                             </form>
