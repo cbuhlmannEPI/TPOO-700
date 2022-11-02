@@ -16,7 +16,6 @@
 </template>
 <script>
 import axios from 'axios';
-import moment from 'moment';
 export default {
 
   data() {
@@ -53,7 +52,15 @@ export default {
         });
     },
     formatDate(value) {
-      return moment(String(value)).format('YYYY-MM-DD hh:mm:ss')
+      const dateObj = new Date(value);
+      let date = this.addZero(dateObj.getFullYear())+'-'+this.addZero(dateObj.getMonth())+'-'+this.addZero(dateObj.getDate())+' '+this.addZero(dateObj.getHours())+':'+this.addZero(dateObj.getMinutes())+':'+this.addZero(dateObj.getSeconds());
+      return date;
+    },
+    addZero(val){
+      if(String(val).length == 1){
+        return '0'+val;
+      }
+      return val;
     }
   },
   created() {

@@ -6,13 +6,21 @@
       REFRESH
     </button>
   </div>
-    <div class="inputs">
-      <label>Time</label> <input class="name" v-model="clock.time">
+  <!-- <div class="inputs">
+    <label>Time</label> <input class="name" v-model="clock.time">
 
-      <label>Status </label><input class="email" type="email" v-model="clock.status">
+    <label>Status </label><input class="email" type="email" v-model="clock.status">
     <button @click="createClock" class="create">Créer</button>
-</div>
-  <div class="workTable">
+  </div> -->
+  <div>
+    <button @click="clockStart">
+      START
+    </button>
+    <button @click="clockEnd">
+      END
+    </button>
+  </div>
+  <!-- <div class="workTable">
     <table>
       <tr>
         <th>time</th>
@@ -27,58 +35,70 @@
         </td>
       </tr>
     </table>
-  </div>
+  </div> -->
 </template>
 <script>
 import axios from 'axios';
-import moment from 'moment';
+// import moment from 'moment';
 
 export default {
   data() {
     return {
-      clocks:[],
+      start : '',
       clock: {
-        time: '',
-        status:'',
+        // time: '',
+        // status:'',
         username: this.$route.params['username']
       },
     }
   },
   methods: {
-    createClock() {
+    createClock(dateStart) {
       axios.post(`http://localhost:4000/api/clocks/`+sessionStorage['userID'], {
         clock: {
-          time: this.clock.time,
-          status: (this.clock.status === "true") 
+          time: dateStart,
+          status: true
         }
       })
         .then((response) => {
-          this.clocks.push(response.data.data)
+          console.log(response);
         })
         .catch(function (error) {
           console.log(error);
         });
     },
-    formatDate(value) {
-      return moment(String(value)).format('YYYY-MM-DD hh:mm:ss')
+    clockStart(){
+      const dateObj = new Date();
+      let currentDate = this.addZero(dateObj.getFullYear())+'-'+this.addZero(dateObj.getMonth())+'-'+this.addZero(dateObj.getDate())+' '+this.addZero(dateObj.getHours())+':'+this.addZero(dateObj.getMinutes())+':'+this.addZero(dateObj.getSeconds());
+      sessionStorage.setItem("start", currentDate);
+      this.createClock(currentDate);
+    },
+    clockEnd(){
+      const dateObj = new Date();
+      let currentDate = this.addZero(dateObj.getFullYear())+'-'+this.addZero(dateObj.getMonth())+'-'+this.addZero(dateObj.getDate())+' '+this.addZero(dateObj.getHours())+':'+this.addZero(dateObj.getMinutes())+':'+this.addZero(dateObj.getSeconds());
+
+      axios.post(`http://localhost:4000/api/workingtimes/` +sessionStorage['userID'], {
+        workingtime: {
+          start: String(sessionStorage['start']),
+          end: String(currentDate)
+        }
+      })
+        .then(() => {
+          console.log('coucou')
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
+    addZero(val){
+      if(String(val).length == 1){
+        return '0'+val;
+      }
+      return val;
     },
     refresh() {
       window.location.reload()
     },
-    clockIn(clk, idx){
-      axios.put(`http://localhost:4000/api/clocks/`+clk.id, {
-        clock: {
-          status: (clk.status) ? false : true
-        }
-      })
-        .then((response) => {
-          this.clocks[idx].status = response.data.data.status
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-
-    }
   },
   created() {
     axios
