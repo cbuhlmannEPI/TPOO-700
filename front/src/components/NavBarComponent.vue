@@ -16,7 +16,7 @@
             </li>
         </ul>
         <div class="account">
-            <p>{{username}}</p>
+            <p>{{ username }}</p>
             <div class="img-account"></div>
 
         </div>
@@ -46,6 +46,11 @@ body {
 }
 
 a {
+    text-decoration: none;
+    color: white;
+}
+
+a:hover {
     text-decoration: none;
     color: white;
 }
