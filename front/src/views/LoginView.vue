@@ -13,18 +13,18 @@
                     <div class="col-lg-6 mx-auto">
                         <div v-if="!registerActive" class="card login" v-bind:class="{ error: emptyFields }">
                             <h1>Se connecter</h1>
-                            <form class="form-group">
+                            <!-- <form class="form-group"> -->
                                 <input v-model="emailLogin" type="email" class="form-control" placeholder="Email"
                                     required>
                                 <input v-model="passwordLogin" type="password" class="form-control"
                                     placeholder="Password" required>
-                                <input type="submit" class="btn btn-primary" @click="doLogin">
+                                <button class="btn btn-primary" @click="getUserbyUsernameAndEmail">Envoyer</button>
                                 <p>Pas de compte? <a href="#"
                                         @click="registerActive = !registerActive, emptyFields = false">S'inscrire
                                         ici</a>
                                 </p>
                                 <p><a href="#">Mot de passe oublié ?</a></p>
-                            </form>
+                            <!-- </form> -->
                         </div>
 
                         <div v-else class="card register" v-bind:class="{ error: emptyFields }">
@@ -36,7 +36,7 @@
                                     required>
                                 <input v-model="confirmReg" type="password" class="form-control"
                                     placeholder="Confirm Password" required>
-                                <input type="submit" class="btn btn-primary" @click="doRegister">
+                                <input type="submit" class="btn btn-primary" @click="getUserbyUsernameAndEmail">
                                 <p>Already have an account? <a href="#"
                                         @click="registerActive = !registerActive, emptyFields = false">Sign in here</a>
                                 </p>
@@ -51,6 +51,8 @@
     </div>
 </template>
 <script>
+import axios from 'axios';
+
 export default {
     data() {
         return {
@@ -79,7 +81,19 @@ export default {
             } else {
                 alert("You are now registered");
             }
-        }
+        },
+        getUserbyUsernameAndEmail() {
+            axios
+                .get(`http://localhost:4000/api/users?email=` + this.emailLogin + '&username=' + this.passwordLogin)
+                .then((response) => {
+                    sessionStorage.setItem("userID", response.data.data[0].id);
+                    sessionStorage.setItem("username", response.data.data[0].username);
+                    window.location.replace('/')
+                })
+                .catch((errors) => {
+                    console.log(errors)
+                });
+            },
     }
 }
 </script>
