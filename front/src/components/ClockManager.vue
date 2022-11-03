@@ -19,6 +19,9 @@
     <button v-else @click="clockEnd">
       END
     </button>
+    <div v-if="secondes">
+      {{heures+':'+minutes+':'+secondes}}
+    </div>
   </div>
   <!-- <div class="workTable">
     <table>
@@ -44,6 +47,9 @@ import axios from 'axios';
 export default {
   data() {
     return {
+      secondes: '00',
+      minutes: '00',
+      heures: '00',
       start : sessionStorage['start'],
       clock: {
         // time: '',
@@ -69,14 +75,14 @@ export default {
     },
     clockStart(){
       const dateObj = new Date();
-      let currentDate = this.addZero(dateObj.getFullYear())+'-'+this.addZero(dateObj.getMonth())+'-'+this.addZero(dateObj.getDate())+' '+this.addZero(dateObj.getHours())+':'+this.addZero(dateObj.getMinutes())+':'+this.addZero(dateObj.getSeconds());
+      let currentDate = this.addZero(dateObj.getFullYear())+'-'+this.addZero(dateObj.getMonth()+1)+'-'+this.addZero(dateObj.getDate())+' '+this.addZero(dateObj.getHours())+':'+this.addZero(dateObj.getMinutes())+':'+this.addZero(dateObj.getSeconds());
       sessionStorage.setItem("start", currentDate);
       this.start = currentDate;
       this.createClock(currentDate);
     },
     clockEnd(){
       const dateObj = new Date();
-      let currentDate = this.addZero(dateObj.getFullYear())+'-'+this.addZero(dateObj.getMonth())+'-'+this.addZero(dateObj.getDate())+' '+this.addZero(dateObj.getHours())+':'+this.addZero(dateObj.getMinutes())+':'+this.addZero(dateObj.getSeconds());
+      let currentDate = this.addZero(dateObj.getFullYear())+'-'+this.addZero(dateObj.getMonth()+1)+'-'+this.addZero(dateObj.getDate())+' '+this.addZero(dateObj.getHours())+':'+this.addZero(dateObj.getMinutes())+':'+this.addZero(dateObj.getSeconds());
 
       axios.post(`http://localhost:4000/api/workingtimes/` +sessionStorage['userID'], {
         workingtime: {
@@ -87,6 +93,9 @@ export default {
         .then(() => {
           sessionStorage.removeItem('start');
           this.start = null;
+          this.heures = "00";
+          this.minutes = "00";
+          this.secondes = "00";
         })
         .catch(function (error) {
           console.log(error);
@@ -99,18 +108,22 @@ export default {
       return val;
     },
     refresh() {
-      window.location.reload()
+      if(sessionStorage['start']){
+        let date1 = new Date(sessionStorage['start']);
+        let date2 = new Date();
+
+        let totalSeconds = Math.round(Math.abs(date2 - date1) / 1000);
+        let seconds = Math.floor(totalSeconds % 60);
+        let minutes = Math.floor((totalSeconds % 3600) / 60);
+        let hours = Math.floor((totalSeconds % (3600 * 24)) / 3600);
+        this.secondes = this.addZero(seconds);
+        this.minutes = this.addZero(minutes);
+        this.heures = this.addZero(hours);
+      }
     },
   },
   created() {
-    axios
-      .get(`http://localhost:4000/api/clocks/`+sessionStorage['userID'])
-      .then((response) => {
-        this.clocks = response.data.data;
-      })
-      .catch((errors) => {
-        console.log(errors)
-      });
+    this.refresh();
   }
 }
 </script>

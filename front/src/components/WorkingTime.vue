@@ -53,7 +53,7 @@ export default {
     },
     formatDate(value) {
       const dateObj = new Date(value);
-      let date = this.addZero(dateObj.getFullYear())+'-'+this.addZero(dateObj.getMonth())+'-'+this.addZero(dateObj.getDate())+' '+this.addZero(dateObj.getHours())+':'+this.addZero(dateObj.getMinutes())+':'+this.addZero(dateObj.getSeconds());
+      let date = this.addZero(dateObj.getFullYear())+'-'+this.addZero(dateObj.getMonth()+1)+'-'+this.addZero(dateObj.getDate())+' '+this.addZero(dateObj.getHours())+':'+this.addZero(dateObj.getMinutes())+':'+this.addZero(dateObj.getSeconds());
       return date;
     },
     addZero(val){
