@@ -1,33 +1,33 @@
 <script lang="ts" setup></script>
 
 <template>
+  <div class="fond">
+    <!-- <div>{{ $route.params }}</div> -->
+    <div class="inputs">
 
-  <!-- <div>{{ $route.params }}</div> -->
-  <div class="inputs">
+      <label>Start</label> <input placeholder="2022-01-02 12:00:00" class="name" v-model="workingtime.start">
 
-    <label>Start</label> <input placeholder="2022-01-02 12:00:00" class="name" v-model="workingtime.start">
+      <label>End </label><input class="email" placeholder="2022-01-02 14:00:00" type="email" v-model="workingtime.end">
 
-    <label>End </label><input class="email" placeholder="2022-01-02 14:00:00" type="email" v-model="workingtime.end">
-
-    <div class="create"><button @click="createWorkingtime" class="create">Créer</button></div>
-  </div>
-  <div class="workTable">
-    <table>
-      <tr>
-        <th>Start</th>
-        <th>End</th>
-        <th></th>
-      </tr>
-      <tr v-for="wtime in workingtimes" :key="wtime.id">
-        <td>{{ formatDate(wtime.start) }}</td>
-        <td>{{ formatDate(wtime.end) }}</td>
-        <td>
-          <button class="seeDetails"> <a
-              v-bind:href="'/workingTimes/' + $route.params['userID'] + '/' + wtime.id">
-              Voir détails</a></button>
-        </td>
-      </tr>
-    </table>
+      <div class="create"><button @click="createWorkingtime" class="create">Créer</button></div>
+    </div>
+    <div class="workTable">
+      <table>
+        <tr>
+          <th>Start</th>
+          <th>End</th>
+          <th></th>
+        </tr>
+        <tr v-for="wtime in workingtimes" :key="wtime.id">
+          <td>{{ formatDate(wtime.start) }}</td>
+          <td>{{ formatDate(wtime.end) }}</td>
+          <td>
+            <button class="seeDetails"> <a v-bind:href="'/workingTimes/' + $route.params['userID'] + '/' + wtime.id">
+                Voir détails</a></button>
+          </td>
+        </tr>
+      </table>
+    </div>
   </div>
 </template>
 
@@ -66,12 +66,12 @@ export default {
     },
     formatDate(value) {
       const dateObj = new Date(value);
-      let date = this.addZero(dateObj.getFullYear())+'-'+this.addZero(dateObj.getMonth()+1)+'-'+this.addZero(dateObj.getDate())+' '+this.addZero(dateObj.getHours())+':'+this.addZero(dateObj.getMinutes())+':'+this.addZero(dateObj.getSeconds());
+      let date = this.addZero(dateObj.getFullYear()) + '-' + this.addZero(dateObj.getMonth() + 1) + '-' + this.addZero(dateObj.getDate()) + ' ' + this.addZero(dateObj.getHours()) + ':' + this.addZero(dateObj.getMinutes()) + ':' + this.addZero(dateObj.getSeconds());
       return date;
     },
-    addZero(val){
-      if(String(val).length == 1){
-        return '0'+val;
+    addZero(val) {
+      if (String(val).length == 1) {
+        return '0' + val;
       }
       return val;
     }
@@ -96,8 +96,7 @@ export default {
 </script>
 <style>
 .inputs {
-  padding: 10px;
-  margin: 10px;
+  margin: 0px 40px;
   display: flex;
   flex-direction: column;
   width: 30%;
@@ -106,6 +105,7 @@ export default {
 
 .inputs input {
   padding: 10px;
+  background: transparent;
   font-size: 20px;
   border: solid 2px black;
 }
@@ -119,6 +119,7 @@ export default {
 table {
   border: solid 1px black;
   border-collapse: collapse;
+  margin: 20px 40px;
 }
 
 td {
@@ -143,8 +144,7 @@ button.seeDetails {
 button.create {
   padding: 10px;
   background-color: green;
-
-  margin: 10px;
+  margin-top: 10px;
   border: none;
   border-radius: 10px;
   color: white;

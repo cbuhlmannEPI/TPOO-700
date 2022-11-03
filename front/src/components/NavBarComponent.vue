@@ -1,5 +1,6 @@
 <template>
     <div class="navbar">
+        <div class="logo-navbar"></div>
         <ul>
             <a v-bind:href="'/'">
                 <i style="font-size:30px" class="fa fa-home"></i>
@@ -11,7 +12,7 @@
                 <a v-bind:href="'/WorkingTimes/' + userID"> Working Times</a>
             </li>
             <li>
-                <a v-bind:href="'/chartManager/'+ userID">Charts</a>
+                <a v-bind:href="'/chartManager/' + userID">Charts</a>
 
             </li>
         </ul>
@@ -59,11 +60,11 @@ a:hover {
 }
 
 .navbar {
+    padding: 0;
     margin: 0;
     width: 100%;
-    background-color: rgb(72, 63, 198);
     color: white;
-    height: 100px;
+    height: auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -98,5 +99,24 @@ ul li {
     background-repeat: no-repeat;
     background-size: cover;
     background-image: url('https://images.unsplash.com/photo-1603415526960-f7e0328c63b1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80');
+}
+
+.logo-navbar {
+    background-image: url(../assets/check-time.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 90px;
+    width: 120px;
+    float: left;
+
+}
+
+body {
+    background: linear-gradient(11deg, rgba(255, 255, 255, 1) 1%, rgba(252, 176, 69, 1) 100%);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    min-height: 100vh;
 }
 </style>
