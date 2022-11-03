@@ -38,6 +38,7 @@ defmodule ApiWeb.Router do
     put "/workingtimes/:id", WorkingtimeController, :update
     delete "/workingtimes/:id", WorkingtimeController, :delete
     post "/workingtimes/:userID", WorkingtimeController, :create
+    get "/allworkingtimes/:userID", WorkingtimeController, :list
   end
 
   # Other scopes may use custom stacks.

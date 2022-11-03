@@ -53,11 +53,10 @@ import Cookies from 'js-cookie'
 export default {
   data() {
     return {
-
       secondes: '00',
       minutes: '00',
       heures: '00',
-      start: Cookies.get('start'),
+      start: (Cookies.get('start')) ? Cookies.get('start') : null,
       clock: {
         // time: '',
         // status:'',
@@ -67,7 +66,7 @@ export default {
   },
   methods: {
     createClock(dateStart) {
-      axios.post(`http://localhost:4000/api/clocks/` + Cookies.get('name'), {
+      axios.post(`http://localhost:4000/api/clocks/` + Cookies.get('userID'), {
         clock: {
           time: dateStart,
           status: true

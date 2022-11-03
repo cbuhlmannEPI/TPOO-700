@@ -11,6 +11,11 @@ defmodule ApiWeb.WorkingtimeController do
     render(conn, "index.json", workingtimes: workingtimes)
   end
 
+  def list(conn, %{"userID" => userID}) do
+    workingtimes = Workingtimes.list_all_workingtimes!(userID)
+    render(conn, "index.json", workingtimes: workingtimes)
+  end
+
   def create(conn, %{"userID"=>userID, "workingtime" => workingtime_params}) do
     with {:ok, %Workingtime{} = workingtime} <- Workingtimes.create_workingtime(userID, workingtime_params) do
       render(conn, "show.json", workingtime: workingtime)
