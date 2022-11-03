@@ -126,7 +126,7 @@ export default defineComponent({
           let dateStart = new Date(wtime.start);
           let dateEnd = new Date(wtime.end);
           let totalSeconds = Math.round(Math.abs(dateEnd - dateStart) / 1000);
-          secondes.push(totalSeconds);
+          secondes.push(totalSeconds/3600);
           i = i + 1;
         });
         this.chartData.datasets[0].data = secondes;
