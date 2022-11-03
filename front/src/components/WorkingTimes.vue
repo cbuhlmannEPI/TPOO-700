@@ -44,7 +44,7 @@ export default {
       workingtime: {
         start: '',
         end: ''
-      }
+      },
     }
   },
   methods: {

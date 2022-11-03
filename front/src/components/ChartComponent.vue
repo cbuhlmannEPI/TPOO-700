@@ -93,6 +93,7 @@ export default defineComponent({
       chartOptions: {
         responsive: false,
       },
+      days: ['Samedi', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi']
     }
   },
   methods: {
@@ -121,8 +122,8 @@ export default defineComponent({
             return false;
           }
           const dateObj = new Date(wtime.start);
-          let date = this.addZero(dateObj.getFullYear()) + '-' + this.addZero(dateObj.getMonth() + 1) + '-' + this.addZero(dateObj.getDate());
-          this.chartData.labels.push(date)
+          // let date = this.addZero(dateObj.getFullYear()) + '-' + this.addZero(dateObj.getMonth() + 1) + '-' + this.addZero(dateObj.getDate());
+          this.chartData.labels.push(this.days[dateObj.getDay()]);
           let dateStart = new Date(wtime.start);
           let dateEnd = new Date(wtime.end);
           let totalSeconds = Math.round(Math.abs(dateEnd - dateStart) / 1000);
