@@ -34,6 +34,7 @@
 <script>
 
 import axios from 'axios';
+import Cookies from 'js-cookie';
 
 export default {
   name: 'UserComponent',
@@ -94,8 +95,10 @@ export default {
         .then((response) => {
           this.user.username = response.data.data.username;
           this.user.email = response.data.data.email;
-          sessionStorage.setItem("userID", response.data.data.id);
-          sessionStorage.setItem("username", response.data.data.username);
+          // sessionStorage.setItem("userID", response.data.data.id);
+          // sessionStorage.setItem("username", response.data.data.username);
+          Cookies.set('userID', response.data.data.id);
+          Cookies.set('username', response.data.data.username);
         })
         .catch((errors) => {
           console.log(errors)
@@ -108,8 +111,10 @@ export default {
           this.user.username = response.data.data[0].username;
           this.user.email = response.data.data[0].email;
           this.user.id = response.data.data[0].id;
-          sessionStorage.setItem("userID", response.data.data.id);
-          sessionStorage.setItem("username", response.data.data.username);
+          // sessionStorage.setItem("userID", response.data.data.id);
+          // sessionStorage.setItem("username", response.data.data.username);
+          Cookies.set('userID', response.data.data.id);
+          Cookies.set('username', response.data.data.username);
         })
         .catch((errors) => {
           console.log(errors)

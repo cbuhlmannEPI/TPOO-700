@@ -33,7 +33,7 @@
 
 <script>
 import axios from 'axios';
-
+import Cookies from 'js-cookie';
 
 export default {
 
@@ -77,11 +77,10 @@ export default {
     }
   },
   created() {
-    if(!sessionStorage['userID']){
+    if(!Cookies.get('userID')){
       window.location.replace('/login');
       return true;
     }
-
 
     axios
       .get(`http://localhost:4000/api/workingtimes/` + this.$route.params['userID'])
