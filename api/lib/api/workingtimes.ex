@@ -18,7 +18,7 @@ defmodule Api.Workingtimes do
 
   """
   def list_workingtimes!(userID) do
-    query = from(w in Workingtime, where: w.user_id == ^userID, limit: 5, order_by: [asc: w.id])
+    query = from(w in Workingtime, where: w.user_id == ^userID, order_by: [asc: w.id], limit: 5)
     Repo.all(query)
     |> Repo.preload(:user)
   end
