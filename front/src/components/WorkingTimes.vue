@@ -77,7 +77,7 @@ export default {
     }
   },
   created() {
-    if(!Cookies.get('userID')){
+    if (!Cookies.get('userID')) {
       window.location.replace('/login');
       return true;
     }
@@ -117,15 +117,27 @@ export default {
 }
 
 table {
-  border: solid 1px black;
+  color: black;
   border-collapse: collapse;
   margin: 20px 40px;
+  background-color: white;
 }
 
 td {
   padding: 10px;
 
-  border: solid 1px black;
+  border-top: solid 1px;
+}
+
+th {
+  padding: 10px;
+  color: black;
+  background-color: rgb(255, 254, 253);
+
+}
+
+tr:nth-child(even) {
+  background-color: rgb(225, 229, 225);
 }
 
 button.seeDetails {

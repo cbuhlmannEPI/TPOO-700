@@ -1,10 +1,10 @@
 <template>
     <div class="navbar">
-        <div class="logo-navbar"></div>
+        <a v-bind:href="'/'">
+            <div class="logo-navbar"></div>
+        </a>
         <ul>
-            <a v-bind:href="'/'">
-                <i style="font-size:30px" class="fa fa-home"></i>
-            </a>
+
             <a v-bind:href="'/clocks/' + username">
                 <li>Clocks</li>
             </a>
@@ -44,6 +44,10 @@ export default {
 </script>
 
 <style>
+* {
+    font-family: 'Montserrat', sans-serif;
+}
+
 body {
     margin: 0;
     padding: 0;
@@ -68,6 +72,7 @@ a:hover {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    font-weight: 700;
 }
 
 .account {
@@ -120,3 +125,4 @@ body {
     min-height: 100vh;
 }
 </style>
+green;
