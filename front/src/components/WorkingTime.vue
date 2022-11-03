@@ -64,6 +64,11 @@ export default {
     }
   },
   created() {
+    if(sessionStorage['userID']){
+      window.location.replace('/login');
+      return true;
+    }
+    
     axios
       .get(`http://localhost:4000/api/workingtimes/` + this.$route.params['userID'] + '/' + this.$route.params['id'])
       .then((response) => {
