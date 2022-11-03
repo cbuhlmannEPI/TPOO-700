@@ -2,7 +2,7 @@
 
 <template>
   <div class="chrono-container">
-    <div class="card">
+    <div class="card-clock">
       <div class="content-button">
         <div>
           <button class="refresh" @click="refresh">
@@ -131,11 +131,11 @@ export default {
     },
   },
   created() {
-    if(!sessionStorage['userID']){
+    if (!sessionStorage['userID']) {
       window.location.replace('/login');
       return true;
     }
-    
+
     this.refresh();
   }
 }
@@ -197,7 +197,7 @@ button.end {
   padding: 10px;
 }
 
-.card {
+.card-clock {
   border-radius: 20px;
   box-shadow: 1px 1px 8px 5px rgba(0, 0, 0, 0.37);
   margin-top: 20px;
