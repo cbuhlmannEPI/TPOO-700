@@ -93,7 +93,7 @@ export default defineComponent({
       chartOptions: {
         responsive: false,
       },
-      days: ['Samedi', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi']
+      days: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi']
     }
   },
   methods: {
