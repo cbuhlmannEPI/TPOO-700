@@ -107,9 +107,15 @@ export default defineComponent({
     axios
       .get(`http://localhost:4000/api/workingtimes/` + sessionStorage['userID'])
       .then((response) => {
-        console.log(response.data.data);
-        let test = [];
+        // console.log(response.data.data.sort());
+        let array = response.data.data;
+        array.sort(function (wTime1, wTime2) {
+          if (wTime1.id > wTime2.id) return 1;
+          if (wTime1.id < wTime2.id) return -1;
+        });
+        let secondes = [];
         let i = 0;
+
         response.data.data.forEach(wtime => {
           if (i == 5) {
             return false;
@@ -120,10 +126,10 @@ export default defineComponent({
           let dateStart = new Date(wtime.start);
           let dateEnd = new Date(wtime.end);
           let totalSeconds = Math.round(Math.abs(dateEnd - dateStart) / 1000);
-          test.push(totalSeconds);
+          secondes.push(totalSeconds);
           i = i + 1;
         });
-        this.chartData.datasets[0].data = test;
+        this.chartData.datasets[0].data = secondes;
 
       })
       .catch((errors) => {

@@ -132,6 +132,11 @@ export default {
     },
   },
   created() {
+    if(!sessionStorage['userID']){
+      window.location.replace('/login');
+      return true;
+    }
+    
     this.refresh();
   }
 }
