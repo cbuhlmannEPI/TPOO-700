@@ -25,6 +25,9 @@
 </template>
 
 <script>
+
+import Cookies from 'js-cookie';
+
 export default {
     data() {
         return {
@@ -34,8 +37,8 @@ export default {
     },
     methods: {},
     created() {
-        this.username = sessionStorage['username']
-        this.userID = sessionStorage['userID']
+        this.username = Cookies.get('username')
+        this.userID = Cookies.get('userID')
     }
 }
 </script>

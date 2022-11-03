@@ -47,6 +47,7 @@
 </template>
 <script>
 import axios from 'axios';
+import Cookies from 'js-cookie'
 // import moment from 'moment';
 
 export default {
@@ -56,7 +57,7 @@ export default {
       secondes: '00',
       minutes: '00',
       heures: '00',
-      start: sessionStorage['start'],
+      start: Cookies.get('start'),
       clock: {
         // time: '',
         // status:'',
@@ -66,7 +67,7 @@ export default {
   },
   methods: {
     createClock(dateStart) {
-      axios.post(`http://localhost:4000/api/clocks/` + sessionStorage['userID'], {
+      axios.post(`http://localhost:4000/api/clocks/` + Cookies.get('name'), {
         clock: {
           time: dateStart,
           status: true
@@ -83,7 +84,7 @@ export default {
       const dateObj = new Date();
 
       let currentDate = this.addZero(dateObj.getFullYear()) + '-' + this.addZero(dateObj.getMonth() + 1) + '-' + this.addZero(dateObj.getDate()) + ' ' + this.addZero(dateObj.getHours()) + ':' + this.addZero(dateObj.getMinutes()) + ':' + this.addZero(dateObj.getSeconds());
-      sessionStorage.setItem("start", currentDate);
+      Cookies.set('start', currentDate);
       this.start = currentDate;
       this.createClock(currentDate);
     },
@@ -92,14 +93,14 @@ export default {
       let currentDate = this.addZero(dateObj.getFullYear()) + '-' + this.addZero(dateObj.getMonth() + 1) + '-' + this.addZero(dateObj.getDate()) + ' ' + this.addZero(dateObj.getHours()) + ':' + this.addZero(dateObj.getMinutes()) + ':' + this.addZero(dateObj.getSeconds());
 
 
-      axios.post(`http://localhost:4000/api/workingtimes/` + sessionStorage['userID'], {
+      axios.post(`http://localhost:4000/api/workingtimes/` + Cookies.get('userID'), {
         workingtime: {
-          start: String(sessionStorage['start']),
+          start: String(Cookies.get('start')),
           end: String(currentDate)
         }
       })
         .then(() => {
-          sessionStorage.removeItem('start');
+          Cookies.remove('start')
           this.start = null;
           this.heures = "00";
           this.minutes = "00";
@@ -116,8 +117,8 @@ export default {
       return val;
     },
     refresh() {
-      if (sessionStorage['start']) {
-        let date1 = new Date(sessionStorage['start']);
+      if (Cookies.get('start')) {
+        let date1 = new Date(Cookies.get('start'));
         let date2 = new Date();
 
         let totalSeconds = Math.round(Math.abs(date2 - date1) / 1000);
@@ -131,7 +132,7 @@ export default {
     },
   },
   created() {
-    if (!sessionStorage['userID']) {
+    if (!Cookies.get('userID')) {
       window.location.replace('/login');
       return true;
     }

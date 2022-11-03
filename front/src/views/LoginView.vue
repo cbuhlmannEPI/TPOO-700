@@ -57,6 +57,7 @@
 <script>
 
 import axios from 'axios';
+import Cookies from 'js-cookie'
 
 export default {
     data() {
@@ -91,8 +92,11 @@ export default {
             axios
                 .get(`http://localhost:4000/api/users?email=` + this.emailLogin + '&username=' + this.passwordLogin)
                 .then((response) => {
-                    sessionStorage.setItem("userID", response.data.data[0].id);
-                    sessionStorage.setItem("username", response.data.data[0].username);
+                    // sessionStorage.setItem("userID", response.data.data[0].id);
+                    // sessionStorage.setItem("username", response.data.data[0].username);
+                    Cookies.set('userID', response.data.data[0].id);
+                    Cookies.set('username', response.data.data[0].username);
+
                     window.location.replace('/')
                 })
                 .catch((errors) => {

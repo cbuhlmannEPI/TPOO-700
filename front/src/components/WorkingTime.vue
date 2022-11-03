@@ -16,6 +16,7 @@
 </template>
 <script>
 import axios from 'axios';
+import Cookies from 'js-cookie';
 export default {
 
   data() {
@@ -64,7 +65,7 @@ export default {
     }
   },
   created() {
-    if(sessionStorage['userID']){
+    if(Cookies.get('id')){
       window.location.replace('/login');
       return true;
     }
