@@ -110,14 +110,15 @@ export default defineComponent({
       .then((response) => {
         // console.log(response.data.data.sort());
         let array = response.data.data;
+        console.log(array);
         array.sort(function (wTime1, wTime2) {
-          if (wTime1.id > wTime2.id) return 1;
-          if (wTime1.id < wTime2.id) return -1;
+          if (wTime1.start > wTime2.start) return 1;
+          if (wTime1.start < wTime2.start) return -1;
         });
         let secondes = [];
         let i = 0;
 
-        response.data.data.forEach(wtime => {
+        array.forEach(wtime => {
           if (i == 5) {
             return false;
           }
