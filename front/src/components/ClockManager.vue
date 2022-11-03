@@ -1,31 +1,30 @@
 <script lang="ts" setup></script>
 
 <template>
-  <div class="content-button">
-    <div>
-      <button class="refresh" @click="refresh">
-        REFRESH
-      </button>
-    </div>
-    <div>
-      <button class="start" v-if="!start" @click="clockStart">
-        START
-      </button>
-      <button v-else @click="clockEnd">
-        END
-      </button>
-    </div>
-  </div>
+  <div class="chrono-container">
+    <div class="card">
+      <div class="content-button">
+        <div>
+          <button class="refresh" @click="refresh">
+            REFRESH
+          </button>
+        </div>
+        <div>
+          <button class="start" v-if="!start" @click="clockStart">
+            START
+          </button>
+          <button class="end" v-else @click="clockEnd">
+            END
+          </button>
+        </div>
+      </div>
 
-  <div>
-    <button v-if="!start" @click="clockStart">
-      START
-    </button>
-    <button v-else @click="clockEnd">
-      END
-    </button>
-    <div v-if="secondes">
-      {{ heures + ':' + minutes + ':' + secondes }}
+      <div class="chrono">
+
+        <div class="chrono-content" v-if="secondes">
+          {{ heures + ':' + minutes + ':' + secondes }}
+        </div>
+      </div>
     </div>
   </div>
   <!-- <div class="workTable">
@@ -168,5 +167,46 @@ button.start {
   background-color: rgb(68, 141, 68);
   color: white;
 
+}
+
+.chrono {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 40px;
+
+}
+
+.chrono button {
+  border: solid 1px black;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+button.end {
+  border: solid 1px black;
+  background-color: rgb(228, 174, 39);
+  color: white;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.chrono-content {
+  border: solid 1px black;
+  padding: 10px;
+}
+
+.card {
+  border-radius: 20px;
+  box-shadow: 1px 1px 8px 5px rgba(0, 0, 0, 0.37);
+  margin-top: 20px;
+  width: 50%;
+}
+
+.chrono-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 </style>
