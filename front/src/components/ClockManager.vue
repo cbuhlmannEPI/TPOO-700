@@ -2,21 +2,19 @@
 
 <template>
   <div class="chrono-container">
-    <div class="card-clock">
-      <div class="content-button">
-        <div>
-          <button class="refresh" @click="refresh">
-            REFRESH
-          </button>
-        </div>
-        <div>
-          <button class="start" v-if="!start" @click="clockStart">
-            START
-          </button>
-          <button class="end" v-else @click="clockEnd">
-            END
-          </button>
-        </div>
+    <div class="content-button">
+      <div>
+        <button class="refresh" @click="refresh">
+          REFRESH
+        </button>
+      </div>
+      <div>
+        <button class="start" v-if="!start" @click="clockStart">
+          START
+        </button>
+        <button class="end" v-else @click="clockEnd">
+          END
+        </button>
       </div>
 
       <div class="chrono">
@@ -151,17 +149,15 @@ export default {
 }
 
 button.refresh {
-  border: solid 1px black;
+  border: none;
   font-size: 30px;
-  border-radius: 30px;
   padding: 15px;
-  color: white;
-  background-color: blue;
+  color: black;
+  background-color: rgb(255, 255, 255);
 }
 
 button.start {
-  border: solid 1px black;
-  border-radius: 30px;
+  border: none;
   font-size: 30px;
   padding: 15px;
   background-color: rgb(68, 141, 68);
@@ -185,10 +181,9 @@ button.start {
 }
 
 button.end {
-  border: solid 1px black;
+  border: none;
   background-color: rgb(228, 174, 39);
   color: white;
-  border-radius: 10px;
   padding: 10px;
 }
 
@@ -197,14 +192,10 @@ button.end {
   padding: 10px;
 }
 
-.card-clock {
-  border-radius: 20px;
-  box-shadow: 1px 1px 8px 5px rgba(0, 0, 0, 0.37);
-  margin-top: 20px;
-  width: 50%;
-}
+
 
 .chrono-container {
+  margin-top: 150px;
   display: flex;
   align-items: center;
   justify-content: center;
