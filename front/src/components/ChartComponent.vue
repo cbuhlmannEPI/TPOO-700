@@ -83,12 +83,12 @@ export default defineComponent({
   }, data() {
     return {
       chartData: {
-        labels: [],
+        labels: ['test', 'test', 'test', 'test'],
         datasets: [
           {
             label: 'Working Time',
             backgroundColor: ['#1d3557', '#457b9d', '#a8dadc', '#f1faee', '#e63946'],
-            data: []
+            data: [40, 20, 30, 10, 100, 150]
           }]
       },
       chartOptions: {
@@ -103,7 +103,7 @@ export default defineComponent({
   },
   created() {
     axios
-      .get(`http://localhost:4000/api/workingtimes/`+sessionStorage['userID'])
+      .get(`http://localhost:4000/api/workingtimes/` + sessionStorage['userID'])
       .then((response) => {
         response.data.data.forEach(wtime => {
           let start = this.formatDate(wtime.start);
