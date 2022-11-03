@@ -20,7 +20,7 @@
 
 <script>
 
-
+import Cookies from 'js-cookie';
 import {
   defineComponent,
 } from 'vue'
@@ -105,7 +105,7 @@ export default defineComponent({
   },
   created() {
     axios
-      .get(`http://localhost:4000/api/workingtimes/` + sessionStorage['userID'])
+      .get(`http://localhost:4000/api/workingtimes/` + Cookies.get('userID'))
       .then((response) => {
         // console.log(response.data.data.sort());
         let array = response.data.data;
