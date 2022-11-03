@@ -24,7 +24,7 @@ defmodule Api.Workingtimes do
   end
 
     def list_all_workingtimes!(userID) do
-    query = from(w in Workingtime, where: w.user_id == ^userID, order_by: [asc: w.inserted_at])
+    query = from(w in Workingtime, where: w.user_id == ^userID, order_by: [desc: w.start])
     Repo.all(query)
     |> Repo.preload(:user)
   end
