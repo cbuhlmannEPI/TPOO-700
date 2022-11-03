@@ -23,6 +23,12 @@ defmodule Api.Workingtimes do
     |> Repo.preload(:user)
   end
 
+    def list_all_workingtimes!(userID) do
+    query = from(w in Workingtime, where: w.user_id == ^userID, order_by: [desc: w.id])
+    Repo.all(query)
+    |> Repo.preload(:user)
+  end
+
   @doc """
   Gets a single workingtime.
 

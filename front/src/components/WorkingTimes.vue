@@ -83,7 +83,7 @@ export default {
     }
 
     axios
-      .get(`http://localhost:4000/api/workingtimes/` + this.$route.params['userID'])
+      .get(`http://localhost:4000/api/allworkingtimes/` + this.$route.params['userID'])
       .then((response) => {
         this.workingtimes = response.data.data;
       })
