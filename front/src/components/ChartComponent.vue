@@ -82,12 +82,12 @@ export default defineComponent({
   }, data() {
     return {
       chartData: {
-        labels: ['test', 'test', 'test', 'test'],
+        labels: [],
         datasets: [
           {
             label: 'Working Time',
             backgroundColor: ['#1d3557', '#457b9d', '#a8dadc', '#f1faee', '#e63946'],
-            data: [40, 20, 30, 10, 100, 150]
+            data: []
           }]
       },
       chartOptions: {
@@ -96,9 +96,9 @@ export default defineComponent({
     }
   },
   methods: {
-    addZero(val){
-      if(String(val).length == 1){
-        return '0'+val;
+    addZero(val) {
+      if (String(val).length == 1) {
+        return '0' + val;
       }
       return val;
     },
@@ -111,19 +111,19 @@ export default defineComponent({
         let test = [];
         let i = 0;
         response.data.data.forEach(wtime => {
-          if(i == 5){
+          if (i == 5) {
             return false;
           }
           const dateObj = new Date(wtime.start);
-          let date = this.addZero(dateObj.getFullYear())+'-'+this.addZero(dateObj.getMonth()+1)+'-'+this.addZero(dateObj.getDate());
+          let date = this.addZero(dateObj.getFullYear()) + '-' + this.addZero(dateObj.getMonth() + 1) + '-' + this.addZero(dateObj.getDate());
           this.chartData.labels.push(date)
-          let dateStart= new Date(wtime.start);
+          let dateStart = new Date(wtime.start);
           let dateEnd = new Date(wtime.end);
           let totalSeconds = Math.round(Math.abs(dateEnd - dateStart) / 1000);
           test.push(totalSeconds);
           i = i + 1;
         });
-      this.chartData.datasets[0].data = test;
+        this.chartData.datasets[0].data = test;
 
       })
       .catch((errors) => {
