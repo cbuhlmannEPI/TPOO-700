@@ -24,7 +24,6 @@
 import {
   defineComponent,
 } from 'vue'
-import moment from 'moment';
 import axios from 'axios';
 import { Pie, Line, Bar } from 'vue-chartjs'
 import {
@@ -97,19 +96,35 @@ export default defineComponent({
     }
   },
   methods: {
-    formatDate(value) {
-      return moment(String(value)).format('YYYY-MM-DD')
-    }
+    addZero(val){
+      if(String(val).length == 1){
+        return '0'+val;
+      }
+      return val;
+    },
   },
   created() {
     axios
       .get(`http://localhost:4000/api/workingtimes/` + sessionStorage['userID'])
       .then((response) => {
+        console.log(response.data.data);
+        let test = [];
+        let i = 0;
         response.data.data.forEach(wtime => {
-          let start = this.formatDate(wtime.start);
-          // let end = this.formatDate(wtime.end)
-          this.chartData.labels.push(start)
+          if(i == 5){
+            return false;
+          }
+          const dateObj = new Date(wtime.start);
+          let date = this.addZero(dateObj.getFullYear())+'-'+this.addZero(dateObj.getMonth()+1)+'-'+this.addZero(dateObj.getDate());
+          this.chartData.labels.push(date)
+          let dateStart= new Date(wtime.start);
+          let dateEnd = new Date(wtime.end);
+          let totalSeconds = Math.round(Math.abs(dateEnd - dateStart) / 1000);
+          test.push(totalSeconds);
+          i = i + 1;
         });
+      this.chartData.datasets[0].data = test;
+
       })
       .catch((errors) => {
         console.log(errors)

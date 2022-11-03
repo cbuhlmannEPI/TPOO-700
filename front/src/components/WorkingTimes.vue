@@ -5,9 +5,9 @@
   <!-- <div>{{ $route.params }}</div> -->
   <div class="inputs">
 
-    <label>Start</label> <input placeholder="2022/01/02" class="name" v-model="workingtime.start">
+    <label>Start</label> <input placeholder="2022-01-02 12:00:00" class="name" v-model="workingtime.start">
 
-    <label>End </label><input class="email" placeholder="2022/01/02" type="email" v-model="workingtime.end">
+    <label>End </label><input class="email" placeholder="2022-01-02 14:00:00" type="email" v-model="workingtime.end">
 
     <div class="create"><button @click="createWorkingtime" class="create">Créer</button></div>
   </div>
@@ -66,7 +66,7 @@ export default {
     },
     formatDate(value) {
       const dateObj = new Date(value);
-      let date = this.addZero(dateObj.getFullYear())+'-'+this.addZero(dateObj.getMonth())+'-'+this.addZero(dateObj.getDate())+' '+this.addZero(dateObj.getHours())+':'+this.addZero(dateObj.getMinutes())+':'+this.addZero(dateObj.getSeconds());
+      let date = this.addZero(dateObj.getFullYear())+'-'+this.addZero(dateObj.getMonth()+1)+'-'+this.addZero(dateObj.getDate())+' '+this.addZero(dateObj.getHours())+':'+this.addZero(dateObj.getMinutes())+':'+this.addZero(dateObj.getSeconds());
       return date;
     },
     addZero(val){
