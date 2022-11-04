@@ -5,6 +5,7 @@ import WorkingTime from "../components/WorkingTime.vue";
 import ChartManager from "../components/ChartManager.vue";
 import ClockManager from "../components/ClockManager.vue";
 import LoginView from "../views/LoginView.vue";
+import DashboardView from "../views/DashboardView";
 import Home from "../components/HomeComponent";
 
 const routes = [
@@ -37,6 +38,11 @@ const routes = [
     path: "/login/",
     name: "login",
     component: LoginView,
+  },
+  {
+    path: "/dashboard/",
+    name: "dashboard",
+    component: DashboardView,
   },
 ];
 

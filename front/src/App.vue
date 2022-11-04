@@ -1,29 +1,18 @@
-<!-- eslint-disable no-unused-vars -->
 <template>
-  <NavBarComponent />
-  <RouterView />
+  <v-app>
+    <v-main>
+      <router-view/>
+    </v-main>
+  </v-app>
 </template>
 
 <script>
 
-import NavBarComponent from "./components/NavBarComponent.vue";
-
 export default {
   name: 'App',
-  components: {
 
-    NavBarComponent
-  }
+  data: () => ({
+    //
+  }),
 }
-
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
-
-}
-</style>

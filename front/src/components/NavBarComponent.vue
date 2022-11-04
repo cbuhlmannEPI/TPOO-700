@@ -32,6 +32,10 @@
 
         </div>
     </header>
+
+    <v-btn variant="outlined">
+        Button
+    </v-btn>
 </template>
 
 <script>
