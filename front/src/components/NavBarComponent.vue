@@ -4,7 +4,7 @@
             <a v-bind:href="'/'">
                 <div class="logo-navbar"></div>
             </a>
-            <ul>
+            <ul v-if="role != 'admin'">
 
                 <a v-bind:href="'/clocks/' + username">
                     <li>Clocks</li>
@@ -17,6 +17,12 @@
 
                 </li>
             </ul>
+            <ul v-else>
+
+                <a v-bind:href="'/admin/users/'">
+                    <li>Users</li>
+                </a>
+            </ul>
             <div class="account">
                 <p>{{ username }}</p>
                 <div id="account" class="img-account"></div>
@@ -25,9 +31,9 @@
         </div>
         <div class="account-content">
             <div class="links d-flex flex-column m-2">
-                <a href=""> <i class="fa-solid fa-right-from-bracket"></i> Se déconnecter</a>
+                <a @click="logout"> <i class="fa-solid fa-right-from-bracket"></i> Se déconnecter</a>
                 <a href="">Paramètres</a>
-                <a href="">Mes informations</a>
+                <a v-bind:href="'/user/' + userID">Mes informations</a>
             </div>
 
         </div>
@@ -58,13 +64,22 @@ export default {
     data() {
         return {
             username: null,
-            userID: null
+            userID: null,
+            role: null
         }
     },
-    methods: {},
+    methods: {
+        logout() {
+            Cookies.remove('username')
+            Cookies.remove('userID')
+            Cookies.remove('role')
+            window.location.replace('/login');
+        }
+    },
     created() {
         this.username = Cookies.get('username')
         this.userID = Cookies.get('userID')
+        this.role = Cookies.get('role')
     },
     scroll() {
 

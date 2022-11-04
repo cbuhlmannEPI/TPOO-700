@@ -106,6 +106,7 @@ export default {
                     } else {
                         Cookies.set('userID', response.data.data[0].id);
                         Cookies.set('username', response.data.data[0].username); 
+                        Cookies.set('role', response.data.data[0].role);
                         window.location.replace('/')
                     }
 
