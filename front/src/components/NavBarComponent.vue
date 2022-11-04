@@ -19,9 +19,17 @@
             </ul>
             <div class="account">
                 <p>{{ username }}</p>
-                <div class="img-account"></div>
+                <div id="account" class="img-account"></div>
 
             </div>
+        </div>
+        <div class="account-content">
+            <div class="links d-flex flex-column m-2">
+                <a href="">Se déconnecter</a>
+                <a href="">Paramètres</a>
+                <a href="">Mes informations</a>
+            </div>
+
         </div>
     </header>
 </template>
@@ -29,7 +37,23 @@
 <script>
 
 import Cookies from 'js-cookie';
+import $ from 'jquery';
 
+$(document).ready(function () {
+
+    $("#account").click(function () {
+        if (!$(".account-content").hasClass("display-account")) {
+
+            $(".account-content").addClass("display-account");
+            $(".account-content").show("fast");
+        } else {
+            $(".account-content").removeClass("display-account");
+            $(".account-content").hide("fast");
+
+        }
+
+    });
+});
 export default {
     data() {
         return {
@@ -46,6 +70,7 @@ export default {
 
     }
 }
+
 
 
 
@@ -78,6 +103,8 @@ a:hover {
     text-decoration: none;
     color: white;
 }
+
+
 
 .navbar {
     padding: 0;
@@ -139,6 +166,28 @@ body {
     background-size: cover;
     background-position: center;
     min-height: 100vh;
+}
+
+.account-content {
+    display: none;
+    background-color: white;
+    border-radius: 30px;
+    position: absolute;
+    right: 0px;
+    min-height: 70%;
+    margin-right: 15px;
+}
+
+.display-account {
+    padding: 10px;
+    position: absolute;
+    right: 0px;
+    min-height: 70%;
+}
+
+
+.account-content a {
+    color: black;
 }
 </style>
 green;
