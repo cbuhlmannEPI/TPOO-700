@@ -25,7 +25,7 @@
         </div>
         <div class="account-content">
             <div class="links d-flex flex-column m-2">
-                <a href="">Se déconnecter</a>
+                <a href=""> <i class="fa-solid fa-right-from-bracket"></i> Se déconnecter</a>
                 <a href="">Paramètres</a>
                 <a href="">Mes informations</a>
             </div>
