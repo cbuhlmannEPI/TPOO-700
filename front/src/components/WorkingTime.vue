@@ -66,7 +66,7 @@ export default {
     }
   },
   created() {
-    if (Cookies.get('id')) {
+    if (!Cookies.get('userID')) {
       window.location.replace('/login');
       return true;
     }

@@ -15,6 +15,7 @@ defmodule ApiWeb.UserView do
       id: user.id,
       username: user.username,
       email: user.email,
+      role: user.role,
       updated_at: user.updated_at,
       inserted_at: user.inserted_at,
       clocks: user.clocks,
