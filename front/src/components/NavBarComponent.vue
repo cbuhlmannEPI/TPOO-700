@@ -176,6 +176,7 @@ body {
     right: 0px;
     min-height: 70%;
     margin-right: 15px;
+    z-index: 9999;
 }
 
 .display-account {
