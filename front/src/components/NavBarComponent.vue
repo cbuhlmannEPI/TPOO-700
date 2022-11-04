@@ -44,7 +44,6 @@
 
 import Cookies from 'js-cookie';
 import $ from 'jquery';
-
 $(document).ready(function () {
 
     $("#account").click(function () {
