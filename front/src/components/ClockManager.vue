@@ -4,11 +4,6 @@
   <div class="chrono-container">
     <div class="content-button">
       <div>
-        <button class="refresh" @click="refresh">
-          REFRESH
-        </button>
-      </div>
-      <div>
         <button class="start" v-if="!start" @click="clockStart">
           START
         </button>
@@ -19,34 +14,16 @@
 
       <div class="chrono">
 
-        <div class="chrono-content" v-if="secondes">
+        <div class="chrono-content">
           {{ heures + ':' + minutes + ':' + secondes }}
         </div>
       </div>
     </div>
   </div>
-  <!-- <div class="workTable">
-    <table>
-      <tr>
-        <th>time</th>
-        <th>status</th>
-        <th></th>
-      </tr>
-      <tr v-for="(clk, idx) in clocks" :key="clk.id">
-        <td>{{ formatDate(clk.time) }}</td>
-        <td>{{ clk.status }}</td>
-        <td>
-          <button @click="clockIn(clk, idx)">active/inactive</button>
-        </td>
-      </tr>
-    </table>
-  </div> -->
-
 </template>
 <script>
 import axios from 'axios';
 import Cookies from 'js-cookie'
-// import moment from 'moment';
 
 export default {
   data() {
@@ -56,8 +33,6 @@ export default {
       heures: '00',
       start: (Cookies.get('start')) ? Cookies.get('start') : null,
       clock: {
-        // time: '',
-        // status:'',
         username: this.$route.params['username']
       },
     }
@@ -84,12 +59,15 @@ export default {
       Cookies.set('start', currentDate);
       this.start = currentDate;
       this.createClock(currentDate);
+      this.refresh();
     },
     clockEnd() {
       const dateObj = new Date();
       let currentDate = this.addZero(dateObj.getFullYear()) + '-' + this.addZero(dateObj.getMonth() + 1) + '-' + this.addZero(dateObj.getDate()) + ' ' + this.addZero(dateObj.getHours()) + ':' + this.addZero(dateObj.getMinutes()) + ':' + this.addZero(dateObj.getSeconds());
 
-
+      this.heures = "00";
+      this.minutes = "00";
+      this.secondes = "00";
       axios.post(`http://localhost:4000/api/workingtimes/` + Cookies.get('userID'), {
         workingtime: {
           start: String(Cookies.get('start')),
@@ -115,16 +93,19 @@ export default {
     },
     refresh() {
       if (Cookies.get('start')) {
-        let date1 = new Date(Cookies.get('start'));
-        let date2 = new Date();
-
-        let totalSeconds = Math.round(Math.abs(date2 - date1) / 1000);
-        let seconds = Math.floor(totalSeconds % 60);
-        let minutes = Math.floor((totalSeconds % 3600) / 60);
-        let hours = Math.floor((totalSeconds % (3600 * 24)) / 3600);
-        this.secondes = this.addZero(seconds);
-        this.minutes = this.addZero(minutes);
-        this.heures = this.addZero(hours);
+        setTimeout(() => {
+          let date1 = new Date(Cookies.get('start'));
+          let date2 = new Date();
+  
+          let totalSeconds = Math.round(Math.abs(date2 - date1) / 1000);
+          let seconds = Math.floor(totalSeconds % 60);
+          let minutes = Math.floor((totalSeconds % 3600) / 60);
+          let hours = Math.floor((totalSeconds % (3600 * 24)) / 3600);
+          this.secondes = this.addZero(seconds);
+          this.minutes = this.addZero(minutes);
+          this.heures = this.addZero(hours);
+          this.refresh();
+        }, 1000)
       }
     },
   },

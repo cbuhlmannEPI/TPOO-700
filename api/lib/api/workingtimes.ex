@@ -18,13 +18,13 @@ defmodule Api.Workingtimes do
 
   """
   def list_workingtimes!(userID) do
-    query = from(w in Workingtime, where: w.user_id == ^userID, limit: 5, order_by: [asc: w.inserted_at])
+    query = from(w in Workingtime, where: w.user_id == ^userID, limit: 5, order_by: [desc: w.inserted_at])
     Repo.all(query)
     |> Repo.preload(:user)
   end
 
     def list_all_workingtimes!(userID) do
-    query = from(w in Workingtime, where: w.user_id == ^userID, order_by: [desc: w.start])
+    query = from(w in Workingtime, where: w.user_id == ^userID, order_by: [desc: w.inserted_at])
     Repo.all(query)
     |> Repo.preload(:user)
   end
