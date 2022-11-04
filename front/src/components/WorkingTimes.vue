@@ -2,14 +2,15 @@
 
 <template>
   <div class="fond">
-    <!-- <div>{{ $route.params }}</div> -->
-    <div class="inputs">
+    <div class="container-center">
+      <div class="inputs">
+        <label>Start</label> <input placeholder="2022-01-02 12:00:00" class="name" v-model="workingtime.start">
 
-      <label>Start</label> <input placeholder="2022-01-02 12:00:00" class="name" v-model="workingtime.start">
+        <label>End </label><input class="email" placeholder="2022-01-02 14:00:00" type="email"
+          v-model="workingtime.end">
 
-      <label>End </label><input class="email" placeholder="2022-01-02 14:00:00" type="email" v-model="workingtime.end">
-
-      <div class="create"><button @click="createWorkingtime" class="create">Créer</button></div>
+        <div class="create"><button @click="createWorkingtime" class="create">Créer</button></div>
+      </div>
     </div>
     <div class="workTable">
       <table>
@@ -29,6 +30,7 @@
       </table>
     </div>
   </div>
+
 </template>
 
 <script>
@@ -95,19 +97,31 @@ export default {
 
 </script>
 <style>
+.container-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .inputs {
   margin: 0px 40px;
   display: flex;
   flex-direction: column;
-  width: 30%;
 
 }
 
+.inputs label {
+  margin: 15px 0px;
+  font-size: 19px;
+  font-weight: bold;
+}
+
 .inputs input {
-  padding: 10px;
-  background: transparent;
+  padding: 15px;
+  background-color: white;
   font-size: 20px;
-  border: solid 2px black;
+  border: none;
+  border-radius: 10px;
 }
 
 .workTable {
@@ -156,11 +170,20 @@ button.seeDetails {
 button.create {
   padding: 10px;
   background-color: green;
-  margin-top: 10px;
+  margin-top: 20px;
   border: none;
   border-radius: 10px;
   color: white;
+  width: 100%;
+  font-weight: bold;
+  letter-spacing: 1px;
+  transition: all ease 0.5s;
 
+}
+
+button.create:hover {
+  background-color: white;
+  color: black;
 }
 </style>
 

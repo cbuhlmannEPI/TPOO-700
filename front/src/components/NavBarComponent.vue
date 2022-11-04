@@ -1,27 +1,29 @@
 <template>
-    <div class="navbar">
-        <a v-bind:href="'/'">
-            <div class="logo-navbar"></div>
-        </a>
-        <ul>
-
-            <a v-bind:href="'/clocks/' + username">
-                <li>Clocks</li>
+    <header>
+        <div id="header" class="navbar">
+            <a v-bind:href="'/'">
+                <div class="logo-navbar"></div>
             </a>
-            <li>
-                <a v-bind:href="'/WorkingTimes/' + userID"> Working Times</a>
-            </li>
-            <li>
-                <a v-bind:href="'/chartManager/' + userID">Charts</a>
+            <ul>
 
-            </li>
-        </ul>
-        <div class="account">
-            <p>{{ username }}</p>
-            <div class="img-account"></div>
+                <a v-bind:href="'/clocks/' + username">
+                    <li>Clocks</li>
+                </a>
+                <li>
+                    <a v-bind:href="'/WorkingTimes/' + userID"> Working Times</a>
+                </li>
+                <li>
+                    <a v-bind:href="'/chartManager/' + userID">Charts</a>
 
+                </li>
+            </ul>
+            <div class="account">
+                <p>{{ username }}</p>
+                <div class="img-account"></div>
+
+            </div>
         </div>
-    </div>
+    </header>
 </template>
 
 <script>
@@ -39,11 +41,24 @@ export default {
     created() {
         this.username = Cookies.get('username')
         this.userID = Cookies.get('userID')
+    },
+    scroll() {
+
     }
 }
+
+
+
+
 </script>
 
 <style>
+.sticky {
+    position: fixed;
+    top: 0;
+    width: 100%
+}
+
 * {
     font-family: 'Montserrat', sans-serif;
 }
@@ -56,6 +71,7 @@ body {
 a {
     text-decoration: none;
     color: white;
+    letter-spacing: 1.5px;
 }
 
 a:hover {

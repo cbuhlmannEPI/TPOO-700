@@ -3,14 +3,15 @@
   <div class="container">
 
     <!-- champs pour nom et prenom de l'user -->
+    <div class="inputs">
+      <label>Start</label> <input class="name" type="datetime" v-model="workingtime.start">
 
-    <label>Start</label> <input class="name" type="datetime" v-model="workingtime.start">
+      <label>End </label><input class="email" type="datetime" v-model="workingtime.end">
 
-    <label>End </label><input class="email" type="datetime" v-model="workingtime.end">
-
-    <div class="buttons">
-      <button @click="updatedWorkingtime" class="update">Modifier</button>
-      <button @click="deleteWorkingtime" class="delete">Supprimer</button>
+      <div class="buttons">
+        <button @click="updatedWorkingtime" class="update">Modifier</button>
+        <button @click="deleteWorkingtime" class="delete">Supprimer</button>
+      </div>
     </div>
   </div>
 </template>
@@ -46,7 +47,7 @@ export default {
     deleteWorkingtime() { // sup un User
       axios.delete(`http://localhost:4000/api/workingtimes/` + this.workingtime.id)
         .then(() => {
-          window.location.replace('/workingtimes/'+this.$route.params['userID'])
+          window.location.replace('/workingtimes/' + this.$route.params['userID'])
         })
         .catch(error => {
           console.error('There was an error!', error);
@@ -54,22 +55,22 @@ export default {
     },
     formatDate(value) {
       const dateObj = new Date(value);
-      let date = this.addZero(dateObj.getFullYear())+'-'+this.addZero(dateObj.getMonth()+1)+'-'+this.addZero(dateObj.getDate())+' '+this.addZero(dateObj.getHours())+':'+this.addZero(dateObj.getMinutes())+':'+this.addZero(dateObj.getSeconds());
+      let date = this.addZero(dateObj.getFullYear()) + '-' + this.addZero(dateObj.getMonth() + 1) + '-' + this.addZero(dateObj.getDate()) + ' ' + this.addZero(dateObj.getHours()) + ':' + this.addZero(dateObj.getMinutes()) + ':' + this.addZero(dateObj.getSeconds());
       return date;
     },
-    addZero(val){
-      if(String(val).length == 1){
-        return '0'+val;
+    addZero(val) {
+      if (String(val).length == 1) {
+        return '0' + val;
       }
       return val;
     }
   },
   created() {
-    if(Cookies.get('id')){
+    if (Cookies.get('id')) {
       window.location.replace('/login');
       return true;
     }
-    
+
     axios
       .get(`http://localhost:4000/api/workingtimes/` + this.$route.params['userID'] + '/' + this.$route.params['id'])
       .then((response) => {
@@ -100,5 +101,42 @@ button.update {
   border: none;
   background-color: orange;
   color: white;
+}
+
+
+
+
+.inputs {
+  margin: 0px 40px;
+  display: flex;
+  flex-direction: column;
+
+}
+
+.inputs label {
+  margin: 15px 0px;
+  font-size: 19px;
+  font-weight: bold;
+}
+
+.inputs input {
+  padding: 15px;
+  background-color: white;
+  font-size: 20px;
+  border: none;
+  border-radius: 10px;
+}
+
+button.delete {
+  padding: 10px;
+  background-color: rgb(231, 47, 47);
+  color: white;
+  border: none;
+  border-radius: 10px;
+
+}
+
+.buttons button {
+  margin: 10px;
 }
 </style>
