@@ -4,10 +4,11 @@
   <div class="chrono-container">
     <div class="content-button">
       <div>
-        <button class="start" v-if="!start" @click="clockStart">
+        <button class="start circle" v-if="!start" @click="clockStart">
+
           START
         </button>
-        <button class="end" v-else @click="clockEnd">
+        <button class="end circle" v-else @click="clockEnd">
           END
         </button>
       </div>
@@ -96,7 +97,7 @@ export default {
         setTimeout(() => {
           let date1 = new Date(Cookies.get('start'));
           let date2 = new Date();
-  
+
           let totalSeconds = Math.round(Math.abs(date2 - date1) / 1000);
           let seconds = Math.floor(totalSeconds % 60);
           let minutes = Math.floor((totalSeconds % 3600) / 60);
@@ -143,7 +144,17 @@ button.start {
   padding: 15px;
   background-color: rgb(68, 141, 68);
   color: white;
+  border: solid 7px white
+}
 
+.circle {
+  border-radius: 50%;
+  width: 160px;
+  height: 160px;
+  padding: 10px;
+  background: #fff;
+  color: #000;
+  text-align: center;
 }
 
 .chrono {
@@ -166,6 +177,8 @@ button.end {
   background-color: rgb(228, 174, 39);
   color: white;
   padding: 10px;
+  color: white;
+  border: solid 7px white
 }
 
 .chrono-content {
