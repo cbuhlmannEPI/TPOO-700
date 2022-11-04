@@ -24,6 +24,13 @@ defmodule Api.Users do
     |> Repo.preload(:workingtimes)
   end
 
+  def list() do
+    query = from(w in User)
+    Repo.all(query)
+    |> Repo.preload(:clocks)
+    |> Repo.preload(:workingtimes)
+  end
+
   @doc """
   Gets a single user.
 

@@ -11,6 +11,11 @@ defmodule ApiWeb.UserController do
     render(conn, "index.json", users: users)
   end
 
+  def list(conn, __params) do
+    users = Users.list()
+    render(conn, "index.json", users: users)
+  end
+
   def create(conn, %{"user" => user_params}) do
     with {:ok, %User{} = user} <- Users.create_user(user_params) do
       conn
@@ -27,7 +32,6 @@ defmodule ApiWeb.UserController do
 
   def update(conn, %{"id" => id, "user" => user_params}) do
     user = Users.get_user!(id)
-
     with {:ok, %User{} = user} <- Users.update_user(user, user_params) do
       render(conn, "show.json", user: user)
     end
