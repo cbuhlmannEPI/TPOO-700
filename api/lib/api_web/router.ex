@@ -28,7 +28,7 @@ defmodule ApiWeb.Router do
 
   scope "/api", ApiWeb do
     get "/allUsers", UserController, :list
-  end  
+  end
 
   scope "/api", ApiWeb do
     get "/clocks/:userID", ClockController, :index
@@ -45,6 +45,18 @@ defmodule ApiWeb.Router do
     get "/allworkingtimes/:userID", WorkingtimeController, :list
   end
 
+  scope "/api/swagger" do
+    forward "/", PhoenixSwagger.Plug.SwaggerUI, otp_app: :tutorial, swagger_file: "swagger.json"
+  end
+
+  def swagger_info do
+    %{
+      info: %{
+        version: "1.0",
+        title: "Tutorial App - Fullstack Phoenix"
+      }
+    }
+  end
   # Other scopes may use custom stacks.
   # scope "/api", ApiWeb do
   #   pipe_through :api
