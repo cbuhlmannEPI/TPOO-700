@@ -53,6 +53,7 @@ defmodule Api.MixProject do
       {:plug_cowboy, "~> 2.5"},
       {:joken, "~> 2.5"},
       {:hackney, "~> 1.9"},
+      {:phoenix_swagger, "~> 0.8"},
       {:ex_json_schema, "~> 0.9.2"}
 
     ]
