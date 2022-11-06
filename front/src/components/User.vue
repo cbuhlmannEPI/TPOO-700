@@ -13,20 +13,32 @@
     <div class="container">
 
       <!-- champs pour nom et prenom de l'user -->
-      <label>ID <input class="name" v-model="user.id"></label>
-      <button id="search" @click="getUserbyID" class="search">Search</button>
-
       <label>Username <input class="name" v-model="user.username"></label>
+      <label>Role <input class="name" v-model="user.role"></label>
 
       <label>Email <input class="email" type="email" v-model="user.email"></label>
       <div class="buttons">
-        <button @click="getUserbyUsernameAndEmail" class="search">Search</button>
         <button @click="updateUser" class="update">Modifier</button>
-        <button @click="createUser" class="create">Créer</button>
-        <button @click="deleteUser" class="delete">Supprimer</button>
-        <button class="userDetail"> <a v-bind:href="'/WorkingTimes/' + user.id"> Voir détails</a></button>
       </div>
     </div>
+  </div>
+  <div>
+    <table>
+        <tr>
+            <th>start</th>
+            <th>end</th>
+            <th></th>
+        </tr>
+        <tr v-for="(wtime, item) in workingtimes" :key="wtime.id">
+            <td>{{ formatDate(wtime.start) }}</td>
+            <td>{{formatDate(wtime.end) }}</td>
+            <td>
+            <button class="seeDetails" @click="deleteWorkingtime(wtime.id, item)">
+                Supprimer
+            </button>
+          </td>
+        </tr>
+    </table>
   </div>
 </template>
 
@@ -43,79 +55,61 @@ export default {
       user: {
         username: '',
         email: '',
-        id: ''
-      }
+        id: '',
+        role: ''
+      },
+      workingtimes: []
     }
   },
   methods: {
-    createUser() { //fonction créer un User
-      axios.post(`http://localhost:4000/api/users`, {
-        user: {
-          username: this.user.username,
-          email: this.user.email
-        }
-      })
-        .then((response) => {
-          this.user.username = response.data.data.username;
-          this.user.email = response.data.data.email;
-          this.user.id = response.data.data.id;
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-    },
-    updateUser() { //fonction mettre à jour un User
-      axios.put(`http://localhost:4000/api/users/` + this.user.id, {
-        user: {
-          username: this.user.username,
-          email: this.user.email
-        }
-      })
-        .then((response) => {
-          this.user.username = response.data.data.username;
-          this.user.email = response.data.data.email;
-          this.user.id = response.data.data.id;
-        })
-    },
-    deleteUser() { // sup un User
-      axios.delete(`http://localhost:4000/api/users/` + this.user.id)
+    deleteWorkingtime(id, idx) { // sup un User
+      axios.delete(`http://localhost:4000/api/workingtimes/` + id)
         .then(() => {
-          this.user.username = "";
-          this.user.email = "";
-          this.user.id = "";
+          this.workingtimes.splice(idx, 1);
         })
         .catch(error => {
           console.error('There was an error!', error);
         });
     },
-    getUserbyID() {
-      axios
-        .get(`http://localhost:4000/api/users/` + this.user.id)
+    updateUser() { //fonction mettre à jour un User
+      axios.put(`http://localhost:4000/api/users/` + this.$route.params['userID'], {
+        user: {
+          username: this.user.username,
+          email: this.user.email,
+          role: this.user.role
+        }
+      })
         .then((response) => {
           this.user.username = response.data.data.username;
           this.user.email = response.data.data.email;
-          sessionStorage.setItem("userID", response.data.data.id);
-          sessionStorage.setItem("username", response.data.data.username);
+          this.user.id = response.data.data.id;
         })
-        .catch((errors) => {
-          console.log(errors)
-        });
     },
-    getUserbyUsernameAndEmail() {
+    formatDate(value) {
+        const dateObj = new Date(value);
+        let date = this.addZero(dateObj.getFullYear()) + '-' + this.addZero(dateObj.getMonth() + 1) + '-' + this.addZero(dateObj.getDate()) + ' ' + this.addZero(dateObj.getHours()) + ':' + this.addZero(dateObj.getMinutes()) + ':' + this.addZero(dateObj.getSeconds());
+        return date;
+      },
+    addZero(val) {
+    if (String(val).length == 1) {
+        return '0' + val;
+    }
+    return val;
+    }
+  },
+  created(){
       axios
-        .get(`http://localhost:4000/api/users?email=` + this.user.email + '&username=' + this.user.username)
+        .get(`http://localhost:4000/api/users/` + this.$route.params['userID'])
         .then((response) => {
-          this.user.username = response.data.data[0].username;
-          this.user.email = response.data.data[0].email;
-          this.user.id = response.data.data[0].id;
-          sessionStorage.setItem("userID", response.data.data.id);
-          sessionStorage.setItem("username", response.data.data.username);
+          this.user.username = response.data.data.username;
+          this.user.email = response.data.data.email;
+          this.user.role = response.data.data.role;
+          this.workingtimes = response.data.data.workingtimes
         })
         .catch((errors) => {
           console.log(errors)
         });
-    },
-  }
+    }
 }
 
 </script>

@@ -20,11 +20,10 @@
 
 <script>
 
-
+import Cookies from 'js-cookie';
 import {
   defineComponent,
 } from 'vue'
-import moment from 'moment';
 import axios from 'axios';
 import { Pie, Line, Bar } from 'vue-chartjs'
 import {
@@ -94,22 +93,50 @@ export default defineComponent({
       chartOptions: {
         responsive: false,
       },
+      days: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi']
     }
   },
   methods: {
-    formatDate(value) {
-      return moment(String(value)).format('YYYY-MM-DD')
-    }
+    addZero(val) {
+      if (String(val).length == 1) {
+        return '0' + val;
+      }
+      return val;
+    },
   },
   created() {
+    if (!Cookies.get('userID')) {
+      window.location.replace('/login');
+      return true;
+    }
     axios
-      .get(`http://localhost:4000/api/workingtimes/`+sessionStorage['userID'])
+      .get(`http://localhost:4000/api/workingtimes/` + Cookies.get('userID'))
       .then((response) => {
-        response.data.data.forEach(wtime => {
-          let start = this.formatDate(wtime.start);
-          // let end = this.formatDate(wtime.end)
-          this.chartData.labels.push(start)
+        // console.log(response.data.data.sort());
+        let array = response.data.data;
+        console.log(array);
+        array.sort(function (wTime1, wTime2) {
+          if (wTime1.start > wTime2.start) return 1;
+          if (wTime1.start < wTime2.start) return -1;
         });
+        let secondes = [];
+        let i = 0;
+
+        array.forEach(wtime => {
+          if (i == 5) {
+            return false;
+          }
+          const dateObj = new Date(wtime.start);
+          // let date = this.addZero(dateObj.getFullYear()) + '-' + this.addZero(dateObj.getMonth() + 1) + '-' + this.addZero(dateObj.getDate());
+          this.chartData.labels.push(this.days[dateObj.getDay()]);
+          let dateStart = new Date(wtime.start);
+          let dateEnd = new Date(wtime.end);
+          let totalSeconds = Math.round(Math.abs(dateEnd - dateStart) / 1000);
+          secondes.push(totalSeconds/3600);
+          i = i + 1;
+        });
+        this.chartData.datasets[0].data = secondes;
+
       })
       .catch((errors) => {
         console.log(errors)

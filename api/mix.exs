@@ -51,6 +51,7 @@ defmodule Api.MixProject do
       {:jason, "~> 1.2"},
       {:cors_plug, "~> 3.0"},
       {:plug_cowboy, "~> 2.5"},
+      {:joken, "~> 2.5"},
       {:hackney, "~> 1.9"}
 
     ]

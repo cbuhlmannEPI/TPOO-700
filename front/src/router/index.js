@@ -5,13 +5,16 @@ import WorkingTime from "../components/WorkingTime.vue";
 import ChartManager from "../components/ChartManager.vue";
 import ClockManager from "../components/ClockManager.vue";
 import LoginView from "../views/LoginView.vue";
+import Home from "../components/HomeComponent";
+import AdminComponent from "../components/AdminComponent";
+import User from "../components/User";
 
 const routes = [
-  // {
-  //   path: '/',
-  //   name: 'app',
-  //   component: App
-  // },
+  {
+    path: "/",
+    name: "app",
+    component: Home,
+  },
   {
     path: "/WorkingTimes/:userID",
     name: "workingTimesUser",
@@ -36,6 +39,16 @@ const routes = [
     path: "/login/",
     name: "login",
     component: LoginView,
+  },
+  {
+    path: "/admin/users",
+    name: "users",
+    component: AdminComponent,
+  },
+  {
+    path: "/user/:userID",
+    name: "user",
+    component: User,
   },
 ];
 

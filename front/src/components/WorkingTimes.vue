@@ -1,39 +1,41 @@
 <script lang="ts" setup></script>
 
 <template>
+  <div class="fond">
+    <div class="container-center">
+      <div class="inputs">
+        <label>Start</label> <input placeholder="2022-01-02 12:00:00" class="name" v-model="workingtime.start">
 
-  <!-- <div>{{ $route.params }}</div> -->
-  <div class="inputs">
+        <label>End </label><input class="email" placeholder="2022-01-02 14:00:00" type="email"
+          v-model="workingtime.end">
 
-    <label>Start</label> <input placeholder="2022/01/02" class="name" v-model="workingtime.start">
-
-    <label>End </label><input class="email" placeholder="2022/01/02" type="email" v-model="workingtime.end">
-
-    <div class="create"><button @click="createWorkingtime" class="create">Créer</button></div>
+        <div class="create"><button @click="createWorkingtime" class="create">Créer</button></div>
+      </div>
+    </div>
+    <div class="workTable">
+      <table>
+        <tr>
+          <th>Start</th>
+          <th>End</th>
+          <th></th>
+        </tr>
+        <tr v-for="wtime in workingtimes" :key="wtime.id">
+          <td>{{ formatDate(wtime.start) }}</td>
+          <td>{{ formatDate(wtime.end) }}</td>
+          <td>
+            <button class="seeDetails"> <a v-bind:href="'/workingTimes/' + $route.params['userID'] + '/' + wtime.id">
+                Voir détails</a></button>
+          </td>
+        </tr>
+      </table>
+    </div>
   </div>
-  <div class="workTable">
-    <table>
-      <tr>
-        <th>Start</th>
-        <th>End</th>
-        <th></th>
-      </tr>
-      <tr v-for="wtime in workingtimes" :key="wtime.id">
-        <td>{{ formatDate(wtime.start) }}</td>
-        <td>{{ formatDate(wtime.end) }}</td>
-        <td>
-          <button class="seeDetails"> <a
-              v-bind:href="'/workingTimes/' + $route.params['userID'] + '/' + wtime.id">
-              Voir détails</a></button>
-        </td>
-      </tr>
-    </table>
-  </div>
+
 </template>
 
 <script>
 import axios from 'axios';
-
+import Cookies from 'js-cookie';
 
 export default {
 
@@ -44,7 +46,7 @@ export default {
       workingtime: {
         start: '',
         end: ''
-      }
+      },
     }
   },
   methods: {
@@ -66,19 +68,24 @@ export default {
     },
     formatDate(value) {
       const dateObj = new Date(value);
-      let date = this.addZero(dateObj.getFullYear())+'-'+this.addZero(dateObj.getMonth())+'-'+this.addZero(dateObj.getDate())+' '+this.addZero(dateObj.getHours())+':'+this.addZero(dateObj.getMinutes())+':'+this.addZero(dateObj.getSeconds());
+      let date = this.addZero(dateObj.getFullYear()) + '-' + this.addZero(dateObj.getMonth() + 1) + '-' + this.addZero(dateObj.getDate()) + ' ' + this.addZero(dateObj.getHours()) + ':' + this.addZero(dateObj.getMinutes()) + ':' + this.addZero(dateObj.getSeconds());
       return date;
     },
-    addZero(val){
-      if(String(val).length == 1){
-        return '0'+val;
+    addZero(val) {
+      if (String(val).length == 1) {
+        return '0' + val;
       }
       return val;
     }
   },
   created() {
+    if (!Cookies.get('userID')) {
+      window.location.replace('/login');
+      return true;
+    }
+
     axios
-      .get(`http://localhost:4000/api/workingtimes/` + this.$route.params['userID'])
+      .get(`http://localhost:4000/api/allworkingtimes/` + this.$route.params['userID'])
       .then((response) => {
         this.workingtimes = response.data.data;
       })
@@ -90,19 +97,31 @@ export default {
 
 </script>
 <style>
+.container-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .inputs {
-  padding: 10px;
-  margin: 10px;
+  margin: 0px 40px;
   display: flex;
   flex-direction: column;
-  width: 30%;
 
 }
 
+.inputs label {
+  margin: 15px 0px;
+  font-size: 19px;
+  font-weight: bold;
+}
+
 .inputs input {
-  padding: 10px;
+  padding: 15px;
+  background-color: white;
   font-size: 20px;
-  border: solid 2px black;
+  border: none;
+  border-radius: 10px;
 }
 
 .workTable {
@@ -112,14 +131,27 @@ export default {
 }
 
 table {
-  border: solid 1px black;
+  color: black;
   border-collapse: collapse;
+  margin: 20px 40px;
+  background-color: white;
 }
 
 td {
   padding: 10px;
 
-  border: solid 1px black;
+  border-top: solid 1px;
+}
+
+th {
+  padding: 10px;
+  color: black;
+  background-color: rgb(255, 254, 253);
+
+}
+
+tr:nth-child(even) {
+  background-color: rgb(225, 229, 225);
 }
 
 button.seeDetails {
@@ -138,12 +170,20 @@ button.seeDetails {
 button.create {
   padding: 10px;
   background-color: green;
-
-  margin: 10px;
+  margin-top: 20px;
   border: none;
   border-radius: 10px;
   color: white;
+  width: 100%;
+  font-weight: bold;
+  letter-spacing: 1px;
+  transition: all ease 0.5s;
 
+}
+
+button.create:hover {
+  background-color: white;
+  color: black;
 }
 </style>
 

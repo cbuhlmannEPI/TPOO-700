@@ -15,6 +15,9 @@
                             <h1>Se connecter</h1>
                             <!-- <form class="form-group"> -->
                             <div class="form-group">
+                                <div v-if="error">
+                                    {{message}}
+                                </div>
                                 <input v-model="emailLogin" type="email" class="form-control" placeholder="Email"
                                     required>
                                 <input v-model="passwordLogin" type="password" class="form-control"
@@ -34,6 +37,9 @@
                         <div v-else class="card register" v-bind:class="{ error: emptyFields }">
                             <h1>Sign Up</h1>
                             <form class="form-group">
+                                <div v-if="error">
+                                    {{message}}
+                                </div>
                                 <input v-model="emailReg" type="email" class="form-control" placeholder="Email"
                                     required>
                                 <input v-model="passwordReg" type="password" class="form-control" placeholder="Password"
@@ -57,10 +63,13 @@
 <script>
 
 import axios from 'axios';
+import Cookies from 'js-cookie'
 
 export default {
     data() {
         return {
+            error: false,
+            message: '',
             registerActive: false,
             emailLogin: "",
             passwordLogin: "",
@@ -91,9 +100,16 @@ export default {
             axios
                 .get(`http://localhost:4000/api/users?email=` + this.emailLogin + '&username=' + this.passwordLogin)
                 .then((response) => {
-                    sessionStorage.setItem("userID", response.data.data[0].id);
-                    sessionStorage.setItem("username", response.data.data[0].username);
-                    window.location.replace('/')
+                    if(response.data.data.length == 0){
+                        this.error = true;
+                        this.message = "Identifiant ou mot de passe incorrect";
+                    } else {
+                        Cookies.set('userID', response.data.data[0].id);
+                        Cookies.set('username', response.data.data[0].username); 
+                        Cookies.set('role', response.data.data[0].role);
+                        window.location.replace('/')
+                    }
+
                 })
                 .catch((errors) => {
                     console.log(errors)

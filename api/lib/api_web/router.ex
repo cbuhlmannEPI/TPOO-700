@@ -27,6 +27,10 @@ defmodule ApiWeb.Router do
   resources "/api/users", ApiWeb.UserController, except: [:new, :edit]
 
   scope "/api", ApiWeb do
+    get "/allUsers", UserController, :list
+  end  
+
+  scope "/api", ApiWeb do
     get "/clocks/:userID", ClockController, :index
     post "/clocks/:userID", ClockController, :create
     put "/clocks/:id", ClockController, :update
@@ -38,6 +42,7 @@ defmodule ApiWeb.Router do
     put "/workingtimes/:id", WorkingtimeController, :update
     delete "/workingtimes/:id", WorkingtimeController, :delete
     post "/workingtimes/:userID", WorkingtimeController, :create
+    get "/allworkingtimes/:userID", WorkingtimeController, :list
   end
 
   # Other scopes may use custom stacks.
