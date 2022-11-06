@@ -6,8 +6,6 @@ services:
     build: front/
     ports:
       - "8080:80"
-    networks:
-      - frontend
     restart: on-failure
 
   back:
@@ -15,11 +13,12 @@ services:
     ports:
       - "4000:4000"
     networks:
-      - backend
+      - database
     environment:
       - POSTGRES_DB=api
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
+      - POSTGRES_HOST=db
     depends_on:
          # The DB container needs to be started before we start this container.
          - db
@@ -27,22 +26,15 @@ services:
       # We use the predefined Postgres image.
       image: postgres:latest
       environment:
-         # Set user/password for Postgres.
-         POSTGRES_USER: postgres
-         POSTGRES_PASSWORD: postgres
-         # Set a path where Postgres should store the data.
-         PGDATA: /var/lib/postgresql/data/pgdata
+         # Set user for Postgres.
+        - POSTGRES_PASSWORD=postgres
+        - PGDATA=/var/lib/postgresql/data/db-files/
       restart: always
-      volumes:
-         - pgdata:/var/lib/postgresql/data
-# Define the volumes.
-volumes:
-   pgdata:
+      ports:
+         - 5432:5432
+      networks: 
+         - database
     
 
-# volumes:
-#   db-data:
-
 networks:
-  frontend:
-  backend:
+  database:

@@ -14,7 +14,6 @@ RUN apt-get install -y inotify-tools
 # Install the Phoenix (phx) archive
 RUN mix local.hex --force \
 && mix local.rebar --force && mix deps.update --all
-
 RUN mix do compile 
 # Expose port 4000
 EXPOSE 4000
