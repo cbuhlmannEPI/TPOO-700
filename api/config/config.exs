@@ -23,6 +23,15 @@ config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]
 
+  config :my_app, :phoenix_swagger,
+  swagger_files: %{
+    "priv/static/swagger.json" => [
+      router: ApiWeb.Router,     # phoenix routes will be converted to swagger paths
+      endpoint: ApiWeb.Endpoint  # (optional) endpoint config used to set host, port and https schemes.
+    ]
+  }
+  config :phoenix_swagger, json_library: Jason
+
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 config :sample, Sample.Mailer,
