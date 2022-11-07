@@ -16,7 +16,7 @@
                             <!-- <form class="form-group"> -->
                             <div class="form-group">
                                 <div v-if="error">
-                                    {{message}}
+                                    {{         message         }}
                                 </div>
                                 <input v-model="emailLogin" type="email" class="form-control" placeholder="Email"
                                     required>
@@ -38,7 +38,7 @@
                             <h1>Sign Up</h1>
                             <form class="form-group">
                                 <div v-if="error">
-                                    {{message}}
+                                    {{         message         }}
                                 </div>
                                 <input v-model="emailReg" type="email" class="form-control" placeholder="Email"
                                     required>
@@ -100,14 +100,14 @@ export default {
             axios
                 .get(`http://localhost:4000/api/users?email=` + this.emailLogin + '&username=' + this.passwordLogin)
                 .then((response) => {
-                    if(response.data.data.length == 0){
+                    if (response.data.data.length == 0) {
                         this.error = true;
                         this.message = "Identifiant ou mot de passe incorrect";
                     } else {
                         Cookies.set('userID', response.data.data[0].id);
-                        Cookies.set('username', response.data.data[0].username); 
-                        Cookies.set('role', response.data.data[0].role);
-                        window.location.replace('/')
+
+                        Cookies.set('username', response.data.data[0].username);
+                        window.location.replace('/dashboard')
                     }
 
                 })
