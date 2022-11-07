@@ -18,6 +18,8 @@
 <script>
 import axios from 'axios';
 import Cookies from 'js-cookie';
+console.log(Cookies);
+
 export default {
 
   data() {
@@ -66,7 +68,7 @@ export default {
     }
   },
   created() {
-    if (Cookies.get('id')) {
+    if (!Cookies.get('userID')) {
       window.location.replace('/login');
       return true;
     }

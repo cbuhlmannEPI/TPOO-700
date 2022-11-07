@@ -1,41 +1,26 @@
 <template>
 
-    <v-card style="height:100%">
-        <v-layout style="height:100%">
-            <v-navigation-drawer expand-on-hover rail>
-                <v-list>
-                    <v-list-item prepend-avatar="https://randomuser.me/api/portraits/women/85.jpg" title="Sandra Adams"
-                        subtitle="sandra_a88@gmailcom"></v-list-item>
-                </v-list>
 
-                <v-divider></v-divider>
 
-                <v-list density="compact" nav v-for="menu in menus" :key="menu.title">
-                    <v-list-item :prepend-icon="'.'" :title="menu.title" v-on:click="changeComponent(menu.component)">
-                    </v-list-item>
-                </v-list>
-            </v-navigation-drawer>
+    <div class="text-center">
+        <h2>Welcome</h2>
 
-            <v-main style="height: 250px">
-                <component :is="dynamicComponent"></component>
-            </v-main>
-        </v-layout>
-    </v-card>
+        <div class="image-logo"></div>
+    </div>
 </template>
   
 <script>
 
 
-import ClockManager from "../components/ClockManager.vue"
-import ChartComponent from "../components/ChartComponent.vue"
-import Worktimes from "../components/WorkingTimes.vue"
+import Cookies from 'js-cookie';
 export default {
+
     name: 'DashboardView',
 
     components: {
-        ClockManager,
-        ChartComponent,
-        Worktimes
+        // ClockManager,
+        // ChartComponent,
+        // Worktimes
 
     },
     data() {
@@ -45,17 +30,21 @@ export default {
                 {
                     title: 'Clocks',
                     icon: 'mdi-clock',
-                    component: 'ClockManager'
+                    component: 'ClockManager',
+                    url: 'Clocks/' + Cookies.get('username')
                 },
                 {
-                    title: 'ChartComponenent',
-                    icon: 'mdi-clock',
-                    component: 'ChartComponent'
+                    title: 'Charts',
+                    icon: 'mdi-chart-pie',
+                    component: 'ChartComponent',
+                    url: 'chartManager/' + Cookies.get('userID')
+
                 },
                 {
-                    title: 'Worktimes',
+                    title: 'Workingtimes',
                     icon: 'mdi-clock',
-                    component: 'Worktimes'
+                    component: 'WorkingTimes',
+                    url: 'WorkingTimes/' + Cookies.get('userID')
                 },
             ],
 
@@ -63,13 +52,35 @@ export default {
 
     },
     methods: {
-        changeComponent(component) {
-            this.dynamicComponent = component;
+        changeComponent(url) {
+            window.location.replace('/' + url);
+
+
+            // this.dynamicComponent = component;
+
         }
     },
+
 
 }
 
 
 </script>
-  
+<style>
+.v-main {
+    height: auto !important
+}
+
+.v-list-item__content {
+    cursor: pointer;
+}
+
+.image-logo {
+    background-image: url(../assets/check-time.png);
+    height: 400px;
+    width: 100%;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+</style>
