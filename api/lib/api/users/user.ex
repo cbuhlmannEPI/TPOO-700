@@ -17,8 +17,9 @@ defmodule Api.Users.User do
   @doc false
   def changeset(user, attrs) do
     user
-    |> cast(attrs, [:username, :email])
-    |> validate_required([:username, :email])
+    |> cast(attrs, [:username, :email, :role, :password])
+    |> validate_format(:email, ~r/@/)
+    |> validate_required([:username, :email, :role, :password])
     |> unique_constraint(:email)
   end
 end
