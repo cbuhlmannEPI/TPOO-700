@@ -7,90 +7,110 @@
   <div class="head">
 
     <!-- filtre -->
-    <input id="search" v-model="prefix" placeholder="Filter prefix">
 
-    <div class="container">
-      <select size="5" v-model="selected">
-        <option v-for="name in filteredNames" :key="name">{{ name }}</option>
-      </select>
-    </div>
+
     <!-- affichage user -->
     <div class="container">
 
       <!-- champs pour nom et prenom de l'user -->
-      <div class="flex">
-        <label>Nom <input class="name" v-model="first"></label>
-      </div>
-      <div class="flex">
-        <label>Email <input class="email" v-model="last"></label>
+      <label>Username <input class="name" v-model="user.username"></label>
+      <label>Role <input class="name" v-model="user.role"></label>
+
+      <label>Email <input class="email" type="email" v-model="user.email"></label>
+      <div class="buttons">
+        <button @click="updateUser" class="update">Modifier</button>
       </div>
     </div>
-    <!-- btn CRUD -->
-    <div class="buttons">
-      <button @click="createUser" class="create">Créer</button>
-      <button @click="updateUser" class="update">Modifier</button>
-      <button @click="deleteUser" class="delete">Supprimer</button>
-    </div>
+  </div>
+  <div>
+    <table>
+        <tr>
+            <th>start</th>
+            <th>end</th>
+            <th></th>
+        </tr>
+        <tr v-for="(wtime, item) in workingtimes" :key="wtime.id">
+            <td>{{ formatDate(wtime.start) }}</td>
+            <td>{{formatDate(wtime.end) }}</td>
+            <td>
+            <button class="seeDetails" @click="deleteWorkingtime(wtime.id, item)">
+                Supprimer
+            </button>
+          </td>
+        </tr>
+    </table>
   </div>
 </template>
 
 
 <script>
+
+import axios from 'axios';
+
 export default {
+  name: 'UserComponent',
   data() {
     return {
-      names: ['Test, test', 'zest,zest'], //mettre data
-      selected: '',
-      prefix: '',
-      first: '',
-      last: ''
-    }
-  },
-  computed: {
-    filteredNames() { // filtre (miniscule to majuscule comprise )
-      return this.names.filter((n) =>
-        n.toLowerCase().startsWith(this.prefix.toLowerCase())
-      )
-    }
-  },
-  watch: {
-    selected(name) {
-      [this.last, this.first] = name.split(', ')
+      show: false,
+      user: {
+        username: '',
+        email: '',
+        id: '',
+        role: ''
+      },
+      workingtimes: []
     }
   },
   methods: {
-    createUser() { //fonction créer un User
-      if (this.hasValidInput()) {
-        const fullName = `${this.last}, ${this.first}`
-        if (!this.names.includes(fullName)) {
-          this.names.push(fullName)
-          this.first = this.last = ''
-        }
-      }
+    deleteWorkingtime(id, idx) { // sup un User
+      axios.delete(`http://localhost:4000/api/workingtimes/` + id)
+        .then(() => {
+          this.workingtimes.splice(idx, 1);
+        })
+        .catch(error => {
+          console.error('There was an error!', error);
+        });
     },
     updateUser() { //fonction mettre à jour un User
-      if (this.hasValidInput() && this.selected) {
-        const i = this.names.indexOf(this.selected)
-        this.names[i] = this.selected = `${this.last}, ${this.first}`
-      }
+      axios.put(`http://localhost:4000/api/users/` + this.$route.params['userID'], {
+        user: {
+          username: this.user.username,
+          email: this.user.email,
+          role: this.user.role
+        }
+      })
+        .then((response) => {
+          this.user.username = response.data.data.username;
+          this.user.email = response.data.data.email;
+          this.user.id = response.data.data.id;
+        })
     },
-    deleteUser() { // sup un User
-      if (this.selected) {
-        const i = this.names.indexOf(this.selected)
-        this.names.splice(i, 1)
-        this.selected = this.first = this.last = ''
-      }
-    },
-    hasValidInput() {
-      return this.first.trim() && this.last.trim()
+    formatDate(value) {
+        const dateObj = new Date(value);
+        let date = this.addZero(dateObj.getFullYear()) + '-' + this.addZero(dateObj.getMonth() + 1) + '-' + this.addZero(dateObj.getDate()) + ' ' + this.addZero(dateObj.getHours()) + ':' + this.addZero(dateObj.getMinutes()) + ':' + this.addZero(dateObj.getSeconds());
+        return date;
+      },
+    addZero(val) {
+    if (String(val).length == 1) {
+        return '0' + val;
     }
-  }
+    return val;
+    }
+  },
+  created(){
+      axios
+        .get(`http://localhost:4000/api/users/` + this.$route.params['userID'])
+        .then((response) => {
+          this.user.username = response.data.data.username;
+          this.user.email = response.data.data.email;
+          this.user.role = response.data.data.role;
+          this.workingtimes = response.data.data.workingtimes
+        })
+        .catch((errors) => {
+          console.log(errors)
+        });
+    }
 }
-
-
-
-
-
 
 </script>
 <style>
@@ -100,7 +120,6 @@ export default {
 
 input {
   display: block;
-  margin-bottom: 10px;
   padding: 10px;
   border-radius: 10px;
   border: solid 1px;
@@ -111,6 +130,14 @@ select {
   padding: 10px;
   width: 14em;
   border-radius: 10px;
+}
+
+button#search {
+  background-color: black;
+}
+
+button.search {
+  background-color: black;
 }
 
 button {
@@ -133,8 +160,7 @@ button:hover {
 .head {
   margin-bottom: 5px;
   display: flex;
-  flex-direction: column;
-  align-items: center;
+
   padding: 10px;
 }
 
@@ -163,7 +189,32 @@ button:hover {
 
 .container {
   display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   gap: 2em;
 
+}
+
+table {
+  border: solid 1px black;
+  border-collapse: collapse;
+}
+
+td {
+  padding: 10px;
+
+  border: solid 1px black;
+}
+
+.userDetail {
+  background-color: rgb(44, 20, 182);
+
+}
+
+.userTable {
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
 }
 </style>

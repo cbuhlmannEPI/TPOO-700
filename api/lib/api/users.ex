@@ -17,8 +17,16 @@ defmodule Api.Users do
       [%User{}, ...]
 
   """
-  def list_users do
-    Repo.all(User)
+  def list_users(email, username) do
+    query = from(w in User, where: w.email == ^email and w.username == ^username)
+    Repo.all(query)
+    |> Repo.preload(:clocks)
+    |> Repo.preload(:workingtimes)
+  end
+
+  def list() do
+    query = from(w in User)
+    Repo.all(query)
     |> Repo.preload(:clocks)
     |> Repo.preload(:workingtimes)
   end
@@ -57,6 +65,8 @@ defmodule Api.Users do
   """
   def create_user(attrs \\ %{}) do
     %User{}
+    |> Repo.preload(:clocks)
+    |> Repo.preload(:workingtimes)
     |> User.changeset(attrs)
     |> Repo.insert()
   end

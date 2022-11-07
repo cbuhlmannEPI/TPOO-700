@@ -1,47 +1,69 @@
-import { createRouter, createWebHistory } from 'vue-router';
-import App from '../App.vue';
-import  WorkingTimes  from "../components/WorkingTimes.vue";
-import  WorkingTime  from "../components/WorkingTime.vue";
-import  ChartManager  from "../components/ChartManager.vue";
-import  ClockManager  from "../components/ClockManager.vue";
+import { createRouter, createWebHistory } from "vue-router";
+
+import WorkingTimes from "../components/WorkingTimes.vue";
+import WorkingTime from "../components/WorkingTime.vue";
+import ChartManager from "../components/ChartManager.vue";
+import ClockManager from "../components/ClockManager.vue";
+import LoginView from "../views/LoginView.vue";
+import DashboardView from "../views/DashboardView";
+import Home from "../components/HomeComponent";
+import AdminComponent from "../components/AdminComponent";
+import User from "../components/User";
 
 const routes = [
   {
-    path: '/', 
-    name: 'home',
-    component: App
+    path: "/",
+    name: "app",
+    component: Home,
   },
   {
-    path: '/workingTime/:userid', 
-    name: 'workingTimeUser',
-    component: WorkingTime
+    path: "/WorkingTimes/:userID",
+    name: "workingTimesUser",
+    component: WorkingTimes,
   },
   {
-    path: '/clock/:username', 
-    name: 'clockUser',
-    component: ClockManager
+    path: "/workingTimes/:userID/:id",
+    name: "workingTimeUser",
+    component: WorkingTime,
   },
   {
-    path: '/workingTime/:userid/:workingtimeid', 
-    name: 'workingTimeTime',
-    component: WorkingTime
+    path: "/clocks/:username",
+    name: "clocks",
+    component: ClockManager,
   },
   {
-    path: '/chartManager/:userid', 
-    name: 'clockUser',
-    component: ChartManager
+    path: "/chartManager/:userID",
+    name: "charts",
+    component: ChartManager,
   },
   {
-    path: '/WorkingTimes/:userI',
-    name: 'WorkingTimes',
-    component: WorkingTimes
-  }
-]
+    path: "/login/",
+    name: "login",
+    component: LoginView,
+  },
+  {
+
+    path: "/dashboard/",
+    name: "dashboard",
+    component: DashboardView,
+    },
+    {
+
+    path: "/admin/users",
+    name: "users",
+    component: AdminComponent,
+  },
+  {
+    path: "/user/:userID",
+    name: "user",
+    component: User,
+
+  },
+];
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
-  routes
-})
+  routes,
+});
 
-export default router
- 
+export default router;

@@ -2,23 +2,29 @@
 <template>
   <h2>CHART</h2>
   <div class="chart">
-    <Pie :chart-options="chartOptions" :chart-data="chartData" :chart-id="chartId" :dataset-id-key="datasetIdKey"
-      :plugins="plugins" :css-classes="cssClasses" :styles="styles" :width="width" :height="height"></Pie>
-    <Line :chart-options="chartOptions" :chart-data="chartData" :chart-id="chartId" :dataset-id-key="datasetIdKey"
-      :plugins="plugins" :css-classes="cssClasses" :styles="styles" :width="width" :height="height"></Line>
-    <Bar :chart-options="chartOptions" :chart-data="chartData" :chart-id="chartId" :dataset-id-key="datasetIdKey"
-      :plugins="plugins" :css-classes="cssClasses" :styles="styles" :width="width" :height="height"></bar>
+    <div class="card">
+      <Pie :chart-options="chartOptions" :chart-data="chartData" :chart-id="chartId" :dataset-id-key="datasetIdKey"
+        :plugins="plugins" :css-classes="cssClasses" :styles="styles" :width="width" :height="height"></Pie>
+    </div>
+    <div class="card">
+      <Line :chart-options="chartOptions" :chart-data="chartData" :chart-id="chartId" :dataset-id-key="datasetIdKey"
+        :plugins="plugins" :css-classes="cssClasses" :styles="styles" :width="width" :height="height"></Line>
+    </div>
+    <div class="card">
+      <Bar :chart-options="chartOptions" :chart-data="chartData" :chart-id="chartId" :dataset-id-key="datasetIdKey"
+        :plugins="plugins" :css-classes="cssClasses" :styles="styles" :width="width" :height="height"></bar>
+    </div>
   </div>
 </template>
 
 
 <script>
 
-
+import Cookies from 'js-cookie';
 import {
   defineComponent,
 } from 'vue'
-import axios from "axios";
+import axios from 'axios';
 import { Pie, Line, Bar } from 'vue-chartjs'
 import {
   Chart as ChartJS,
@@ -56,11 +62,11 @@ export default defineComponent({
     },
     width: {
       type: Number,
-      default: 450
+      default: 290
     },
     height: {
       type: Number,
-      default: 400
+      default: 290
     },
     cssClasses: {
       default: '',
@@ -74,51 +80,66 @@ export default defineComponent({
       default: () => []
     }
   }, data() {
-
     return {
-
       chartData: {
-
-        labels: ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi'],
-
+        labels: [],
         datasets: [
-
           {
-
             label: 'Working Time',
-
             backgroundColor: ['#1d3557', '#457b9d', '#a8dadc', '#f1faee', '#e63946'],
-
-            data: [6, 7, 6, 8, 9]
-
+            data: []
           }]
-
       },
-
       chartOptions: {
-
         responsive: false,
-
       },
-
-
-
+      days: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi']
     }
-
   },
-
-  // Pulls posts when the component is created.
+  methods: {
+    addZero(val) {
+      if (String(val).length == 1) {
+        return '0' + val;
+      }
+      return val;
+    },
+  },
   created() {
+    if (!Cookies.get('userID')) {
+      window.location.replace('/login');
+      return true;
+    }
     axios
-      .get(`http://localhost:4000/api/users`)
+      .get(`http://localhost:4000/api/workingtimes/` + Cookies.get('userID'))
       .then((response) => {
-        // JSON responses are automatically parsed.
-        this.posts = response.data;
-        console.log(response.data);
-      })
-      .catch((e) => {
+        // console.log(response.data.data.sort());
+        let array = response.data.data;
+        console.log(array);
+        array.sort(function (wTime1, wTime2) {
+          if (wTime1.start > wTime2.start) return 1;
+          if (wTime1.start < wTime2.start) return -1;
+        });
+        let secondes = [];
+        let i = 0;
 
-        this.errors.push(e);
+        array.forEach(wtime => {
+          if (i == 5) {
+            return false;
+          }
+          const dateObj = new Date(wtime.start);
+          // let date = this.addZero(dateObj.getFullYear()) + '-' + this.addZero(dateObj.getMonth() + 1) + '-' + this.addZero(dateObj.getDate());
+          this.chartData.labels.push(this.days[dateObj.getDay()]);
+          let dateStart = new Date(wtime.start);
+          let dateEnd = new Date(wtime.end);
+          let totalSeconds = Math.round(Math.abs(dateEnd - dateStart) / 1000);
+          secondes.push(totalSeconds/3600);
+          i = i + 1;
+        });
+        this.chartData.datasets[0].data = secondes;
+
+      })
+      .catch((errors) => {
+        console.log(errors)
       });
   }
 })
