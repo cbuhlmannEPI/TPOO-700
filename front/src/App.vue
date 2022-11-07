@@ -60,13 +60,7 @@ export default {
           icon: 'mdi-clock',
           component: 'WorkingTimes',
           url: 'WorkingTimes/' + Cookies.get('userID')
-        },
-        {
-          title: 'Admin',
-          icon: 'mdi-account',
-          component: 'AdminComponent',
-          url: 'admin/users'
-        },
+        }
       ],
 
     }
@@ -84,6 +78,17 @@ export default {
       if (!window.location.href.endsWith('/login')) {
         window.location.replace('/login');
       }
+    }
+
+    if(Cookies.get('role') == 'admin'){
+      let menu = {
+        title: 'Admin',
+        icon: 'mdi-account',
+        component: 'AdminComponent',
+        url: 'admin/users'
+      }
+
+      this.menus.push(menu);
     }
   }
 
