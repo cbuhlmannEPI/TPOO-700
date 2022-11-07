@@ -51,9 +51,18 @@ defmodule ApiWeb.Router do
 
   def swagger_info do
     %{
+      schemes: ["http", "https", "ws", "wss"],
       info: %{
         version: "1.0",
-        title: "Tutorial App - Fullstack Phoenix"
+        title: "MyAPI",
+        description: "API Documentation for MyAPI v1",
+        termsOfService: "Open for public",
+
+        consumes: ["application/json"],
+        produces: ["application/json"],
+        tags: [
+          %{name: "Users", description: "User resources"},
+        ]
       }
     }
   end

@@ -1,0 +1,30 @@
+{
+  "definitions": {},
+  "host": "localhost:4000",
+  "info": {
+    "consumes": [
+      "application/json"
+    ],
+    "description": "API Documentation for MyAPI v1",
+    "produces": [
+      "application/json"
+    ],
+    "tags": [
+      {
+        "description": "User resources",
+        "name": "Users"
+      }
+    ],
+    "termsOfService": "Open for public",
+    "title": "MyAPI",
+    "version": "1.0"
+  },
+  "paths": {},
+  "schemes": [
+    "http",
+    "https",
+    "ws",
+    "wss"
+  ],
+  "swagger": "2.0"
+}
