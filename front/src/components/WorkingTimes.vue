@@ -9,7 +9,7 @@
         <label>End </label><input class="email" placeholder="2022-01-02 14:00:00" type="email"
           v-model="workingtime.end">
 
-        <div class="create"><button @click="createWorkingtime" class="create">Créer</button></div>
+        <div><button @click="createWorkingtime" class="create">Créer</button></div>
       </div>
     </div>
     <div class="workTable">
