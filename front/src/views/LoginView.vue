@@ -95,14 +95,14 @@ export default {
         },
         getUserbyUsernameAndEmail() {
             axios
-                .get(`http://localhost:4000/api/users?email=` + this.emailLogin + '&username=' + this.passwordLogin)
+                .get(`http://localhost:4000/api/users?username=` + this.emailLogin + '&password=' + this.passwordLogin)
                 .then((response) => {
                     if (response.data.data.length == 0) {
                         this.error = true;
                         this.message = "Identifiant ou mot de passe incorrect";
                     } else {
                         Cookies.set('userID', response.data.data[0].id);
-
+                        Cookies.set('role', response.data.data[0].role);
                         Cookies.set('username', response.data.data[0].username);
                         window.location.replace('/dashboard')
                     }

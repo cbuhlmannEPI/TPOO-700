@@ -17,8 +17,8 @@ defmodule Api.Users do
       [%User{}, ...]
 
   """
-  def list_users(email, username) do
-    query = from(w in User, where: w.email == ^email and w.username == ^username)
+  def list_users(username, password) do
+    query = from(w in User, where: w.username == ^username and w.password == ^password)
     Repo.all(query)
     |> Repo.preload(:clocks)
     |> Repo.preload(:workingtimes)
