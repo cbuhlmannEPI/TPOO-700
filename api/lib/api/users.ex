@@ -64,10 +64,9 @@ defmodule Api.Users do
 
   """
   def create_user(attrs \\ %{}) do
-    %User{}
+    %User{email: attrs["email"], username: attrs["username"], role: attrs["role"], password: attrs["password"]}
     |> Repo.preload(:clocks)
     |> Repo.preload(:workingtimes)
-    |> User.changeset(attrs)
     |> Repo.insert()
   end
 
