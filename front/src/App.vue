@@ -1,9 +1,5 @@
 <template>
-  <!-- <v-app>
-    <v-main>
-      <router-view />
-    </v-main>
-  </v-app> -->
+
   <v-card style="height:100%">
     <v-layout style="height:100%">
       <v-navigation-drawer v-if="$route.path !== '/login'" expand-on-hover rail>
@@ -21,7 +17,6 @@
       </v-navigation-drawer>
 
       <v-main>
-        <!-- <component :is="dynamicComponent"></component> -->
         <router-view></router-view>
       </v-main>
     </v-layout>
@@ -65,6 +60,12 @@ export default {
           icon: 'mdi-clock',
           component: 'WorkingTimes',
           url: 'WorkingTimes/' + Cookies.get('userID')
+        },
+        {
+          title: 'Admin',
+          icon: 'mdi-account',
+          component: 'AdminComponent',
+          url: 'admin/users'
         },
       ],
 
