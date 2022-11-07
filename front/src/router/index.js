@@ -7,6 +7,8 @@ import ClockManager from "../components/ClockManager.vue";
 import LoginView from "../views/LoginView.vue";
 import DashboardView from "../views/DashboardView";
 import Home from "../components/HomeComponent";
+import AdminComponent from "../components/AdminComponent";
+import User from "../components/User";
 
 const routes = [
   {
@@ -40,9 +42,22 @@ const routes = [
     component: LoginView,
   },
   {
+
     path: "/dashboard/",
     name: "dashboard",
     component: DashboardView,
+    },
+    {
+
+    path: "/admin/users",
+    name: "users",
+    component: AdminComponent,
+  },
+  {
+    path: "/user/:userID",
+    name: "user",
+    component: User,
+
   },
 ];
 

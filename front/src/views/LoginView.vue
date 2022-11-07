@@ -105,6 +105,7 @@ export default {
                         this.message = "Identifiant ou mot de passe incorrect";
                     } else {
                         Cookies.set('userID', response.data.data[0].id);
+
                         Cookies.set('username', response.data.data[0].username);
                         window.location.replace('/dashboard')
                     }

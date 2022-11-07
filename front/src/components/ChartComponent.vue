@@ -105,6 +105,10 @@ export default defineComponent({
     },
   },
   created() {
+    if (!Cookies.get('userID')) {
+      window.location.replace('/login');
+      return true;
+    }
     axios
       .get(`http://localhost:4000/api/workingtimes/` + Cookies.get('userID'))
       .then((response) => {
