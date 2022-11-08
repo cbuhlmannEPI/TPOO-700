@@ -9,7 +9,7 @@
         <label>End </label><input class="email" placeholder="2022-01-02 14:00:00" type="email"
           v-model="workingtime.end">
 
-        <div class="create"><button @click="createWorkingtime" class="create">Créer</button></div>
+        <div><button @click="createWorkingtime" class="create">Créer</button></div>
       </div>
     </div>
     <div class="workTable">
@@ -51,7 +51,7 @@ export default {
   },
   methods: {
     createWorkingtime() { //fonction créer un User
-      axios.post(`http://localhost:4000/api/workingtimes/` + this.$route.params['userID'], {
+      axios.post(`http://localhost:4000/api/workingtimes/` + Cookies.get('userID'), {
         workingtime: {
           start: this.workingtime.start,
           end: this.workingtime.end
@@ -85,8 +85,9 @@ export default {
     }
 
     axios
-      .get(`http://localhost:4000/api/allworkingtimes/` + this.$route.params['userID'])
+      .get(`http://localhost:4000/api/allworkingtimes/` + Cookies.get('userID'))
       .then((response) => {
+        console.log(response);
         this.workingtimes = response.data.data;
       })
       .catch((errors) => {
@@ -97,6 +98,11 @@ export default {
 
 </script>
 <style>
+a {
+  text-decoration: none;
+  color: white;
+}
+
 .container-center {
   display: flex;
   justify-content: center;

@@ -9,51 +9,48 @@
             <div class="wallpaper-register"></div>
 
             <div class="container">
-                <div class="row">
-                    <div class="col-lg-6 mx-auto">
-                        <div v-if="!registerActive" class="card login" v-bind:class="{ error: emptyFields }">
-                            <h1>Se connecter</h1>
-                            <!-- <form class="form-group"> -->
-                            <div class="form-group">
-                                <div v-if="error">
-                                    {{message}}
-                                </div>
-                                <input v-model="emailLogin" type="email" class="form-control" placeholder="Email"
-                                    required>
-                                <input v-model="passwordLogin" type="password" class="form-control"
-                                    placeholder="Password" required>
-                                <button class="btn btn-primary mb-3 mt-3"
-                                    @click="getUserbyUsernameAndEmail">Envoyer</button>
-                                <p>Pas de compte? <a href="#"
-                                        @click="registerActive = !registerActive, emptyFields = false"
-                                        style="color:black">S'inscrire
-                                        ici</a>
-                                </p>
-                                <p><a href="#">Mot de passe oublié ?</a></p>
-                                <!-- </form> -->
-                            </div>
-                        </div>
 
-                        <div v-else class="card register" v-bind:class="{ error: emptyFields }">
-                            <h1>Sign Up</h1>
-                            <form class="form-group">
-                                <div v-if="error">
-                                    {{message}}
-                                </div>
-                                <input v-model="emailReg" type="email" class="form-control" placeholder="Email"
-                                    required>
-                                <input v-model="passwordReg" type="password" class="form-control" placeholder="Password"
-                                    required>
-                                <input v-model="confirmReg" type="password" class="form-control"
-                                    placeholder="Confirm Password" required>
-                                <input type="submit" class="btn btn-primary" @click="doRegister">
-                                <p>Already have an account? <a style="color:black" href="#"
-                                        @click="registerActive = !registerActive, emptyFields = false">Sign in here</a>
-                                </p>
-                            </form>
+                <div class="col-lg-12 ">
+                    <div v-if="!registerActive" class="card login" v-bind:class="{ error: emptyFields }">
+                        <h1>Se connecter</h1>
+                        <!-- <form class="form-group"> -->
+                        <div class="form-group">
+                            <div v-if="error">
+                                {{ message }}
+                            </div>
+                            <input v-model="emailLogin" type="email" class="form-control" placeholder="Email" required>
+                            <input v-model="passwordLogin" type="password" class="form-control" placeholder="Password"
+                                required>
+                            <button class="btn btn-primary mb-3 mt-3"
+                                @click="getUserbyUsernameAndEmail">Envoyer</button>
+                            <p>Pas de compte? <a href="#" @click="registerActive = !registerActive, emptyFields = false"
+                                    style="color:black">S'inscrire
+                                    ici</a>
+                            </p>
+                            <p><a href="#">Mot de passe oublié ?</a></p>
+                            <!-- </form> -->
                         </div>
                     </div>
+
+                    <div v-else class="card register" v-bind:class="{ error: emptyFields }">
+                        <h1>Sign Up</h1>
+                        <form class="form-group">
+                            <div v-if="error">
+                                {{ message }}
+                            </div>
+                            <input v-model="emailReg" type="email" class="form-control" placeholder="Email" required>
+                            <input v-model="passwordReg" type="password" class="form-control" placeholder="Password"
+                                required>
+                            <input v-model="confirmReg" type="password" class="form-control"
+                                placeholder="Confirm Password" required>
+                            <input type="submit" class="btn btn-primary" @click="doRegister">
+                            <p>Already have an account? <a style="color:black" href="#"
+                                    @click="registerActive = !registerActive, emptyFields = false">Sign in here</a>
+                            </p>
+                        </form>
+                    </div>
                 </div>
+
 
             </div>
         </div>
@@ -98,16 +95,16 @@ export default {
         },
         getUserbyUsernameAndEmail() {
             axios
-                .get(`http://localhost:4000/api/users?email=` + this.emailLogin + '&username=' + this.passwordLogin)
+                .get(`http://localhost:4000/api/users?username=` + this.emailLogin + '&password=' + this.passwordLogin)
                 .then((response) => {
-                    if(response.data.data.length == 0){
+                    if (response.data.data.length == 0) {
                         this.error = true;
                         this.message = "Identifiant ou mot de passe incorrect";
                     } else {
                         Cookies.set('userID', response.data.data[0].id);
-                        Cookies.set('username', response.data.data[0].username); 
                         Cookies.set('role', response.data.data[0].role);
-                        window.location.replace('/')
+                        Cookies.set('username', response.data.data[0].username);
+                        window.location.replace('/dashboard')
                     }
 
                 })

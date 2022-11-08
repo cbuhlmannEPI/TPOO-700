@@ -1,5 +1,24 @@
 import Config
 
+<<<<<<< HEAD
+=======
+# config/runtime.exs is executed for all environments, including
+# during releases. It is executed after compilation and before the
+# system starts, so it is typically used to load production configuration
+# and secrets from environment variables or elsewhere. Do not define
+# any compile-time configuration in here, as it won't be applied.
+# The block below contains prod specific runtime configuration.
+
+# ## Using releases
+#
+# If you use `mix release`, you need to explicitly enable the server
+# by passing the PHX_SERVER=true when you start it:
+#
+#     PHX_SERVER=true bin/api start
+#
+# Alternatively, you can use `mix phx.gen.release` to generate a `bin/server`
+# script that automatically sets the env var above.
+>>>>>>> 07ca5ca6850067f1bfb740ffa87e5f197c6e83ca
 if System.get_env("PHX_SERVER") do
   config :api, ApiWeb.Endpoint, server: true
 end
@@ -15,10 +34,17 @@ if config_env() == :prod do
   maybe_ipv6 = if System.get_env("ECTO_IPV6"), do: [:inet6], else: []
 
   config :api, Api.Repo,
+<<<<<<< HEAD
   ssl: false,
   url: database_url,
   pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10")
 
+=======
+    # ssl: true,
+    url: database_url,
+    pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10"),
+    socket_options: maybe_ipv6
+>>>>>>> 07ca5ca6850067f1bfb740ffa87e5f197c6e83ca
 
   # The secret key base is used to sign/encrypt cookies and other secrets.
   # A default value is used in config/dev.exs and config/test.exs but you
@@ -47,5 +73,25 @@ if config_env() == :prod do
     ],
     secret_key_base: secret_key_base
 
+<<<<<<< HEAD
 
+=======
+  # ## Configuring the mailer
+  #
+  # In production you need to configure the mailer to use a different adapter.
+  # Also, you may need to configure the Swoosh API client of your choice if you
+  # are not using SMTP. Here is an example of the configuration:
+  #
+  #     config :api, Api.Mailer,
+  #       adapter: Swoosh.Adapters.Mailgun,
+  #       api_key: System.get_env("MAILGUN_API_KEY"),
+  #       domain: System.get_env("MAILGUN_DOMAIN")
+  #
+  # For this example you need include a HTTP client required by Swoosh API client.
+  # Swoosh supports Hackney and Finch out of the box:
+  #
+  #     config :swoosh, :api_client, Swoosh.ApiClient.Hackney
+  #
+  # See https://hexdocs.pm/swoosh/Swoosh.html#module-installation for details.
+>>>>>>> 07ca5ca6850067f1bfb740ffa87e5f197c6e83ca
 end

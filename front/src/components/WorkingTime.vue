@@ -18,6 +18,8 @@
 <script>
 import axios from 'axios';
 import Cookies from 'js-cookie';
+console.log(Cookies);
+
 export default {
 
   data() {

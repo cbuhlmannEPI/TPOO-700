@@ -15,6 +15,7 @@ defmodule Api.Workingtimes.Workingtime do
   def changeset(workingtime, attrs) do
     workingtime
     |> cast(attrs, [:start, :end])
+    # |> validate_format([:end, :start], )
     |> validate_required([:start, :end])
   end
 end
