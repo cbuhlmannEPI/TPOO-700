@@ -1,5 +1,4 @@
 version: '3'
-
 services:
 
   front:
@@ -18,7 +17,7 @@ services:
       - POSTGRES_DB=api
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-      - POSTGRES_HOST=db
+      - POSTGRES_HOST=hostname
     depends_on:
          # The DB container needs to be started before we start this container.
          - db
