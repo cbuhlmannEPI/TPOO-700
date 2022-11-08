@@ -7,6 +7,7 @@ defmodule Api.Users.User do
     field :email, :string
     field :username, :string
     field :role, :string
+    field :password, :string
     has_many :clocks, Api.Clocks.Clock
     has_many :workingtimes, Api.Workingtimes.Workingtime
 
@@ -16,8 +17,9 @@ defmodule Api.Users.User do
   @doc false
   def changeset(user, attrs) do
     user
-    |> cast(attrs, [:username, :email])
-    |> validate_required([:username, :email])
+    |> cast(attrs, [:username, :email, :role, :password])
+    |> validate_format(:email, ~r/@/)
+    |> validate_required([:username, :email, :role, :password])
     |> unique_constraint(:email)
   end
 end
